@@ -4,6 +4,6 @@ class SubTemplate
   end
   
   def replace_with(object, subgroups)
-    @template.gsub(/\$([\w]+)\$/) {|s| puts "found the subtemplate attributes"; object.send($1)}
+    @template.gsub(/\$([\w]+)\$/) {|s| object.send($1)}
   end
 end

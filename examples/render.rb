@@ -1,5 +1,4 @@
 require 'renderer'
-require 'template_group'
 require 'template'
 require 'sub_template'
   

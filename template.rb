@@ -9,7 +9,7 @@ class Template
   end
   
   def replace_sub_templates(attributes, subgroups)
-    @template.gsub(/\$([\w]+):([\w]+)\(\)\$/) {|s| puts "yes";subgroups[$2.to_sym].replace_with(attributes[$1.to_sym], subgroups)}
+    @template.gsub(/\$([\w]+):([\w]+)\(\)\$/) {|s| subgroups[$2.to_sym].replace_with(attributes[$1.to_sym], subgroups)}
   end
   
   def replace_attributes(template, attributes)
