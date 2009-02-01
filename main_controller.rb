@@ -10,11 +10,10 @@ class Person
 end
 
 class MainController <  Ramaze::Controller
+  engine :Slippers
+  trait :slipper_subtemplates => {:age => Template.new('was born in $year$')}
   def index
-    sarah = Person.new('Sarah', DateTime.new(1983, 9, 2))
-    sub_templates = {:age => Template.new('was born in $year$')}
-    renderer = Template.new "Introducing $name$ who $dob:age$", sub_templates
-    renderer.to_s(sarah)
+    @content = Person.new('Sarah', DateTime.new(1983, 9, 2))
   end
 end
 
