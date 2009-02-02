@@ -11,7 +11,7 @@ end
 
 class MainController <  Ramaze::Controller
   engine :Slippers
-  trait :slipper_subtemplates => {:age => Template.new('was born in $year$')}
+  
   def index
     @content = Person.new('Sarah', DateTime.new(1983, 9, 2))
   end

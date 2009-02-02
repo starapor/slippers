@@ -1,1 +1,1 @@
-Introducing $name$ who $dob:age$
+Introducing $name$ who $dob:person_age$
