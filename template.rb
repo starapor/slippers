@@ -12,12 +12,13 @@ module Slippers
     end
   
     def substitute_objects(object_to_render)
-      stuff = template.gsub(/\$([\w]+):?([\w]*)\$/) {|s| render object_to_render.send($1), $2}
-      stuff.gsub(/\$([\w]+)\(\)\$/){|s| render object_to_render, $1}
+      attributes_replaced = template.gsub(/\$([\w]+)\$/) { |s| render object_to_render.send($1) }
+      templates_replaced = attributes_replaced.gsub(/\$([\w]+)\(\)\$/){|s| render object_to_render, $1}
+      templates_for_next_level_replaced = templates_replaced.gsub(/\$([\w]+):?([\w]*)\(\)\$/) {|s| render object_to_render.send($1), $2}
     end
   
-    def render(attribute, template)
-      return attribute if template.empty?
+    def render(attribute, template=nil)
+      return attribute if !template or template.empty?
       return '' unless @subtemplates[template.to_sym]
       @subtemplates[template.to_sym].to_s(attribute)
     end
