@@ -12,7 +12,8 @@ module Slippers
     end
   
     def substitute_objects(object_to_render)
-      template.gsub(/\$([\w]+):?([\w]*)\$/) {|s| render object_to_render.send($1), $2}
+      stuff = template.gsub(/\$([\w]+):?([\w]*)\$/) {|s| render object_to_render.send($1), $2}
+      stuff.gsub(/\$([\w]+)\(\)\$/){|s| render object_to_render, $1}
     end
   
     def render(attribute, template)

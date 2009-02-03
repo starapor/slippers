@@ -2,7 +2,7 @@ require 'template'
 require 'file_template'
 require 'ostruct'
   
-describe Slippers::Template, " when rendering a template" do
+describe Slippers::Template, " when rendering" do
   it "should return the same template when no substitutions are required" do
     template = Slippers::Template.new("This is the template with substitutions.")
     template.to_s.should eql("This is the template with substitutions.")
@@ -19,11 +19,18 @@ describe Slippers::Template, " when rendering a template" do
     template.to_s(OpenStruct.new).should eql("This is the  template with .")
   end
   
-  it "should render the subtemplate that is refererenced within the template" do
+  it "should render the attribute for a subtemplate that is refererenced within the template" do
     person = OpenStruct.new({:name => OpenStruct.new({:first => 'fred', :last => 'flinstone'})})
     person_template = Slippers::Template.new("template to render $first$ $last$")
     template = Slippers::Template.new("This is the $name:person$!", :person => person_template)    
     template.to_s(person).should eql("This is the template to render fred flinstone!")
+  end
+  
+  it "should render a subtemplate that is referenced within the template" do 
+    name = OpenStruct.new({:first => 'fred', :last => 'flinshone'})
+    name_template = Slippers::Template.new('$first$ $last$')
+    template = Slippers::Template.new('This is the template to render $name()$', :name => name_template)
+    template.to_s(name).should eql("This is the template to render fred flinshone")
   end
   
   it "should render a list of objects" do
