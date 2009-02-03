@@ -19,11 +19,11 @@ describe Slippers::Template, " when rendering" do
     template.to_s(OpenStruct.new).should eql("This is the  template with .")
   end
   
-  it "should render a subtemplate that is referenced within the template" do 
-    name = OpenStruct.new({:first => 'fred', :last => 'flinshone'})
+  it "should substitute a subtemplate that is referenced within the template" do 
+    name = OpenStruct.new({:first => 'fred', :last => 'flinstone'})
     name_template = Slippers::Template.new('$first$ $last$')
     template = Slippers::Template.new('This is the template to render $name()$', :name => name_template)
-    template.to_s(name).should eql("This is the template to render fred flinshone")
+    template.to_s(name).should eql("This is the template to render fred flinstone")
   end  
 
   it "should render the attribute for a subtemplate that is refererenced within the template" do
@@ -31,6 +31,12 @@ describe Slippers::Template, " when rendering" do
     person_template = Slippers::Template.new("template to render $first$ $last$")
     template = Slippers::Template.new("This is the $name:person()$!", :person => person_template)    
     template.to_s(person).should eql("This is the template to render fred flinstone!")
+  end
+  
+  it "should give the subtemplates the parameters provided" do
+    name_template = Slippers::Template.new('$first$ $last$')
+    template = Slippers::Template.new("This is the template to render $name(:first => 'fred', :last => 'flinstone')$", :name => name_template)
+    template.to_s(:object).should eql("This is the template to render fred flinsthone")
   end
 
   it "should render a list of objects" do

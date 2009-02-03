@@ -1,3 +1,4 @@
+require 'ostruct'
 module Slippers 
   class Template
     def initialize(template, subtemplates={})
@@ -13,8 +14,9 @@ module Slippers
   
     def substitute_objects(object_to_render)
       attributes_replaced = template.gsub(/\$([\w]+)\$/) { |s| render object_to_render.send($1) }
-      templates_replaced = attributes_replaced.gsub(/\$([\w]+)\(\)\$/){|s| render object_to_render, $1}
-      templates_for_next_level_replaced = templates_replaced.gsub(/\$([\w]+):?([\w]*)\(\)\$/) {|s| render object_to_render.send($1), $2}
+      templates_replaced = attributes_replaced.gsub(/\$([\w]+)\(\)\$/) {|s| render object_to_render, $1}
+      templates_with_parameters_replaced = templates_replaced.gsub(/\$([\w]+)\(([:\w]+\s*=>\s*\'?[\w]+\'?)\)\$/) {|s| render new_object($2), $1}
+      templates_for_next_level_replaced = templates_with_parameters_replaced.gsub(/\$([\w]+):?([\w]*)\(\)\$/) {|s| render object_to_render.send($1), $2}
     end
   
     def render(attribute, template=nil)
@@ -25,6 +27,10 @@ module Slippers
     
     def add_subtemplates(subtemplates)
       @subtemplates = subtemplates
+    end
+    
+    def new_object(parameters)
+      OpenStruct.new(parameters)
     end
   end    
 end
