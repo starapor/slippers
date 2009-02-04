@@ -5,7 +5,7 @@ module Slippers
       @template = template
       @subtemplates = subtemplates
     end
-    attr_reader :template
+    attr_reader :template, :subtemplates
   
     def to_s(object_to_render=nil)
       objects_as_list = [object_to_render].flatten

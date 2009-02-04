@@ -2,23 +2,36 @@ grammar Slippers
 	
 	rule expression
 	 before:possible_text templated_expression after:possible_text {
- 	  def eval(object_to_render)
- 	    before.eval(object_to_render) + templated_expression.eval(object_to_render)
+ 	  def eval(object_to_render, subtemplate={})
+ 	    before.eval + templated_expression.eval(object_to_render, subtemplate) + after.eval
 	    end
  	} / regular_text
   end
   
   rule templated_expression
-    "$" attribute "$" {
-   	  def eval(object_to_render)
-   	    attribute.eval(object_to_render)
+    "$" foo "$" {
+   	  def eval(object_to_render, subtemplate={})
+   	    foo.eval(object_to_render, subtemplate)
   	    end
-   	}
+   	} 
+  end
+  
+  rule foo
+    template / attribute
+  end
+  
+  rule template
+    word "()" {
+      def eval(object_to_render, subtemplates={})
+        subtemplate = subtemplates[:template]
+        SlippersParser.new.parse(subtemplate.template).eval(object_to_render, subtemplate.subtemplates)
+      end
+    }
   end
 	  
   rule attribute
   	word {
-  	  def eval(object_to_render)
+  	  def eval(object_to_render, subtemplate={})
   	    object_to_render.send text_value
 	    end
   	}
@@ -26,7 +39,7 @@ grammar Slippers
 	
 	rule regular_text
     (word space)+  {
-  		def eval(object_to_render=nil)
+  		def eval(object_to_render, subtemplate={})
   		  text_value
   		end
   	}	
@@ -34,7 +47,7 @@ grammar Slippers
   
   rule possible_text 
     (word space)*  {
-  		def eval(object_to_render=nil)
+  		def eval
   		  text_value
   		end
   	}	
