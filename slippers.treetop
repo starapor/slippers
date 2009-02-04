@@ -1,0 +1,51 @@
+grammar Slippers
+	
+	rule expression
+	 before:possible_text templated_expression after:possible_text {
+ 	  def eval(object_to_render)
+ 	    before.eval(object_to_render) + templated_expression.eval(object_to_render)
+	    end
+ 	} / regular_text
+  end
+  
+  rule templated_expression
+    "$" attribute "$" {
+   	  def eval(object_to_render)
+   	    attribute.eval(object_to_render)
+  	    end
+   	}
+  end
+	  
+  rule attribute
+  	word {
+  	  def eval(object_to_render)
+  	    object_to_render.send text_value
+	    end
+  	}
+  end
+	
+	rule regular_text
+    (word space)+  {
+  		def eval(object_to_render=nil)
+  		  text_value
+  		end
+  	}	
+  end
+  
+  rule possible_text 
+    (word space)*  {
+  		def eval(object_to_render=nil)
+  		  text_value
+  		end
+  	}	
+  end
+  
+	rule word
+		[a-zA-Z]+
+	end
+	
+	rule space
+      ' '*
+  end
+	
+end
