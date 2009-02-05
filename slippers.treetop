@@ -24,7 +24,12 @@ grammar Slippers
     attribute apply_op template {
       def eval(object_to_render, subtemplates)
         subtemplate = subtemplates[template.to_sym]
-        SlippersParser.new.parse(subtemplate.template).eval(attribute.eval(object_to_render), subtemplate.subtemplates)
+        
+        [object_to_render].flatten.inject('') { |rendered, item| rendered + apply_item_to_subtemplate(item, subtemplate) }
+      end
+      
+      def apply_item_to_subtemplate(item, subtemplate)
+        SlippersParser.new.parse(subtemplate.template).eval(attribute.value_of(item), subtemplate.subtemplates)
       end
     }
   end
@@ -45,8 +50,12 @@ grammar Slippers
   rule attribute
   	word {
   	  def eval(object_to_render, subtemplate={})
-  	    object_to_render.send text_value
+  	    [object_to_render].flatten.inject('') { |rendered, item| rendered + value_of(item) }
 	    end
+	    
+	    def value_of(item)
+	      item.send(text_value)
+      end
   	}
   end
 	

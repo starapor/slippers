@@ -14,11 +14,11 @@ describe SlippersParser do
   it "should return the string unparsed when there are no keywords in it" do
     @parser.parse('').eval(nil).should eql('')
     @parser.parse('  ').eval(nil).should eql('  ')
-    @parser.parse('this should be returned unchanged').eval(nil).should eql('this should be returned unchanged')
-    @parser.parse(' this should be returned unchanged ').eval(nil).should eql(' this should be returned unchanged ')
-    @parser.parse('this should be 1234567890 ').eval(nil).should eql('this should be 1234567890 ')
-    @parser.parse('this should be abc1234567890 ').eval(nil).should eql('this should be abc1234567890 ')
-    @parser.parse('this should be !@£%^&*()').eval(nil).should eql('this should be !@£%^&*()')
+    @parser.parse('this should be returned unchanged').eval.should eql('this should be returned unchanged')
+    @parser.parse(' this should be returned unchanged ').eval.should eql(' this should be returned unchanged ')
+    @parser.parse('this should be 1234567890 ').eval.should eql('this should be 1234567890 ')
+    @parser.parse('this should be abc1234567890 ').eval.should eql('this should be abc1234567890 ')
+    @parser.parse('this should be !@£%^&*()').eval.should eql('this should be !@£%^&*()')
   end
   
   it 'should find the keyword within the delimiters' do
@@ -44,7 +44,13 @@ describe SlippersParser do
   
   it 'should not match on escaped delimiters' do
     #@parser.parse('stuff \$notmatched\$').eval.should eql('stuff \$notmatched\$')
-  end 
+  end
+  
+  it "should render a list of objects" do
+    people = [OpenStruct.new({:name => 'fred'}), OpenStruct.new({:name => 'barney'})]
+    @parser.parse('this is $name$').eval(people).should eql("this is fredbarney")
+  end
+   
 end
 
 
