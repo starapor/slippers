@@ -23,7 +23,7 @@ grammar Slippers
   rule apply_attribute_to_template 
     attribute apply_op template {
       def eval(object_to_render, subtemplates)
-        subtemplate = subtemplates[:template]
+        subtemplate = subtemplates[template.to_sym]
         SlippersParser.new.parse(subtemplate.template).eval(attribute.eval(object_to_render), subtemplate.subtemplates)
       end
     }
@@ -32,8 +32,12 @@ grammar Slippers
   rule template
     word "()" {
       def eval(object_to_render, subtemplates={})
-        subtemplate = subtemplates[:template]
+        subtemplate = subtemplates[to_sym]
         SlippersParser.new.parse(subtemplate.template).eval(object_to_render, subtemplate.subtemplates)
+      end
+      
+      def to_sym
+        word.to_s.to_sym
       end
     }
   end
@@ -59,7 +63,11 @@ grammar Slippers
   end
 	
 	rule word
-		[a-zA-Z]+
+		[a-zA-Z]+ {		  
+	    def to_s
+	      text_value
+      end
+		}
 	end
 	
 	rule space

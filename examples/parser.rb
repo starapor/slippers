@@ -37,9 +37,9 @@ describe SlippersParser do
   end 
   
   it 'should apply the attribute to a subtemplate when parsing it' do
-    template = Slippers::Template.new('Hello $first$ $last$')
+    subtemplate = Slippers::Template.new('Hello $first$ $last$')
     person = OpenStruct.new({:name => OpenStruct.new({:first => 'fred', :last => 'flinstone'})})
-    @parser.parse('$name:template()$').eval(person, {:template => template}).should eql('Hello fred flinstone')
+    @parser.parse('$name:person()$').eval(person, {:person => subtemplate}).should eql('Hello fred flinstone')
   end
   
   it 'should not match on escaped delimiters' do
