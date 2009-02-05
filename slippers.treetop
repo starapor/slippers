@@ -1,9 +1,9 @@
 grammar Slippers
 	
 	rule expression
-	 before:sentance templated_expression space after:sentance {
+	 before:sentance templated_expression space after:expression {
  	  def eval(object_to_render, subtemplate={})
- 	    before.eval + templated_expression.eval(object_to_render, subtemplate) + after.eval
+ 	    before.eval + templated_expression.eval(object_to_render, subtemplate) + space.eval + after.eval(object_to_render, subtemplate)
 	    end
  	} / sentance
   end
@@ -63,7 +63,11 @@ grammar Slippers
 	end
 	
 	rule space
-      ' '*
+      ' '* {
+        def eval(object_to_render=nil, subtemplate={})
+          text_value
+        end
+      }
   end
   
   rule apply_op
