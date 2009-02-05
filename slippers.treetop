@@ -55,9 +55,13 @@ grammar Slippers
   end
   
   rule possible_text 
-    space word space
+    space word space / space number space 
   end
   
+  rule number
+    [1-9] [0-9]* / '0'
+  end
+	
 	rule word
 		[a-zA-Z]+
 	end
