@@ -55,7 +55,7 @@ grammar Slippers
   end
   
   rule possible_text 
-    word space
+    space word space
   end
   
 	rule word

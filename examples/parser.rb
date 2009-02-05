@@ -13,9 +13,9 @@ describe SlippersParser do
   
   it "should return the string unparsed when there are no keywords in it" do
     @parser.parse('').eval(nil).should eql('')
-    #@parser.parse(' ').eval(nil).should eql(' ')
+    @parser.parse(' ').eval(nil).should eql(' ')
     @parser.parse('this should be returned unchanged').eval(nil).should eql('this should be returned unchanged')
-    #@parser.parse(' this should be returned unchanged ').eval(nil).should eql(' this should be returned unchanged ')
+    @parser.parse(' this should be returned unchanged ').eval(nil).should eql(' this should be returned unchanged ')
   end
   
   it 'should find the keyword within the delimiters' do
