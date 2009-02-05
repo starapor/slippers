@@ -13,21 +13,21 @@ describe SlippersParser do
   
   it "should return the string unparsed when there are no keywords in it" do
     @parser.parse('').eval(nil).should eql('')
-    #@parser.parse(' ').eval(nil).should eql(' ')
+    @parser.parse('  ').eval(nil).should eql('  ')
     @parser.parse('this should be returned unchanged').eval(nil).should eql('this should be returned unchanged')
     @parser.parse(' this should be returned unchanged ').eval(nil).should eql(' this should be returned unchanged ')
     @parser.parse('this should be 1234567890 ').eval(nil).should eql('this should be 1234567890 ')
     @parser.parse('this should be abc1234567890 ').eval(nil).should eql('this should be abc1234567890 ')
-    #@parser.parse('this should be @£$%^&*() ').eval(nil).should eql(' this should be!@£$%^&*()')
+    @parser.parse('this should be !@£%^&*()').eval(nil).should eql('this should be !@£%^&*()')
   end
   
   it 'should find the keyword within the delimiters' do
     message = OpenStruct.new({:message => 'the message', :name => 'fred'})
     @parser.parse('$message$').eval(message).should eql('the message')
     @parser.parse('$message$ for $name$').eval(message).should eql('the message for fred')
-    @parser.parse('We want to find $message$').eval(message).should eql('We want to find the message')
+    @parser.parse('we want to find $message$').eval(message).should eql('we want to find the message')
     @parser.parse('$message$ has spoken').eval(message).should eql('the message has spoken')
-    @parser.parse('Yes $message$ has spoken').eval(message).should eql('Yes the message has spoken')
+    @parser.parse('Yes! $message$ has spoken').eval(message).should eql('Yes! the message has spoken')
   end
   
   it 'should parse the subtemplate found within the delimiters' do
@@ -40,6 +40,10 @@ describe SlippersParser do
     template = Slippers::Template.new('Hello $first$ $last$')
     person = OpenStruct.new({:name => OpenStruct.new({:first => 'fred', :last => 'flinstone'})})
     @parser.parse('$name:template()$').eval(person, {:template => template}).should eql('Hello fred flinstone')
+  end
+  
+  it 'should not match on escaped delimiters' do
+    #@parser.parse('stuff \$notmatched\$').eval.should eql('stuff \$notmatched\$')
   end 
 end
 

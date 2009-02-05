@@ -1,11 +1,11 @@
 grammar Slippers
 	
 	rule expression
-	 before:sentance templated_expression space after:expression {
+	 before:some_text templated_expression space after:expression {
  	  def eval(object_to_render, subtemplate={})
  	    before.eval + templated_expression.eval(object_to_render, subtemplate) + space.eval + after.eval(object_to_render, subtemplate)
 	    end
- 	} / sentance
+ 	} / some_text
   end
   
   rule templated_expression
@@ -46,20 +46,16 @@ grammar Slippers
   	}
   end
 	
-	rule sentance
-    possible_text* {
+	rule some_text
+    not_delimiter* {
   		def eval(object_to_render=nil, subtemplate={})
   		  text_value
   		end
   	}	
   end
   
-  rule possible_text 
-    space word space / space number space 
-  end
-  
-  rule number
-    [1-9] [0-9]* / '0'
+  rule not_delimiter 
+    !"$" .
   end
 	
 	rule word
