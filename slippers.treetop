@@ -2,16 +2,16 @@ grammar Slippers
 	
 	rule expression
 	 before:some_text templated_expression space after:expression {
- 	  def eval(object_to_render, subtemplate={})
- 	    before.eval + templated_expression.eval(object_to_render, subtemplate) + space.eval + after.eval(object_to_render, subtemplate)
+ 	  def eval(object_to_render, template_group=nil)
+ 	    before.eval + templated_expression.eval(object_to_render, template_group) + space.eval + after.eval(object_to_render, template_group)
 	    end
  	} / some_text
   end
   
   rule templated_expression
     "$" foo "$" {
-   	  def eval(object_to_render, subtemplate={})
-   	    foo.eval(object_to_render, subtemplate)
+   	  def eval(object_to_render, template_group=nil)
+   	    foo.eval(object_to_render, template_group)
   	    end
    	} 
   end
@@ -22,46 +22,44 @@ grammar Slippers
   
   rule apply_attribute_to_template 
     attribute apply_op template {
-      def eval(object_to_render, subtemplates)
-        subtemplate = subtemplates[template.to_sym]
-        
-        [object_to_render].flatten.inject('') { |rendered, item| rendered + apply_item_to_subtemplate(item, subtemplate) }
-      end
-      
-      def apply_item_to_subtemplate(item, subtemplate)
-        SlippersParser.new.parse(subtemplate.template).eval(attribute.value_of(item), subtemplate.subtemplates)
+      def eval(object_to_render, template_group)
+        [object_to_render].flatten.inject('') { |rendered, item| rendered + template.apply_attribute_to_subtemplate(attribute.value_of(item), template_group) }
       end
     }
   end
   
   rule template
     word "()" {
-      def eval(object_to_render, subtemplates={})
-        subtemplate = subtemplates[to_sym]
-        SlippersParser.new.parse(subtemplate.template).eval(object_to_render, subtemplate.subtemplates)
+      def eval(object_to_render, template_group)
+        apply_attribute_to_subtemplate(object_to_render, template_group)
       end
       
-      def to_sym
-        word.to_s.to_sym
+      def apply_attribute_to_subtemplate(item, template_group)
+        return '' unless template_group
+        subtemplate = template_group.find(word.to_s)
+        return '' unless subtemplate
+        SlippersParser.new.parse(subtemplate.template).eval(item, template_group)
       end
     }
   end
 	  
   rule attribute
   	word {
-  	  def eval(object_to_render, subtemplate={})
+  	  def eval(object_to_render, template_group=nil)
   	    [object_to_render].flatten.inject('') { |rendered, item| rendered + value_of(item) }
 	    end
 	    
 	    def value_of(item)
-	      item.send(text_value)
+	      value = item.send(text_value) 
+	      return '' unless value
+	      value
       end
   	}
   end
 	
 	rule some_text
     not_delimiter* {
-  		def eval(object_to_render=nil, subtemplate={})
+  		def eval(object_to_render=nil, template_group=nil)
   		  text_value
   		end
   	}	
@@ -81,7 +79,7 @@ grammar Slippers
 	
 	rule space
       ' '* {
-        def eval(object_to_render=nil, subtemplate={})
+        def eval(object_to_render=nil, template_group=nil)
           text_value
         end
       }

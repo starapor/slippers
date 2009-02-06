@@ -32,14 +32,16 @@ describe SlippersParser do
   
   it 'should parse the subtemplate found within the delimiters' do
     template = Slippers::Template.new('template for this')
-    @parser.parse('$template()$').eval(nil, {:template => template}).should eql('template for this')
-    @parser.parse('Stuff before $template()$ and after').eval(nil, {:template => template}).should eql('Stuff before template for this and after')
+    template_group = Slippers::TemplateGroup.new(:templates => {:template => template})
+    @parser.parse('$template()$').eval(nil, template_group).should eql('template for this')
+    @parser.parse('Stuff before $template()$ and after').eval(nil, template_group).should eql('Stuff before template for this and after')
   end 
   
   it 'should apply the attribute to a subtemplate when parsing it' do
     subtemplate = Slippers::Template.new('Hello $first$ $last$')
+    template_group = Slippers::TemplateGroup.new(:templates => {:person => subtemplate})
     person = OpenStruct.new({:name => OpenStruct.new({:first => 'fred', :last => 'flinstone'})})
-    @parser.parse('$name:person()$').eval(person, {:person => subtemplate}).should eql('Hello fred flinstone')
+    @parser.parse('$name:person()$').eval(person, template_group).should eql('Hello fred flinstone')
   end
   
   it 'should not match on escaped delimiters' do
@@ -50,6 +52,21 @@ describe SlippersParser do
     people = [OpenStruct.new({:name => 'fred'}), OpenStruct.new({:name => 'barney'})]
     @parser.parse('this is $name$').eval(people).should eql("this is fredbarney")
   end
+  
+  it "should substitue in an empty string when the subtemplate cannot be found" do
+    person = OpenStruct.new({:name => 'red'})
+    @parser.parse("This is the unknown template $name:unknown()$!").eval(person).should eql("This is the unknown template !")
+  end
+  
+  it "should substitute in an empty string when the attribute cannot be found" do  
+    @parser.parse("This is the $adjective$ template with $message$.").eval(OpenStruct.new).should eql("This is the  template with .")
+  end
+  
+  it "should give the subtemplates the parameters provided" do
+    name_template = Slippers::Template.new('$first$ $last$')
+    #@parser.parse("This is the template to render $name(:first => 'fred', :last => 'flinstone')$").eval(:object, :name => name_template).should eql("This is the template to render fred flinstone")
+  end
+  
    
 end
 
