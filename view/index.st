@@ -1,1 +1,1 @@
-Introducing $name$ who $dob:person_age$
+Introducing $name$ who $dob:person/age()$

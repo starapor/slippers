@@ -9,6 +9,7 @@ class Person
   attr_reader :name, :dob
 end
 
+
 class MainController <  Ramaze::Controller
   engine :Slippers
   
