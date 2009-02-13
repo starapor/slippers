@@ -1,5 +1,6 @@
 require '/Users/starapor/Development/slippers/template_group_directory'
 require '/Users/starapor/Development/slippers/engine'
+require '/Users/starapor/Development/slippers/binding_wrapper'
 
 module Ramaze
   module Template
@@ -9,7 +10,7 @@ module Ramaze
       class << self
         def transform(action)
           slippers = wrap_compile(action)
-           object_to_render = eval("@content", action.binding)
+          object_to_render = ::Slippers::BindingWrapper.new(action.binding)
           slippers.render(object_to_render)
         end
 
@@ -17,7 +18,6 @@ module Ramaze
           subtemplates = action.controller.trait[:slipper_subtemplates] || {}
           subtemplates.merge! :filename => action.template if action.template
          
-          
           template_group = ::Slippers::TemplateGroupDirectory.new(Global.view_root)
           ::Slippers::Engine.new(template, :template_group => template_group)
         end

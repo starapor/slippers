@@ -58,7 +58,7 @@ grammar Slippers
 	    end
 	    
 	    def value_of(item)
-	      value = item.send(text_value) 
+	      value = item.send(to_s) 
 	      return '' unless value
 	      value
       end

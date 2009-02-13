@@ -14,7 +14,7 @@ class MainController <  Ramaze::Controller
   engine :Slippers
   
   def index
-    @content = Person.new('Sarah', DateTime.new(1983, 9, 2))
+    @person = Person.new('Sarah', DateTime.new(1983, 9, 2))
   end
 end
 
