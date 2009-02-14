@@ -1,3 +1,4 @@
+$LOAD_PATH.unshift(__DIR__)
 require 'engine/template'
 require 'engine/file_template'
 require 'engine/template_group'

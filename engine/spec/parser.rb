@@ -1,4 +1,4 @@
-require 'spec/helper'
+require 'engine/spec/helper'
 
 describe SlippersParser do
   

@@ -1,4 +1,4 @@
-require 'spec/helper'
+require 'engine/spec/helper'
 describe Slippers::Engine do
   before do
     template = 'Hello $first$ $last$'

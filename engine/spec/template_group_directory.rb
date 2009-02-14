@@ -1,4 +1,4 @@
-require 'spec/helper'
+require 'engine/spec/helper'
 
 describe Slippers::TemplateGroupDirectory do
   it 'should find the file template in the directory folder' do
