@@ -7,7 +7,6 @@ module Slippers
     end
     def find(subtemplate)
       file_name = @directory_path + '/' + subtemplate + '.st'
-      #return unless File.exist? file_name
       FileTemplate.new(file_name)
     end
   end
