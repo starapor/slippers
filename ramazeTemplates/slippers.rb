@@ -1,6 +1,4 @@
-require '/Users/starapor/Development/slippers/template_group_directory'
-require '/Users/starapor/Development/slippers/engine'
-require '/Users/starapor/Development/slippers/binding_wrapper'
+require '/Users/starapor/Development/slippers/slippers'
 
 module Ramaze
   module Template

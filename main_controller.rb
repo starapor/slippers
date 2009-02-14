@@ -1,7 +1,3 @@
-require 'rubygems'
-require 'ramaze'
-require 'template'
-
 class Person
   def initialize(name, date_of_birth)
     @name, @dob = name, date_of_birth
@@ -18,4 +14,3 @@ class MainController <  Ramaze::Controller
   end
 end
 
-Ramaze.start
