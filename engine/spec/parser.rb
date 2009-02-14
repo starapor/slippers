@@ -1,5 +1,13 @@
 require 'engine/spec/helper'
-
+class Person
+  def initialize(first, last)
+    @first, @last = first, last
+  end
+  attr_reader :first, :last
+  def to_s
+    first + ' ' + last
+  end
+end
 describe SlippersParser do
   
   before(:each) do
@@ -13,7 +21,7 @@ describe SlippersParser do
     @parser.parse(' this should be returned unchanged ').eval.should eql(' this should be returned unchanged ')
     @parser.parse('this should be 1234567890 ').eval.should eql('this should be 1234567890 ')
     @parser.parse('this should be abc1234567890 ').eval.should eql('this should be abc1234567890 ')
-    @parser.parse('this should be !@£%^&*()').eval.should eql('this should be !@£%^&*()')
+    @parser.parse('this should be !@¬£%^&*()').eval.should eql('this should be !@¬£%^&*()')
   end
   
   it 'should find the keyword within the delimiters' do
@@ -44,10 +52,19 @@ describe SlippersParser do
   end
   
   it "should render a list of objects" do
-    people = [OpenStruct.new({:name => 'fred'}), OpenStruct.new({:name => 'barney'})]
+    people = [OpenStruct.new({:name => 'fred'}), OpenStruct.new({:name => 'barney'}) ]
     @parser.parse('this is $name$').eval(people).should eql("this is fredbarney")
   end
-  
+
+  it "should apply a list of objects to subtemplates" do
+    people = [ Person.new('fred', 'flinstone'), Person.new('barney', 'rubble') ]
+    subtemplate = Slippers::Template.new('this is $first$ $last$ ')
+    template_group = Slippers::TemplateGroup.new(:templates => {:person => subtemplate})
+    object_to_render = OpenStruct.new({:people => people})
+
+    @parser.parse('$people:person()$').eval(object_to_render, template_group).should eql("this is fred flinstone this is barney rubble ")
+  end
+
   it "should substitue in an empty string when the subtemplate cannot be found" do
     person = OpenStruct.new({:name => 'red'})
     @parser.parse("This is the unknown template $name:unknown()$!").eval(person).should eql("This is the unknown template !")

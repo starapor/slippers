@@ -5,6 +5,7 @@ require 'engine/template_group_directory'
 require 'engine/engine'
 require 'engine/binding_wrapper'
 require 'engine/directory_not_found_error'
+require 'engine/slippers_nodes'
 
 require 'rubygems'
 require 'treetop'

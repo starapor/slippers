@@ -1,19 +1,11 @@
 grammar Slippers
 	
-	rule expression
-	 before:some_text templated_expression space after:expression {
- 	  def eval(object_to_render, template_group=nil)
- 	    before.eval + templated_expression.eval(object_to_render, template_group) + space.eval + after.eval(object_to_render, template_group)
-	    end
- 	} / some_text
+  rule expression
+	 before:some_text templated_expression space after:expression <ExpressionNode> / some_text
   end
   
   rule templated_expression
-    "$" foo "$" {
-   	  def eval(object_to_render, template_group=nil)
-   	    foo.eval(object_to_render, template_group)
-  	    end
-   	} 
+    "$" foo "$" <TemplatedExpressionNode>
   end
   
   rule foo
@@ -21,64 +13,26 @@ grammar Slippers
   end
   
   rule apply_attribute_to_template 
-    attribute apply_op template {
-      def eval(object_to_render, template_group)
-        [object_to_render].flatten.inject('') { |rendered, item| rendered + template.apply_attribute_to_subtemplate(attribute.value_of(item), template_group).to_s }
-      end
-      
-      def to_s
-        text_value
-      end
-    }
+    attribute apply_op template <ApplyAttributeToTemplateNode>
   end
   
   rule template
-    template_path "()" {
-      def eval(object_to_render, template_group)
-        apply_attribute_to_subtemplate(object_to_render, template_group)
-      end
-      
-      def apply_attribute_to_subtemplate(item, template_group)
-        return '' unless template_group
-        subtemplate = template_group.find(template_path.to_s)
-        return '' unless subtemplate
-        SlippersParser.new.parse(subtemplate.template).eval(item, template_group)
-      end
-      
+    template_path "()" <TemplateNode>
+  end
+	  
+  rule attribute
+  	word <AttributeNode>
+  end
+	
+  rule some_text
+    not_delimiter* {
+ 	  def eval(*args)
+ 	   to_s
+ 	  end
       def to_s
         text_value
       end
     }
-  end
-	  
-  rule attribute
-  	word {
-  	  def eval(object_to_render, template_group=nil)
-  	    [object_to_render].flatten.inject('') { |rendered, item| rendered + value_of(item).to_s }
-	    end
-	    
-	    def value_of(item)
-	      value = item.send(to_s) 
-	      return '' unless value
-	      value
-      end
-      
-      def to_s
-        text_value
-      end
-  	}
-  end
-	
-	rule some_text
-    not_delimiter* {
-  		def eval(object_to_render=nil, template_group=nil)
-  		  text_value
-  		end
-  	  
-      def to_s
-        text_value
-      end
-    }	
   end
   
   rule not_delimiter 
@@ -97,18 +51,21 @@ grammar Slippers
     }
   end
   
-	rule word
-		[a-zA-Z]+ {
+  rule word
+	[a-zA-Z]+ {
       def to_s
         text_value
       end
-		}
-	end
+      }
+  end
 	
-	rule space
-      ' '* {
+  rule space
+    ' '* {
         def eval(object_to_render=nil, template_group=nil)
-          text_value
+          to_s
+        end
+        def to_s
+            text_value
         end
       }
   end
