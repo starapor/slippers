@@ -9,6 +9,6 @@ describe Slippers::BindingWrapper do
   
   it "should evaluate the bindings" do
     bindings_wrapper = Slippers::BindingWrapper.new(f())
-    bindings_wrapper.send('a').should eql(22)
+    bindings_wrapper['a'].should eql(22)
   end
 end

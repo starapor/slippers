@@ -3,7 +3,7 @@ module Slippers
     def initialize(bindings)
       @bindings = bindings
     end
-    def method_missing(method, *args)
+    def [](method)
       eval('@'+ method.to_s, @bindings) || super
     end
   end

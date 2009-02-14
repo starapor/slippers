@@ -92,6 +92,11 @@ describe SlippersParser do
     template_group = Slippers::TemplateGroup.new(:templates => {:date => Slippers::Template.new('$year$')} )
     @parser.parse("This is $name$ who was born in $dob:date()$").eval(fred, template_group).should eql('This is fred who was born in 1983')
   end
+
+  it "should render a hash" do
+    hash_object = {:title => 'Domain driven design', :author => 'Eric Evans'}
+    @parser.parse("should parse $title$ by $author$").eval(hash_object).should eql("should parse Domain driven design by Eric Evans")
+  end
    
 end
 
