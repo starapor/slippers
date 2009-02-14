@@ -1,4 +1,3 @@
-require 'ostruct'
 module Slippers 
   class Template
     def initialize(template, subtemplates={})

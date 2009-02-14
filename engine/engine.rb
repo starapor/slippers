@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'treetop'
-require 'slippers'
-require 'template'
+require 'engine/slippers'
+require 'engine/template'
 
 module Slippers
   class Engine

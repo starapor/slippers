@@ -1,4 +1,4 @@
-require 'file_template'
+require 'examples/helper'
   
 describe Slippers::FileTemplate, " when rendering" do
   it "should read the template from a file" do

@@ -1,4 +1,4 @@
-require 'engine'
+require 'examples/helper'
 describe Slippers::Engine do
   before do
     template = 'Hello $first$ $last$'

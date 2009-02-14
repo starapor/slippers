@@ -1,8 +1,4 @@
-require 'rubygems'
-require 'treetop'
-require 'ostruct'
-require 'template'
-require 'date'
+require 'examples/helper'
 
 describe SlippersParser do
   

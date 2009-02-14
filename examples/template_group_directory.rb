@@ -1,4 +1,4 @@
-require 'template_group_directory'
+require 'examples/helper'
 
 describe Slippers::TemplateGroupDirectory do
   it 'should find the file template in the directory folder' do

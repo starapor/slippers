@@ -1,4 +1,4 @@
-require 'binding_wrapper'
+require 'examples/helper'
 
 describe Slippers::BindingWrapper do
   def f

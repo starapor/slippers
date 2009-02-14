@@ -1,4 +1,4 @@
-require 'template_group'
+require 'examples/helper'
 describe Slippers::TemplateGroup do
   it 'should find the right template' do
     subtemplate = Slippers::Template.new('Hello $first$ $last$')

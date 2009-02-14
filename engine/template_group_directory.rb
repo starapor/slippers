@@ -1,5 +1,5 @@
-require 'template_group'
-require 'file_template'
+require 'engine/template_group'
+require 'engine/file_template'
 module Slippers
   class TemplateGroupDirectory < TemplateGroup
     def initialize(directory_path)

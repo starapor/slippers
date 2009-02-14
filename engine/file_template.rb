@@ -1,4 +1,4 @@
-require 'template'
+require 'engine/template'
 
 module Slippers 
   class FileTemplate  < Template
