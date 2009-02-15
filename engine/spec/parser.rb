@@ -35,9 +35,11 @@ describe SlippersParser do
   
   it 'should parse the subtemplate found within the delimiters' do
     template = Slippers::Template.new('template for this')
-    template_group = Slippers::TemplateGroup.new(:templates => {:template => template})
+    template_with_underscore = Slippers::Template.new('template with underscore')
+    template_group = Slippers::TemplateGroup.new(:templates => {:template => template, :template_with_underscore => template_with_underscore})
     @parser.parse('$template()$').eval(nil, template_group).should eql('template for this')
     @parser.parse('Stuff before $template()$ and after').eval(nil, template_group).should eql('Stuff before template for this and after')
+    @parser.parse('then there is $template_with_underscore()$').eval(nil, template_group).should eql('then there is template with underscore')
   end 
   
   it 'should apply the attribute to a subtemplate when parsing it' do

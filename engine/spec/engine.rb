@@ -4,6 +4,35 @@ describe Slippers::Engine do
     template = 'Hello $first$ $last$'
     @engine = Slippers::Engine.new(template)
   end
+  
+  it "Rendering template of a string without any holes" do
+    template = "This is a string without any holes in it"
+    engine = Slippers::Engine.new(template)
+    engine.render(nil).should eql("This is a string without any holes in it")
+  end
+
+  it "Filling in a hole within a template" do
+    template = "This is a string with a message of $message$"
+    engine = Slippers::Engine.new(template)
+    engine.render(:message => "hello world").should eql("This is a string with a message of hello world")
+  end
+
+  it "Rendering a subtemplate within a template" do
+    subtemplate = Slippers::Template.new("this is a subtemplate")
+    template_group = Slippers::TemplateGroup.new(:templates => {:message => subtemplate})
+    template = "This is a template and then $message()$"
+    engine = Slippers::Engine.new(template, :template_group => template_group)
+    engine.render(nil).should eql("This is a template and then this is a subtemplate")
+  end
+
+  it "Applying a new object to a subtemplate" do
+    subtemplate = Slippers::Template.new("this is a subtemplate with a message of $saying$")
+    template_group = Slippers::TemplateGroup.new(:templates => {:message_subtemplate => subtemplate})
+    template = "This is a template and then $message:message_subtemplate()$!"
+    engine = Slippers::Engine.new(template, :template_group => template_group)
+    engine.render(:message => {:saying => 'hello world'}).should eql("This is a template and then this is a subtemplate with a message of hello world!")
+  end
+  
     
   it "should render the object within the template" do
     person = OpenStruct.new({:first => 'fred', :last => 'flinstone'})

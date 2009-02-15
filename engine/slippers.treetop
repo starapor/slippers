@@ -44,11 +44,15 @@ grammar Slippers
   end
 	
   rule template_path
-    word ("/" word)? {
+    word_with_underscore ("/" word_with_underscore)? {
       def to_s
         text_value
       end
     }
+  end
+  
+  rule word_with_underscore
+    word ("_" word)*
   end
   
   rule word
