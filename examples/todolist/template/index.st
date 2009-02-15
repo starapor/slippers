@@ -30,7 +30,7 @@
     </style>
 </head>
 <body>
-<h1>TodoList</h1>
+<h1>$heading$</h1>
 <a href="/new">New Task</a>
 <table>
     $tasks:tasks()$

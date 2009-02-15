@@ -23,6 +23,7 @@ class MainController < Ramaze::Controller
       delete = A('Delete', :href => Rs(:delete, title))
       @tasks << {:title => title, :status => status, :resource => title, :toggle => toggle}
     end
+    @heading = "TodoList"
     #@tasks.sort!
   end
 
