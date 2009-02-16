@@ -1,0 +1,25 @@
+From 5a6c869d4709ce84d7c07b5dd33cf06e39c0111e Mon Sep 17 00:00:00 2001
+From: Sarah Taraporewalla <sarah.tarap@gmail.com>
+Date: Mon, 16 Feb 2009 20:44:08 +0000
+Subject: [PATCH] SarahTaraporewalla: adding new template file for slippers template engine
+
+---
+ lib/ramaze/template.rb |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/lib/ramaze/template.rb b/lib/ramaze/template.rb
+index 096816b..99f1f94 100644
+--- a/lib/ramaze/template.rb
++++ b/lib/ramaze/template.rb
+@@ -18,7 +18,7 @@ module Ramaze
+ 
+     AVAILABLE_ENGINES = %w[
+       Amrita2 Builder Erubis Haml Liquid Markaby Maruku Nagoro None RedCloth
+-      Remarkably Sass Tagz Tenjin XSLT
++      Remarkably Sass Slippers Tagz Tenjin XSLT
+     ]
+ 
+     AVAILABLE_ENGINES.each do |const|
+-- 
+1.6.1
+

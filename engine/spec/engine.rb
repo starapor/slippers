@@ -8,7 +8,7 @@ describe Slippers::Engine do
   it "Rendering template of a string without any holes" do
     template = "This is a string without any holes in it"
     engine = Slippers::Engine.new(template)
-    engine.render(nil).should eql("This is a string without any holes in it")
+    engine.render.should eql("This is a string without any holes in it")
   end
 
   it "Filling in a hole within a template" do
@@ -22,7 +22,7 @@ describe Slippers::Engine do
     template_group = Slippers::TemplateGroup.new(:templates => {:message => subtemplate})
     template = "This is a template and then $message()$"
     engine = Slippers::Engine.new(template, :template_group => template_group)
-    engine.render(nil).should eql("This is a template and then this is a subtemplate")
+    engine.render.should eql("This is a template and then this is a subtemplate")
   end
 
   it "Applying a new object to a subtemplate" do

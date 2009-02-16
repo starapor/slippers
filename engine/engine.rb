@@ -11,7 +11,7 @@ module Slippers
       @template_group = params[:template_group]
     end
     
-    def render(object_to_render)
+    def render(object_to_render=nil)
       parser = SlippersParser.new
       parser.parse(@main_template.template).eval(object_to_render, @template_group) 
     end

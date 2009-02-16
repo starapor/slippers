@@ -8,7 +8,7 @@ Examples
 1. Rendering template of a string without any holes
   template = "This is a string without any holes in it"
   engine = Slippers::Engine.new(template)
-  engine.render(nil) #=> "This is a string without any holes in it"
+  engine.render #=> "This is a string without any holes in it"
 
 2. Filling in a hole within a template
   template = "This is a string with a message of $message$"
@@ -20,7 +20,7 @@ Examples
   template_group = Slippers::TemplateGroup.new(:templates => {:message => subtemplate})
   template = "This is a template and then $message()$"
   engine = Slippers::Engine.new(template, :template_group => template_group)
-  engine.render(nil).should #=> "This is a template and then this is a subtemplate"
+  engine.render #=> "This is a template and then this is a subtemplate"
 
 4. Applying a new object to a subtemplate
   subtemplate = Slippers::Template.new("this is a subtemplate with a message of $saying$")
