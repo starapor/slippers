@@ -42,6 +42,11 @@ describe SlippersParser do
     @parser.parse('then there is $template_with_underscore()$').eval(nil, template_group).should eql('then there is template with underscore')
   end 
   
+  it 'should parse an anonymous subtemplate' do
+    @parser.parse('$people:{template for this $name$}$').eval(:people => {:name => 'fred'}).should eql('template for this fred')
+    @parser.parse('${template for this $name$}$').eval(:name => 'fred').should eql('template for this fred')
+  end
+  
   it 'should apply the attribute to a subtemplate when parsing it' do
     subtemplate = Slippers::Template.new('Hello $first$ $last$')
     template_group = Slippers::TemplateGroup.new(:templates => {:person => subtemplate})

@@ -23,7 +23,6 @@ module Slippers
 
   class TemplateNode < Treetop::Runtime::SyntaxNode
 
-
     def eval(object_to_render, template_group)
       apply_attribute_to_subtemplate(object_to_render, template_group)
     end
@@ -38,7 +37,21 @@ module Slippers
     def to_s
       text_value
     end
-
+  end
+  
+  class AnonymousTemplateNode < Treetop::Runtime::SyntaxNode
+    
+    def eval(object_to_render, template_group)
+      apply_attribute_to_subtemplate(object_to_render, template_group)
+    end
+    
+    def apply_attribute_to_subtemplate(item, template_group)
+      SlippersParser.new.parse(anonymous_template_words.to_s).eval(item, template_group)
+    end
+    
+    def to_s
+      text_value
+    end
   end
 
   class ApplyAttributeToTemplateNode < Treetop::Runtime::SyntaxNode

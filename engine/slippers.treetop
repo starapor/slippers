@@ -17,7 +17,15 @@ grammar Slippers
   end
   
   rule template
+    known_template / anonymous_template
+  end
+  
+  rule known_template
     template_path "()" <TemplateNode>
+  end
+  
+  rule anonymous_template
+    "{" anonymous_template_words "}" <AnonymousTemplateNode>
   end
 	  
   rule attribute
@@ -42,6 +50,14 @@ grammar Slippers
       end
     }
   end
+  
+  rule anonymous_template_words
+    not_curly* {
+      def to_s
+        text_value
+      end
+    }
+  end
 	
   rule template_path
     word_with_underscore ("/" word_with_underscore)? {
@@ -53,6 +69,14 @@ grammar Slippers
   
   rule word_with_underscore
     word ("_" word)*
+  end
+  
+  rule not_curly
+    !("{" / "}") . {
+      def to_s
+        text_value
+      end
+    }
   end
   
   rule word
