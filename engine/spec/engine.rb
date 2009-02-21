@@ -18,7 +18,7 @@ describe Slippers::Engine do
   end
 
   it "Rendering a subtemplate within a template" do
-    subtemplate = Slippers::Template.new("this is a subtemplate")
+    subtemplate = Slippers::Engine.new("this is a subtemplate")
     template_group = Slippers::TemplateGroup.new(:templates => {:message => subtemplate})
     template = "This is a template and then $message()$"
     engine = Slippers::Engine.new(template, :template_group => template_group)
@@ -26,10 +26,16 @@ describe Slippers::Engine do
   end
 
   it "Applying a new object to a subtemplate" do
-    subtemplate = Slippers::Template.new("this is a subtemplate with a message of $saying$")
+    subtemplate = Slippers::Engine.new("this is a subtemplate with a message of $saying$")
     template_group = Slippers::TemplateGroup.new(:templates => {:message_subtemplate => subtemplate})
     template = "This is a template and then $message:message_subtemplate()$!"
     engine = Slippers::Engine.new(template, :template_group => template_group)
+    engine.render(:message => {:saying => 'hello world'}).should eql("This is a template and then this is a subtemplate with a message of hello world!")
+  end
+
+  it "Applying a new object to an anymous subtemplate" do
+    template = "This is a template and then $message:{this is a subtemplate with a message of $saying$}$!"
+    engine = Slippers::Engine.new(template)
     engine.render(:message => {:saying => 'hello world'}).should eql("This is a template and then this is a subtemplate with a message of hello world!")
   end
   
@@ -48,7 +54,7 @@ describe Slippers::Engine do
   end
   
   it 'should render an array' do
-    subtemplate = Slippers::Template.new('Hello $first$ $last$ ')
+    subtemplate = Slippers::Engine.new('Hello $first$ $last$ ')
     template_group = Slippers::TemplateGroup.new(:templates => {:person => subtemplate})
     template = 'Say: $people:person()$'
     @people = [OpenStruct.new({:first => 'fred', :last => 'flinstone'}), OpenStruct.new({:first => 'barney', :last => 'rubble'})]

@@ -31,7 +31,8 @@ module Slippers
       return '' unless template_group
       subtemplate = template_group.find(template_path.to_s)
       return '' unless subtemplate
-      SlippersParser.new.parse(subtemplate.template).eval(item, template_group)
+      subtemplate.render(item)
+      #SlippersParser.new.parse(subtemplate.template).eval(item, template_group)
     end
 
     def to_s

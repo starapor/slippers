@@ -34,8 +34,8 @@ describe SlippersParser do
   end
   
   it 'should parse the subtemplate found within the delimiters' do
-    template = Slippers::Template.new('template for this')
-    template_with_underscore = Slippers::Template.new('template with underscore')
+    template = Slippers::Engine.new('template for this')
+    template_with_underscore = Slippers::Engine.new('template with underscore')
     template_group = Slippers::TemplateGroup.new(:templates => {:template => template, :template_with_underscore => template_with_underscore})
     @parser.parse('$template()$').eval(nil, template_group).should eql('template for this')
     @parser.parse('Stuff before $template()$ and after').eval(nil, template_group).should eql('Stuff before template for this and after')
@@ -48,7 +48,7 @@ describe SlippersParser do
   end
   
   it 'should apply the attribute to a subtemplate when parsing it' do
-    subtemplate = Slippers::Template.new('Hello $first$ $last$')
+    subtemplate = Slippers::Engine.new('Hello $first$ $last$')
     template_group = Slippers::TemplateGroup.new(:templates => {:person => subtemplate})
     person = OpenStruct.new({:name => OpenStruct.new({:first => 'fred', :last => 'flinstone'})})
     @parser.parse('$name:person()$').eval(person, template_group).should eql('Hello fred flinstone')
@@ -65,7 +65,7 @@ describe SlippersParser do
 
   it "should apply a list of objects to subtemplates" do
     people = [ Person.new('fred', 'flinstone'), Person.new('barney', 'rubble') ]
-    subtemplate = Slippers::Template.new('this is $first$ $last$ ')
+    subtemplate = Slippers::Engine.new('this is $first$ $last$ ')
     template_group = Slippers::TemplateGroup.new(:templates => {:person => subtemplate})
     object_to_render = OpenStruct.new({:people => people})
 
@@ -81,11 +81,6 @@ describe SlippersParser do
     @parser.parse("This is the $adjective$ template with $message$.").eval(OpenStruct.new).should eql("This is the  template with .")
   end
   
-  it "should give the subtemplates the parameters provided" do
-    name_template = Slippers::Template.new('$first$ $last$')
-    #@parser.parse("This is the template to render $name(:first => 'fred', :last => 'flinstone')$").eval(:object, :name => name_template).should eql("This is the template to render fred flinstone")
-  end
-  
   it "should parse the file template from the template group" do
     template_group = Slippers::TemplateGroupDirectory.new('view')
     name = OpenStruct.new({:first => 'fred', :last => 'flinestone'})
@@ -96,7 +91,7 @@ describe SlippersParser do
   
   it "should convert attribute to string" do
     fred = OpenStruct.new({:name => 'fred', :dob => DateTime.new(1983, 1, 2)})
-    template_group = Slippers::TemplateGroup.new(:templates => {:date => Slippers::Template.new('$year$')} )
+    template_group = Slippers::TemplateGroup.new(:templates => {:date => Slippers::Engine.new('$year$')} )
     @parser.parse("This is $name$ who was born in $dob:date()$").eval(fred, template_group).should eql('This is fred who was born in 1983')
   end
 
