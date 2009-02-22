@@ -99,6 +99,11 @@ describe SlippersParser do
     hash_object = {:title => 'Domain driven design', :author => 'Eric Evans'}
     @parser.parse("should parse $title$ by $author$").eval(hash_object).should eql("should parse Domain driven design by Eric Evans")
   end
+  
+  it 'should return an empty string if the subtemplate does not respond to render' do
+    template_group = Slippers::TemplateGroup.new(:templates => {:not_a_renderer => stub('renderer')})    
+    @parser.parse("$not_a_renderer()$").eval(stub('object'), template_group).should eql('')
+  end
    
 end
 

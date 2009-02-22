@@ -2,7 +2,7 @@ There are many template engines that you can choose for the generation of views 
 
 All we want our template engine to do is read a string which has holes in it, and replace those holes with the desired string, much like mail merge. String Template is a template engine originally for Java but now ported to C# and python, which enforces strict separation of model and view by only supporting these strings with holes. Unfortunately, it has not been ported to ruby...until now.
 
-Introducing...Slippers, a strict template engine for ruby. Slippers supports the syntax from string template (although currently anonymous templates are not yet supported.)
+Introducing...Slippers, a strict template engine for ruby. Slippers supports the syntax from string template.
 
 Examples
 1. Rendering template of a string without any holes
@@ -28,3 +28,8 @@ Examples
   template = "This is a template and then $message:message_subtemplate()$!"
   engine = Slippers::Engine.new(template, :template_group => template_group)
   engine.render(:message => {:saying => 'hello world'}) #=> "This is a template and then this is a subtemplate with a message of hello world!"
+
+5. Applying a new object to an anonymous subtemplate
+  template = "This is a template and then $message:{this is a subtemplate with a message of $saying$}$!"
+  engine = Slippers::Engine.new(template)
+  engine.render(:message => {:saying => 'hello world'}).should eql("This is a template and then this is a subtemplate with a message of hello world!")

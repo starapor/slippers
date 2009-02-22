@@ -30,9 +30,8 @@ module Slippers
     def apply_attribute_to_subtemplate(item, template_group)
       return '' unless template_group
       subtemplate = template_group.find(template_path.to_s)
-      return '' unless subtemplate
+      return '' unless (subtemplate && subtemplate.respond_to?('render')) 
       subtemplate.render(item)
-      #SlippersParser.new.parse(subtemplate.template).eval(item, template_group)
     end
 
     def to_s
