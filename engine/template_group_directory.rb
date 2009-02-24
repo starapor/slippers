@@ -19,7 +19,7 @@ module Slippers
       file_name = @directory_path + '/' + subtemplate + '.rb'
       return nil unless File.exist?(file_name)
       renderer_name = subtemplate.split('/')[-1]
-      autoload(renderer_name.camelize.to_sym, file_name)
+      load File.expand_path(file_name)
       renderer_name.camelize.constantize.new
     end
     
