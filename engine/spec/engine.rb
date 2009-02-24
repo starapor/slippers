@@ -40,12 +40,12 @@ describe Slippers::Engine do
   end
   
   it "should render a subtemplate using different rendering technologies" do
-    this_year = DateTime.now.year - 34
-    age_renderer = AgeRenderer.new 
-    person = OpenStruct.new({:name => 'Fred', :dob => Date.new(this_year, 2, 4)})
-    template_group = Slippers::TemplateGroup.new(:templates => {:age => age_renderer})
-    engine = Slippers::Engine.new("Introducing $name$ who is $dob:age()$.", :template_group => template_group)
-    engine.render(person).should eql("Introducing Fred who is 34 years old.")
+    age_renderer = AgeRenderer.new
+    subtemplate = Slippers::Engine.new('$first$ $last$')
+    person = OpenStruct.new({:name => {:first => 'Fred', :last => 'Flinstone'}, :dob => Date.new(DateTime.now.year - 34, 2, 4)})
+    template_group = Slippers::TemplateGroup.new(:templates => {:name => subtemplate, :age => age_renderer})
+    engine = Slippers::Engine.new("Introducing $name:name()$ who is $dob:age()$.", :template_group => template_group)
+    engine.render(person).should eql("Introducing Fred Flinstone who is 34 years old.")
   end
    
   it 'should render a bindings wrapper' do
