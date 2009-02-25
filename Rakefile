@@ -23,7 +23,7 @@ begin
     gem.homepage = "http://github.com/starapor/slippers"
     gem.description = "A strict templating library for ruby"
     gem.authors = ["Sarah Taraporewalla"]
-    gem.files =  FileList["[A-Z]*", "{engine,examples,ramazeTemplates,view}/**/*"]
+    gem.files =  FileList["[A-Z]*", "{bin,lib,spec,examples}/**/*"]
     gem.add_dependency 'schacon-git'
   end
 rescue LoadError
