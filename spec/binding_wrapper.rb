@@ -1,4 +1,4 @@
-require 'engine/spec/helper'
+require File.dirname(__FILE__) + '/spec_helper'
 
 describe Slippers::BindingWrapper do
   def f

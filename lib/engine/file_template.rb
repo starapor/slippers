@@ -1,5 +1,3 @@
-require 'engine/template'
-
 module Slippers 
   class FileTemplate  < Template
     def initialize(filename)

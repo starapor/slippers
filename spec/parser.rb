@@ -1,4 +1,5 @@
-require 'engine/spec/helper'
+require File.dirname(__FILE__) + '/spec_helper'
+
 class Person
   def initialize(first, last)
     @first, @last = first, last
@@ -82,7 +83,7 @@ describe SlippersParser do
   end
   
   it "should parse the file template from the template group" do
-    template_group = Slippers::TemplateGroupDirectory.new('view')
+    template_group = Slippers::TemplateGroupDirectory.new('spec/views')
     name = OpenStruct.new({:first => 'fred', :last => 'flinestone'})
     people = OpenStruct.new({:fred => name})
     @parser.parse("should parse $person/name()$").eval(name, template_group).should eql("should parse fred flinestone")

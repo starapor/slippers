@@ -1,4 +1,5 @@
-require 'engine/spec/helper'
+require File.dirname(__FILE__) + '/spec_helper'
+
 describe Slippers::Engine do
   before do
     template = 'Hello $first$ $last$'

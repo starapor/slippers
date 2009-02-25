@@ -1,4 +1,5 @@
-require 'engine/spec/helper'
+require File.dirname(__FILE__) + '/spec_helper'
+
 describe Slippers::TemplateGroup do
   it 'should find the right template' do
     subtemplate = Slippers::Engine.new('Hello $first$ $last$')

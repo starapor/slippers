@@ -1,7 +1,4 @@
-require 'rubygems'
-require 'treetop'
-require 'engine/slippers'
-require 'engine/template'
+Treetop.load File.dirname(__FILE__) + '/slippers'
 
 module Slippers
   class Engine
