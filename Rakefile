@@ -25,6 +25,8 @@ begin
     gem.authors = ["Sarah Taraporewalla"]
     gem.files =  FileList["[A-Z]*", "{bin,lib,spec,examples}/**/*"]
     gem.add_dependency 'schacon-git'
+    gem.add_dependency 'active_support'
+    gem.add_dependency 'treetop'
   end
 rescue LoadError
   puts "Slippers, or one of its dependencies, is not available. Install it with: sudo gem install starapor-slippers -s http://gems.github.com"
