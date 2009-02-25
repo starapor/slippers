@@ -13,7 +13,7 @@ module Ramaze
         end
 
         def compile(action, template)
-          subtemplates = action.controller.trait[:slipper_options] || {}
+          subtemplates = action.controller.trait[:slippers_options] || {}
          
           template_group_directory = ::Slippers::TemplateGroupDirectory.new(Global.view_root)
           template_group = ::Slippers::TemplateGroup.new(:super_group => template_group_directory, :templates => subtemplates)
