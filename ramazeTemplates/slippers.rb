@@ -13,10 +13,10 @@ module Ramaze
         end
 
         def compile(action, template)
-          subtemplates = action.controller.trait[:slipper_subtemplates] || {}
-          subtemplates.merge! :filename => action.template if action.template
+          subtemplates = action.controller.trait[:slipper_options] || {}
          
-          template_group = ::Slippers::TemplateGroupDirectory.new(Global.view_root)
+          template_group_directory = ::Slippers::TemplateGroupDirectory.new(Global.view_root)
+          template_group = ::Slippers::TemplateGroup.new(:super_group => template_group_directory, :templates => subtemplates)
           ::Slippers::Engine.new(template, :template_group => template_group)
         end
       end

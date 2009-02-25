@@ -2,8 +2,9 @@ require 'engine/engine'
 
 module Slippers
   class TemplateGroupDirectory < TemplateGroup
-    def initialize(directory_path)
+    def initialize(directory_path, params={})
       @directory_path = directory_path
+      @super_group = params[:super_group]
     end
     attr_reader :directory_path
     
@@ -15,15 +16,6 @@ module Slippers
       
     end
     
-    def find_renderer(subtemplate)
-      file_name = @directory_path + '/' + subtemplate + '.rb'
-      return nil unless File.exist?(file_name)
-      renderer_name = subtemplate.split('/')[-1]
-      load File.expand_path(file_name)
-      renderer_name.camelize.constantize.new
-    end
-    
-    
     def eql?(other)
       return false unless other
       directory_path.eql?(other.directory_path)
@@ -31,5 +23,19 @@ module Slippers
     def hash
       @directory_path.hash
     end
+    
+    private
+      def find_renderer(subtemplate)
+        file_name = @directory_path + '/' + subtemplate + '.rb'
+        return find_in_super_group(subtemplate) unless File.exist?(file_name)
+        renderer_name = subtemplate.split('/')[-1]
+        load File.expand_path(file_name)
+        renderer_name.camelize.constantize.new
+      end
+      
+      def find_in_super_group(subtemplate)
+        return nil unless @super_group 
+        @super_group.find(subtemplate)
+      end
   end
 end

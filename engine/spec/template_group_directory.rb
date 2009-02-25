@@ -27,5 +27,14 @@ describe Slippers::TemplateGroupDirectory do
     template_group.find('money').class.should eql(Money)
   end
   
+  it 'should look in the super template group if it cannot find the template' do
+    template = stub 'template'
+    super_template_group = Slippers::TemplateGroup.new(:templates => {:person => template})
+    template_group = Slippers::TemplateGroupDirectory.new('engine/spec/views', :super_group => super_template_group)
+    template_group.find('person').should eql(template)
+    template_group.find('not_this').should eql(nil)
+  end
+  
+  
 
 end
