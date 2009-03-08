@@ -5,7 +5,7 @@ grammar Slippers
   end
   
   rule templated_expression
-    "$" foo "$" <TemplatedExpressionNode>
+    delimiter foo delimiter <TemplatedExpressionNode>
   end
   
   rule foo
@@ -21,7 +21,7 @@ grammar Slippers
   end
   
   rule known_template
-    template_path "()" <TemplateNode>
+    template_path brackets <TemplateNode>
   end
   
   rule anonymous_template
@@ -29,22 +29,14 @@ grammar Slippers
   end
 	  
   rule attribute
-  	word <AttributeNode>
+  	anything_except_keywords <AttributeNode>
   end
 	
   rule some_text
     not_delimiter* {
- 	  def eval(*args)
- 	   to_s
- 	  end
-      def to_s
-        text_value
-      end
-    }
-  end
-  
-  rule not_delimiter 
-    !"$" . {
+ 	    def eval(*args)
+   	   to_s
+   	  end
       def to_s
         text_value
       end
@@ -60,7 +52,18 @@ grammar Slippers
   end
 	
   rule template_path
-    word_with_underscore ("/" word_with_underscore)? {
+    anything_except_keywords {
+      def to_s
+        text_value
+      end
+    }
+  end
+  
+  rule anything_except_keywords
+    not_keyword* {
+ 	    def eval(*args)
+   	   to_s
+   	  end
       def to_s
         text_value
       end
@@ -69,14 +72,6 @@ grammar Slippers
   
   rule word_with_underscore
     word ("_" word)*
-  end
-  
-  rule not_curly
-    !("{" / "}") . {
-      def to_s
-        text_value
-      end
-    }
   end
   
   rule word
@@ -104,6 +99,54 @@ grammar Slippers
         text_value
       end
    }
+  end
+  
+  rule delimiter
+   '$' {
+      def to_s
+        text_value
+      end
+   }
+  end
+  
+  rule brackets
+   '()' {
+      def to_s
+        text_value
+      end
+   }
+  end
+  
+  rule not_delimiter 
+    !delimiter . {
+      def to_s
+        text_value
+      end
+    }
+  end
+
+  rule not_apply_op 
+    !apply_op . {
+      def to_s
+        text_value
+      end
+    }
+  end
+  
+  rule not_keyword
+  !(apply_op / delimiter / brackets) . {
+    def to_s
+      text_value
+    end
+  }
+  end
+  
+  rule not_curly
+    !("{" / "}") . {
+      def to_s
+        text_value
+      end
+    }
   end
 	
 end

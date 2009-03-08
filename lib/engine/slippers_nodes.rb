@@ -6,6 +6,7 @@ module Slippers
     end
 
     def value_of(item)
+      return '' if to_s == ''
       return item.send(to_s) if item.respond_to?(to_s)
       return item[to_sym] if item.respond_to?('[]'.to_sym) && item[to_sym]
       ''

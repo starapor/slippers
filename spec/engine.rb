@@ -66,6 +66,11 @@ describe Slippers::Engine do
     engine = Slippers::Engine.new(template, :template_group => template_group)
     engine.render(Slippers::BindingWrapper.new(binding)).should eql('Say: Hello fred flinstone Hello barney rubble ')
   end
+  
+  it 'should render empty string if the template can not be evaluated' do
+    engine = Slippers::Engine.new('$this_is_bad')
+    engine.render(stub('object')).should eql('')
+  end
 end
 
 class AgeRenderer  

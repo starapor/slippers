@@ -5,6 +5,9 @@ class Person
     @first, @last = first, last
   end
   attr_reader :first, :last
+  def full_name
+    to_s
+  end
   def to_s
     first + ' ' + last
   end
@@ -26,19 +29,23 @@ describe SlippersParser do
   end
   
   it 'should find the keyword within the delimiters' do
-    message = OpenStruct.new({:message => 'the message', :name => 'fred'})
+    message = OpenStruct.new({:message => 'the message', :message2 => 'the second message', :name => 'fred', :full_name => 'fred flinstone'})
     @parser.parse('$message$').eval(message).should eql('the message')
     @parser.parse('$message$ for $name$').eval(message).should eql('the message for fred')
     @parser.parse('we want to find $message$').eval(message).should eql('we want to find the message')
     @parser.parse('$message$ has spoken').eval(message).should eql('the message has spoken')
     @parser.parse('Yes! $message$ has spoken').eval(message).should eql('Yes! the message has spoken')
+    @parser.parse('Yes! $full_name$ has spoken').eval(message).should eql('Yes! fred flinstone has spoken')
+    @parser.parse('Yes! $message2$ has spoken').eval(message).should eql('Yes! the second message has spoken')
+    @parser.parse('$$').eval(message).should eql('')
   end
   
   it 'should parse the subtemplate found within the delimiters' do
     template = Slippers::Engine.new('template for this')
     template_with_underscore = Slippers::Engine.new('template with underscore')
-    template_group = Slippers::TemplateGroup.new(:templates => {:template => template, :template_with_underscore => template_with_underscore})
+    template_group = Slippers::TemplateGroup.new(:templates => {:template => template, :template_with_underscore => template_with_underscore, :template2 => template})
     @parser.parse('$template()$').eval(nil, template_group).should eql('template for this')
+    @parser.parse('$template2()$').eval(nil, template_group).should eql('template for this')
     @parser.parse('Stuff before $template()$ and after').eval(nil, template_group).should eql('Stuff before template for this and after')
     @parser.parse('then there is $template_with_underscore()$').eval(nil, template_group).should eql('then there is template with underscore')
   end 
@@ -104,6 +111,14 @@ describe SlippersParser do
   it 'should return an empty string if the subtemplate does not respond to render' do
     template_group = Slippers::TemplateGroup.new(:templates => {:not_a_renderer => stub('renderer')})    
     @parser.parse("$not_a_renderer()$").eval(stub('object'), template_group).should eql('')
+  end
+  
+  it 'should return an empty string if the template is not correctly formed' do
+    @parser.parse("$not_properly_formed").should eql(nil)
+  end
+  
+  it 'should render an empty string if it cannot find the attribute to render' do
+    @parser.parse("$not_me$").eval(Person.new('fred', 'flinestone')).should eql('')
   end
    
 end

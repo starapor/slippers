@@ -3,7 +3,7 @@ require 'spec/rake/spectask'
 
 desc "Run all examples"
 Spec::Rake::SpecTask.new('examples') do |t|
-  t.spec_files = FileList['engine/spec/**/*.rb']
+  t.spec_files = FileList['spec/**/*.rb']
 end
 
 desc "Generate HTML report for failing examples"

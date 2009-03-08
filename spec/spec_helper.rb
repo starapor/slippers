@@ -2,7 +2,7 @@ require 'spec'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
-require 'slippers'
+require 'lib/slippers'
 require 'ostruct'
 require 'date'
 require 'mocha'

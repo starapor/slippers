@@ -11,7 +11,9 @@ module Slippers
     
     def render(object_to_render=nil)
       parser = SlippersParser.new
-      parser.parse(@main_template.template).eval(object_to_render, @template_group) 
+      parse_tree = parser.parse(@main_template.template)
+      return '' unless parse_tree
+      parse_tree.eval(object_to_render, @template_group) 
     end
     
     def eql?(other)

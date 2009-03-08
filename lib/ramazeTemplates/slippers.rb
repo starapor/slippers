@@ -1,4 +1,4 @@
-require '/Users/starapor/Development/slippers/slippers'
+require 'slippers'
 
 module Ramaze
   module Template
