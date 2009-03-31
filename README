@@ -32,4 +32,12 @@ Examples
 5. Applying a new object to an anonymous subtemplate
   template = "This is a template and then $message:{this is a subtemplate with a message of $saying$}$!"
   engine = Slippers::Engine.new(template)
-  engine.render(:message => {:saying => 'hello world'}).should eql("This is a template and then this is a subtemplate with a message of hello world!")
+  engine.render(:message => {:saying => 'hello world'}) #=> "This is a template and then this is a subtemplate with a message of hello world!"
+
+6. Render a subtemplate using a different rendering technology
+	age_renderer = AgeRenderer.new
+	subtemplate = Slippers::Engine.new('$first$ $last$')
+	person = OpenStruct.new({:name => {:first => 'Fred', :last => 'Flinstone'}, :dob => Date.new(DateTime.now.year - 34, 2, 4)})
+	template_group = Slippers::TemplateGroup.new(:templates => {:name => subtemplate, :age => age_renderer})
+	engine = Slippers::Engine.new("Introducing $name:name()$ who is $dob:age()$.", :template_group => template_group)
+	engine.render(person) #=> "Introducing Fred Flinstone who is 34 years old."
