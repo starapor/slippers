@@ -84,7 +84,7 @@ module Slippers
   class ExpressionNode < Treetop::Runtime::SyntaxNode
 
     def eval(object_to_render, template_group=nil)
-      before.eval + templated_expression.eval(object_to_render, template_group) + space.eval + after.eval(object_to_render, template_group)
+      before.eval(object_to_render, template_group) + templated_expression.eval(object_to_render, template_group) + space.eval + after.eval(object_to_render, template_group)
     end
 
   end

@@ -117,8 +117,12 @@ grammar Slippers
    }
   end
   
+  rule escape 
+    '\\'
+  end
+  
   rule not_delimiter 
-    !delimiter . {
+    escape delimiter / !delimiter . {
       def to_s
         text_value
       end
