@@ -7,7 +7,7 @@ class RegistrationController < Controller
   def index
     key = request[:key]
     @form =  @registrationRepository.find(key)
-    @message = if flash[:message] then flash[:message] else "" end
+    @message = flash[:message] if flash[:message]
   end
   
   def save

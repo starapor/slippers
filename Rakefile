@@ -25,7 +25,6 @@ begin
     gem.authors = ["Sarah Taraporewalla"]
     gem.files =  FileList["[A-Z]*", "{bin,lib,spec,examples}/**/*"]
     gem.add_dependency 'schacon-git'
-    gem.add_dependency 'active_support'
     gem.add_dependency 'treetop'
   end
 rescue LoadError

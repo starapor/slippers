@@ -28,12 +28,20 @@ module Slippers
         return find_in_super_group(subtemplate) unless File.exist?(file_name)
         renderer_name = subtemplate.split('/')[-1]
         load File.expand_path(file_name)
-        renderer_name.camelize.constantize.new
+        create_renderer renderer_name
       end
       
       def find_in_super_group(subtemplate)
         return nil unless @super_group 
         @super_group.find(subtemplate)
+      end
+      
+      def create_renderer(renderer_name)
+        camelCase = renderer_name.to_s.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
+        classes = camelCase.split('::')
+        classes.shift if classes.empty? or classes.first.empty?
+        const = classes.inject(Object){ |constant, class_name| constant.const_get(class_name) }
+        const.new
       end
   end
 end
