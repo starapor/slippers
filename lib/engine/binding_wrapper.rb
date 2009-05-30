@@ -4,7 +4,7 @@ module Slippers
       @bindings = bindings
     end
     def [](method)
-      eval('@'+ method.to_s, @bindings) || super
+      eval('@'+ method.to_s, @bindings)
     end
   end
 end

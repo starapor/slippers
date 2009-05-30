@@ -37,6 +37,7 @@ describe SlippersParser do
     @parser.parse('Yes! $message$ has spoken').eval(message).should eql('Yes! the message has spoken')
     @parser.parse('Yes! $full_name$ has spoken').eval(message).should eql('Yes! fred flinstone has spoken')
     @parser.parse('Yes! $message2$ has spoken').eval(message).should eql('Yes! the second message has spoken')
+    @parser.parse('Yes! "$message2$" has spoken').eval(message).should eql('Yes! "the second message" has spoken')
     @parser.parse('$$').eval(message).should eql('')
   end
   
@@ -52,6 +53,7 @@ describe SlippersParser do
   
   it 'should parse an anonymous subtemplate' do
     @parser.parse('$people:{template for this $name$}$').eval(:people => {:name => 'fred'}).should eql('template for this fred')
+    @parser.parse('$people:{template for this "$name$"}$').eval(:people => {:name => 'fred'}).should eql('template for this "fred"')
     @parser.parse('${template for this $name$}$').eval(:name => 'fred').should eql('template for this fred')
   end
   

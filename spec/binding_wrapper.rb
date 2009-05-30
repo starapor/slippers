@@ -11,4 +11,9 @@ describe Slippers::BindingWrapper do
     bindings_wrapper = Slippers::BindingWrapper.new(f())
     bindings_wrapper['a'].should eql(22)
   end
+
+  it "should evaluate the bindings" do
+    bindings_wrapper = Slippers::BindingWrapper.new(f())
+    bindings_wrapper['z'].should eql(nil)
+  end
 end
