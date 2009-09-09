@@ -58,7 +58,7 @@ grammar Slippers
       end
     }
   end
-  
+    
   rule anything_except_keywords
     not_keyword* {
  	    def eval(*args)
@@ -108,7 +108,7 @@ grammar Slippers
       end
    }
   end
-  
+    
   rule brackets
    '()' {
       def to_s

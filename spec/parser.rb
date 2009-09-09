@@ -57,6 +57,12 @@ describe SlippersParser do
     @parser.parse('${template for this $name$}$').eval(:name => 'fred').should eql('template for this fred')
   end
   
+  it 'should parse an anonymous subtemplate within an anonymous subtemplate' do
+    stuff = @parser.parse('$cars:{I really like $types:{toyota}$ }$')
+    stuff.eval(:cars => {:types => 'toyota'}) if stuff
+    #.should eql('template for this')
+  end
+  
   it 'should apply the attribute to a subtemplate when parsing it' do
     subtemplate = Slippers::Engine.new('Hello $first$ $last$')
     template_group = Slippers::TemplateGroup.new(:templates => {:person => subtemplate})
