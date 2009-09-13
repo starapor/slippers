@@ -4,8 +4,8 @@
 require 'rubygems'
 require 'ramaze'
 
-require 'src/controller/main'
-require 'src/element/page'
-require 'src/model'
+require 'controller/main'
+#require 'layout/page'
+require 'model/tasks'
 
 Ramaze.start :port => 3000

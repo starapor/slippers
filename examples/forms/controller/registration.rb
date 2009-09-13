@@ -19,6 +19,6 @@ class RegistrationController < Controller
     
     @registrationRepository.save(form)
     flash[:message] = "Saved!"
-    redirect R('/registration', :index, :key=>form[:key])
+    redirect route('/registration', :index, :key=>form[:key])
   end
 end

@@ -1,6 +1,7 @@
 <h2>Editing entry</h2>
 <div id="entries">
   <div class="entry">
+	$entry:{
     <form method="post" action="/save">
       <input name="id" type="hidden" value="$id$"/>
       <div class="header">
@@ -13,5 +14,6 @@
       </div>
       <input type="submit" value="Update Entry"/>
     </form>
+	}$
   </div>
 </div>

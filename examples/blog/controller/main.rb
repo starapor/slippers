@@ -1,6 +1,7 @@
 class MainController < Ramaze::Controller
   layout '/layout'
-
+  engine :Slippers
+  
   def index
     @entries = Entry.order(:created.desc).all
   end

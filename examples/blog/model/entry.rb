@@ -1,4 +1,5 @@
 require 'sequel'
+Sequel::Model.plugin(:schema)
 
 DB = Sequel.connect("sqlite:///#{__DIR__}/../blog.db")
 

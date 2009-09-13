@@ -11,6 +11,10 @@ module Slippers
       find_in_super_group(subtemplate)
     end
     
+    def to_s
+      "TemplateGroup#Templates:[#{@templates}]&SuperGroup:[#{@super_group}] "
+    end
+    
     private
       def find_in_super_group(subtemplate)
         return nil unless @super_group 

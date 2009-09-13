@@ -1,7 +1,11 @@
 --- 
-Wash dishes: 
-  :done: false
 Watch the tv: 
   :done: false
+Wash dishes: 
+  :done: true
+Clean the shower: 
+  :done: false
 Laundry: 
+  :done: false
+Vacuum the room: 
   :done: false

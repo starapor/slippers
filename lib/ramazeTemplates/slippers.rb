@@ -1,25 +1,22 @@
 require 'slippers'
 
 module Ramaze
-  module Template
-    class Slippers < Template
-
-      ENGINES[self] = %w[ st ]
-      class << self
-        def transform(action)
-          slippers = wrap_compile(action)
-          object_to_render = ::Slippers::BindingWrapper.new(action.binding)
-          slippers.render(object_to_render)
-        end
-
-        def compile(action, template)
-          subtemplates = action.controller.trait[:slippers_options] || {}
-         
-          template_group_directory = ::Slippers::TemplateGroupDirectory.new(Global.view_root)
-          template_group = ::Slippers::TemplateGroup.new(:super_group => template_group_directory, :templates => subtemplates)
-          ::Slippers::Engine.new(template, :template_group => template_group)
-        end
+  module View
+    module Slippers
+      def self.call(action, string)
+        slippers = View.compile(string){|s| ::Slippers::Engine.new(s, :template_group => template_group(action)) }
+        object_to_render = ::Slippers::BindingWrapper.new(action.instance.binding)
+        html = slippers.render(object_to_render)
+        return html, 'text/html'
       end
+      
+      private
+        def self.template_group(action)
+          subtemplates = action.instance.ancestral_trait[:slippers_options] || {}
+          view_root = "#{action.instance.options[:roots]}/#{action.instance.options[:views]}"
+          template_group_directory = ::Slippers::TemplateGroupDirectory.new(view_root)
+          template_group = ::Slippers::TemplateGroup.new(:super_group => template_group_directory, :templates => subtemplates)
+        end
     end
   end
 end

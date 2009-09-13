@@ -20,7 +20,6 @@ class MainController < Ramaze::Controller
         status = 'not done'
         toggle = 'close'
       end
-      delete = A('Delete', :href => Rs(:delete, title))
       @tasks << {:title => title, :status => status, :resource => title, :toggle => toggle}
     end
     @heading = "TodoList"
@@ -35,6 +34,7 @@ class MainController < Ramaze::Controller
         redirect '/new'
       end
       TodoList[title] = {:done => false}
+      redirect route('/', :title => title)
     end
   end
 
@@ -51,7 +51,7 @@ class MainController < Ramaze::Controller
   end
 
   helper :aspect
-  after(:create, :open, :close, :delete){ redirect(Rs()) unless redirected? }
+  after(:create, :open, :close, :delete){ redirect_referrer }
 
   private
 

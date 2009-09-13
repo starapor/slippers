@@ -6,5 +6,9 @@ module Slippers
     def [](method)
       eval('@'+ method.to_s, @bindings)
     end
+    
+    def to_s
+      "BindingWrapper with #{@bindings}"
+    end
   end
 end
