@@ -7,7 +7,6 @@ module Slippers
     attr_reader :directory_path
     
     def find(subtemplate)
-
       file_name = @directory_path + '/' + subtemplate + '.st'
       return find_renderer(subtemplate) unless File.exist?(file_name)
       Engine.new(FileTemplate.new(file_name).template, :template_group => self)

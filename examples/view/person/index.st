@@ -1,2 +1,2 @@
 <h3>Introducing....</h3>
-the faboulous <strong>$name$</strong> who $dob:person/age()$
+<p>the faboulous <strong>$name$</strong> who $dob:person/age()$ is a $role:role()$</p>

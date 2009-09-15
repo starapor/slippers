@@ -1,1 +1,1 @@
-was born in $year$
+is $person/age_renderer()$ years old

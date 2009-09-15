@@ -14,8 +14,8 @@ module Ramaze
         def self.template_group(action)
           subtemplates = action.instance.ancestral_trait[:slippers_options] || {}
           view_root = "#{action.instance.options[:roots]}/#{action.instance.options[:views]}"
-          template_group_directory = ::Slippers::TemplateGroupDirectory.new(view_root)
-          template_group = ::Slippers::TemplateGroup.new(:super_group => template_group_directory, :templates => subtemplates)
+          super_group = ::Slippers::TemplateGroup.new(:templates => subtemplates)
+          ::Slippers::TemplateGroupDirectory.new(view_root, :super_group => super_group)          
         end
     end
   end
