@@ -1,0 +1,27 @@
+From a72bd79dfa70bc41cf9bc97ef0f5e96273583a17 Mon Sep 17 00:00:00 2001
+From: starapor <me@sarahtaraporewalla.com>
+Date: Tue, 15 Sep 2009 19:16:55 +0100
+Subject: [PATCH 2/2] Fixing problem with using other renderers
+
+---
+ lib/ramaze/view/slippers.rb |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/lib/ramaze/view/slippers.rb b/lib/ramaze/view/slippers.rb
+index f604185..7a4569a 100644
+--- a/lib/ramaze/view/slippers.rb
++++ b/lib/ramaze/view/slippers.rb
+@@ -14,8 +14,8 @@ module Ramaze
+         def self.template_group(action)
+           subtemplates = action.instance.ancestral_trait[:slippers_options] || {}
+           view_root = "#{action.instance.options[:roots]}/#{action.instance.options[:views]}"
+-          template_group_directory = ::Slippers::TemplateGroupDirectory.new(view_root)
+-          template_group = ::Slippers::TemplateGroup.new(:super_group => template_group_directory, :templates => subtemplates)
++          super_group = ::Slippers::TemplateGroup.new(:templates => subtemplates)
++          ::Slippers::TemplateGroupDirectory.new(view_root, :super_group => super_group)          
+         end
+     end
+   end
+-- 
+1.6.1
+
