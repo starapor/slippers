@@ -11,6 +11,20 @@ module Slippers
       find_in_super_group(subtemplate)
     end
     
+    def has_registered?(class_name)
+       return false unless @templates
+       return true if @templates.include?(class_name) 
+       return false unless @super_group
+       @super_group.has_registered?(class_name)  
+    end
+    
+    def render(item)
+      return '' unless @templates
+      return @templates[item.class].render(item) if has_registered?(item.class)
+      return '' unless @super_group
+      @super_group.render(item)
+    end
+    
     private
       def find_in_super_group(subtemplate)
         return nil unless @super_group 

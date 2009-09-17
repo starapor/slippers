@@ -28,11 +28,12 @@ end
 
 class MainController <  Ramaze::Controller
   engine :Slippers
-  trait :slippers_options => {:author => AuthorRenderer.new, :role => RoleRenderer.new}
+  trait :slippers_options => {:author => AuthorRenderer.new, Role => RoleRenderer.new}
 
   def index
     @person = Person.new('Sarah', Date.new(1999, 1, 1), Role.new('developer', 'senior'))
     @author = Person.new('Paul', Date.new(1880,3,5), Role.new('author', 'junior'))
+    @role = Role.new("sd", "sdffs")
   end
 end
 

@@ -48,6 +48,14 @@ describe Slippers::Engine do
     engine = Slippers::Engine.new("Introducing $name:name()$ who is $dob:age()$.", :template_group => template_group)
     engine.render(person).should eql("Introducing Fred Flinstone who is 34 years old.")
   end
+  
+  it "should select a renderer based on the type of the object to render" do
+    person = OpenStruct.new({:name => {:first => 'Fred', :last => 'Flinstone'}, :dob => Date.new(DateTime.now.year - 34, 2, 4)})
+    template_group = Slippers::TemplateGroup.new(:templates => {:name => Slippers::Engine.new('$first$ $last$'), Date => AgeRenderer.new})
+    
+    engine = Slippers::Engine.new("Introducing $name:name()$ who is $dob$.", :template_group => template_group)
+    engine.render(person).should eql("Introducing Fred Flinstone who is 34 years old.")
+  end
    
   it 'should render a bindings wrapper' do
     @first = 'fred'

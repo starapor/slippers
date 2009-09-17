@@ -8,7 +8,7 @@ module Slippers
     end
     
     def to_s
-      "BindingWrapper with #{@bindings}"
+      "BindingWrapper with #{@bindingsw}"
     end
   end
 end

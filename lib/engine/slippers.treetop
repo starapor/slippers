@@ -29,7 +29,7 @@ grammar Slippers
   end
 	  
   rule attribute
-  	anything_except_keywords <AttributeNode>
+  	anything_except_keywords <AttributeToRenderNode>
   end
 	
   rule some_text

@@ -12,7 +12,17 @@ module Slippers
       Engine.new(FileTemplate.new(file_name).template, :template_group => self)
       
     end
+    def has_registered?(class_name)
+       return false unless @super_group
+       @super_group.has_registered?(class_name)  
+    end
     
+    def render(item)
+      return '' unless @super_group
+      @super_group.render(item)
+    end
+    
+
     def eql?(other)
       return false unless other
       directory_path.eql?(other.directory_path)
