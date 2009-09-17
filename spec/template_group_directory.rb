@@ -32,7 +32,5 @@ describe Slippers::TemplateGroupDirectory do
     template_group.find('person').should eql(template)
     template_group.find('not_this').should eql(nil)
   end
-  
-  
 
 end
