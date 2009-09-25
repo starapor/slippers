@@ -1,17 +1,9 @@
+load File.expand_path(File.dirname(__FILE__) + "/tasks/spec.rake")
+#load File.expand_path(File.dirname(__FILE__) + "/tasks/git.rake")
+
 require 'rake'
 require 'spec/rake/spectask'
 
-desc "Run all examples"
-Spec::Rake::SpecTask.new('examples') do |t|
-  t.spec_files = FileList['spec/**/*.rb']
-end
-
-desc "Generate HTML report for failing examples"
-Spec::Rake::SpecTask.new('failing_examples_with_html') do |t|
-  t.spec_files = FileList['failing_examples/**/*.rb']
-  t.spec_opts = ["--format", "html:doc/reports/tools/failing_examples.html", "--diff"]
-  t.fail_on_error = false
-end
 
 desc "Generate the gem using technicalpickles jeweler"
 begin
@@ -31,32 +23,5 @@ rescue LoadError
   puts "Slippers, or one of its dependencies, is not available. Install it with: sudo gem install starapor-slippers -s http://gems.github.com"
 end
 
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = 'slippers'
-  rdoc.options << '--line-numbers' << '--inline-source'
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
+task :default => "spec:run"
 
-require 'spec/rake/spectask'
-Spec::Rake::SpecTask.new(:spec) do |t|
-  t.libs << 'lib' << 'spec'
-  t.spec_files = FileList['spec/**/*.rb']
-end
-
-Spec::Rake::SpecTask.new(:rcov) do |t|
-  t.libs << 'lib' << 'spec'
-  t.spec_files = FileList['spec/**/*_spec.rb']
-  t.rcov = true
-end
-
-begin
-  require 'cucumber/rake/task'
-  Cucumber::Rake::Task.new(:features)
-rescue LoadError
-  puts "Cucumber is not available. In order to run features, you must: sudo gem install cucumber"
-end
-
-task :default => :spec

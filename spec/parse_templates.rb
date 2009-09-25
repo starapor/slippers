@@ -5,12 +5,7 @@ class Person
     @first, @last = first, last
   end
   attr_reader :first, :last
-  def full_name
-    to_s
-  end
-  def to_s
-    first + ' ' + last
-  end
+  
 end
 
 describe SlippersParser do

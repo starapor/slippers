@@ -49,8 +49,15 @@ describe SlippersParser do
   end
 
   it "should render a hash" do
-    hash_object = {:title => 'Domain driven design', :author => 'Eric Evans'}
+    hash_object = {:title => 'Domain driven design', :author => 'Eric Evans', :find => 'method on a hash'}
     @parser.parse("should parse $title$ by $author$").eval(hash_object).should eql("should parse Domain driven design by Eric Evans")
+    @parser.parse("should parse a symbol before a $find$").eval(hash_object).should eql('should parse a symbol before a method on a hash')
+  end
+
+  it "should render a symbol on a hash before its methods" do
+    hash_object = {:find => 'method on a hash'}
+    @parser.parse("should parse a symbol before a $find$").eval(hash_object).should eql('should parse a symbol before a method on a hash')
+    @parser.parse("should still render the method $size$").eval(hash_object).should eql('should still render the method 1')
   end
   
   it 'should return an empty string if the template is not correctly formed' do
@@ -60,6 +67,7 @@ describe SlippersParser do
   it 'should render an empty string if it cannot find the attribute to render' do
     @parser.parse("$not_me$").eval(:object).should eql('')
   end
+  
    
 end
 

@@ -7,8 +7,8 @@ module Slippers
 
     def value_of(item)
       return '' if to_s == ''
-      return item.send(to_s) if item.respond_to?(to_s)
       return item[to_sym] if item.respond_to?('[]'.to_sym) && item[to_sym]
+      return item.send(to_s) if item.respond_to?(to_s)
       ''
     end
 
@@ -39,10 +39,6 @@ module Slippers
       return '' unless (subtemplate && subtemplate.respond_to?('render')) 
       subtemplate.render(item)
     end
-
-    def to_s
-      text_value
-    end
   end
   
   class AnonymousTemplateNode < Treetop::Runtime::SyntaxNode
@@ -53,10 +49,6 @@ module Slippers
     
     def apply_attribute_to_subtemplate(item, template_group)
       SlippersParser.new.parse(anonymous_template_words.to_s).eval(item, template_group)
-    end
-    
-    def to_s
-      text_value
     end
   end
 
@@ -70,12 +62,6 @@ module Slippers
       object_to_render = attribute.value_of(item)
       [object_to_render].flatten.inject('') { |rendered, i| rendered + template.apply_attribute_to_subtemplate(i, template_group).to_s }
     end
-
-
-    def to_s
-      text_value
-    end
-
   end
 
   class TemplatedExpressionNode < Treetop::Runtime::SyntaxNode

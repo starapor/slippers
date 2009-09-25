@@ -1,0 +1,913 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'><head><title>/Library/Ruby/Gems/1.8/gems/activesupport-2.2.2/lib/active_support/core_ext/time/calculations.rb - C0 code coverage information</title>
+    <style type='text/css'>body { background-color: rgb(240, 240, 245); }</style>
+    <style type='text/css'>span.cross-ref-title {
+ font-size: 140%;
+}
+span.cross-ref a {
+ text-decoration: none;
+}
+span.cross-ref {
+ background-color:#f3f7fa;
+ border: 1px dashed #333;
+ margin: 1em;
+ padding: 0.5em;
+ overflow: hidden;
+}
+a.crossref-toggle {
+ text-decoration: none;
+}
+span.marked0 {
+ background-color: rgb(185, 210, 200);
+ display: block;
+}
+span.marked1 {
+ background-color: rgb(190, 215, 205);
+ display: block;
+}
+span.inferred0 {
+ background-color: rgb(175, 200, 200);
+ display: block;
+}
+span.inferred1 {
+ background-color: rgb(180, 205, 205);
+ display: block;
+}
+span.uncovered0 {
+ background-color: rgb(225, 110, 110);
+ display: block;
+}
+span.uncovered1 {
+ background-color: rgb(235, 120, 120);
+ display: block;
+}
+span.overview {
+ border-bottom: 8px solid black;
+}
+div.overview {
+ border-bottom: 8px solid black;
+}
+body {
+ font-family: verdana, arial, helvetica;
+}
+div.footer {
+ font-size: 68%;
+ margin-top: 1.5em;
+}
+h1, h2, h3, h4, h5, h6 {
+ margin-bottom: 0.5em;
+}
+h5 {
+ margin-top: 0.5em;
+}
+.hidden {
+ display: none;
+}
+div.separator {
+ height: 10px;
+}
+/* Commented out for better readability, esp. on IE */
+/*
+table tr td, table tr th {
+ font-size: 68%;
+}
+td.value table tr td {
+ font-size: 11px;
+}
+*/
+table.percent_graph {
+ height: 12px;
+ border: #808080 1px solid;
+ empty-cells: show;
+}
+table.percent_graph td.covered {
+ height: 10px;
+ background: #00f000;
+}
+table.percent_graph td.uncovered {
+ height: 10px;
+ background: #e00000;
+}
+table.percent_graph td.NA {
+ height: 10px;
+ background: #eaeaea;
+}
+table.report {
+ border-collapse: collapse;
+ width: 100%;
+}
+table.report td.heading {
+ background: #dcecff;
+ border: #d0d0d0 1px solid;
+ font-weight: bold;
+ text-align: center;
+}
+table.report td.heading:hover {
+ background: #c0ffc0;
+}
+table.report td.text {
+ border: #d0d0d0 1px solid;
+}
+table.report td.value,
+table.report td.lines_total,
+table.report td.lines_code {
+ text-align: right;
+ border: #d0d0d0 1px solid;
+}
+table.report tr.light {
+ background-color: rgb(240, 240, 245);
+}
+table.report tr.dark {
+ background-color: rgb(230, 230, 235);
+}
+</style>
+    <script type='text/javascript'>
+// <![CDATA[
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make cross-references hidden by default
+  document.writeln( "<style type=\"text/css\">span.cross-ref { display: none }</style>" )
+  // ]]>
+</script>
+    <style type='text/css'>span.run0 {
+  background-color: rgb(178, 204, 255);
+  display: block;
+}
+span.run1 {
+  background-color: rgb(178, 206, 255);
+  display: block;
+}
+span.run2 {
+  background-color: rgb(178, 209, 255);
+  display: block;
+}
+span.run3 {
+  background-color: rgb(178, 211, 255);
+  display: block;
+}
+span.run4 {
+  background-color: rgb(178, 214, 255);
+  display: block;
+}
+span.run5 {
+  background-color: rgb(178, 218, 255);
+  display: block;
+}
+span.run6 {
+  background-color: rgb(178, 220, 255);
+  display: block;
+}
+span.run7 {
+  background-color: rgb(178, 223, 255);
+  display: block;
+}
+span.run8 {
+  background-color: rgb(178, 225, 255);
+  display: block;
+}
+span.run9 {
+  background-color: rgb(178, 228, 255);
+  display: block;
+}
+span.run10 {
+  background-color: rgb(178, 232, 255);
+  display: block;
+}
+span.run11 {
+  background-color: rgb(178, 234, 255);
+  display: block;
+}
+span.run12 {
+  background-color: rgb(178, 237, 255);
+  display: block;
+}
+span.run13 {
+  background-color: rgb(178, 239, 255);
+  display: block;
+}
+span.run14 {
+  background-color: rgb(178, 242, 255);
+  display: block;
+}
+span.run15 {
+  background-color: rgb(178, 246, 255);
+  display: block;
+}
+span.run16 {
+  background-color: rgb(178, 248, 255);
+  display: block;
+}
+span.run17 {
+  background-color: rgb(178, 251, 255);
+  display: block;
+}
+span.run18 {
+  background-color: rgb(178, 253, 255);
+  display: block;
+}
+span.run19 {
+  background-color: rgb(178, 255, 253);
+  display: block;
+}
+span.run20 {
+  background-color: rgb(178, 255, 249);
+  display: block;
+}
+span.run21 {
+  background-color: rgb(178, 255, 247);
+  display: block;
+}
+span.run22 {
+  background-color: rgb(178, 255, 244);
+  display: block;
+}
+span.run23 {
+  background-color: rgb(178, 255, 242);
+  display: block;
+}
+span.run24 {
+  background-color: rgb(178, 255, 239);
+  display: block;
+}
+span.run25 {
+  background-color: rgb(178, 255, 235);
+  display: block;
+}
+span.run26 {
+  background-color: rgb(178, 255, 233);
+  display: block;
+}
+span.run27 {
+  background-color: rgb(178, 255, 230);
+  display: block;
+}
+span.run28 {
+  background-color: rgb(178, 255, 228);
+  display: block;
+}
+span.run29 {
+  background-color: rgb(178, 255, 225);
+  display: block;
+}
+span.run30 {
+  background-color: rgb(178, 255, 221);
+  display: block;
+}
+span.run31 {
+  background-color: rgb(178, 255, 219);
+  display: block;
+}
+span.run32 {
+  background-color: rgb(178, 255, 216);
+  display: block;
+}
+span.run33 {
+  background-color: rgb(178, 255, 214);
+  display: block;
+}
+span.run34 {
+  background-color: rgb(178, 255, 211);
+  display: block;
+}
+span.run35 {
+  background-color: rgb(178, 255, 207);
+  display: block;
+}
+span.run36 {
+  background-color: rgb(178, 255, 205);
+  display: block;
+}
+span.run37 {
+  background-color: rgb(178, 255, 202);
+  display: block;
+}
+span.run38 {
+  background-color: rgb(178, 255, 200);
+  display: block;
+}
+span.run39 {
+  background-color: rgb(178, 255, 197);
+  display: block;
+}
+span.run40 {
+  background-color: rgb(178, 255, 193);
+  display: block;
+}
+span.run41 {
+  background-color: rgb(178, 255, 191);
+  display: block;
+}
+span.run42 {
+  background-color: rgb(178, 255, 188);
+  display: block;
+}
+span.run43 {
+  background-color: rgb(178, 255, 186);
+  display: block;
+}
+span.run44 {
+  background-color: rgb(178, 255, 183);
+  display: block;
+}
+span.run45 {
+  background-color: rgb(178, 255, 179);
+  display: block;
+}
+span.run46 {
+  background-color: rgb(179, 255, 178);
+  display: block;
+}
+span.run47 {
+  background-color: rgb(182, 255, 178);
+  display: block;
+}
+span.run48 {
+  background-color: rgb(184, 255, 178);
+  display: block;
+}
+span.run49 {
+  background-color: rgb(187, 255, 178);
+  display: block;
+}
+span.run50 {
+  background-color: rgb(191, 255, 178);
+  display: block;
+}
+span.run51 {
+  background-color: rgb(193, 255, 178);
+  display: block;
+}
+span.run52 {
+  background-color: rgb(196, 255, 178);
+  display: block;
+}
+span.run53 {
+  background-color: rgb(198, 255, 178);
+  display: block;
+}
+span.run54 {
+  background-color: rgb(201, 255, 178);
+  display: block;
+}
+span.run55 {
+  background-color: rgb(205, 255, 178);
+  display: block;
+}
+span.run56 {
+  background-color: rgb(207, 255, 178);
+  display: block;
+}
+span.run57 {
+  background-color: rgb(210, 255, 178);
+  display: block;
+}
+span.run58 {
+  background-color: rgb(212, 255, 178);
+  display: block;
+}
+span.run59 {
+  background-color: rgb(215, 255, 178);
+  display: block;
+}
+span.run60 {
+  background-color: rgb(219, 255, 178);
+  display: block;
+}
+span.run61 {
+  background-color: rgb(221, 255, 178);
+  display: block;
+}
+span.run62 {
+  background-color: rgb(224, 255, 178);
+  display: block;
+}
+span.run63 {
+  background-color: rgb(226, 255, 178);
+  display: block;
+}
+span.run64 {
+  background-color: rgb(229, 255, 178);
+  display: block;
+}
+span.run65 {
+  background-color: rgb(233, 255, 178);
+  display: block;
+}
+span.run66 {
+  background-color: rgb(235, 255, 178);
+  display: block;
+}
+span.run67 {
+  background-color: rgb(238, 255, 178);
+  display: block;
+}
+span.run68 {
+  background-color: rgb(240, 255, 178);
+  display: block;
+}
+span.run69 {
+  background-color: rgb(243, 255, 178);
+  display: block;
+}
+span.run70 {
+  background-color: rgb(247, 255, 178);
+  display: block;
+}
+span.run71 {
+  background-color: rgb(249, 255, 178);
+  display: block;
+}
+span.run72 {
+  background-color: rgb(252, 255, 178);
+  display: block;
+}
+span.run73 {
+  background-color: rgb(255, 255, 178);
+  display: block;
+}
+span.run74 {
+  background-color: rgb(255, 252, 178);
+  display: block;
+}
+span.run75 {
+  background-color: rgb(255, 248, 178);
+  display: block;
+}
+span.run76 {
+  background-color: rgb(255, 246, 178);
+  display: block;
+}
+span.run77 {
+  background-color: rgb(255, 243, 178);
+  display: block;
+}
+span.run78 {
+  background-color: rgb(255, 240, 178);
+  display: block;
+}
+span.run79 {
+  background-color: rgb(255, 238, 178);
+  display: block;
+}
+span.run80 {
+  background-color: rgb(255, 234, 178);
+  display: block;
+}
+span.run81 {
+  background-color: rgb(255, 232, 178);
+  display: block;
+}
+span.run82 {
+  background-color: rgb(255, 229, 178);
+  display: block;
+}
+span.run83 {
+  background-color: rgb(255, 226, 178);
+  display: block;
+}
+span.run84 {
+  background-color: rgb(255, 224, 178);
+  display: block;
+}
+span.run85 {
+  background-color: rgb(255, 220, 178);
+  display: block;
+}
+span.run86 {
+  background-color: rgb(255, 218, 178);
+  display: block;
+}
+span.run87 {
+  background-color: rgb(255, 215, 178);
+  display: block;
+}
+span.run88 {
+  background-color: rgb(255, 212, 178);
+  display: block;
+}
+span.run89 {
+  background-color: rgb(255, 210, 178);
+  display: block;
+}
+span.run90 {
+  background-color: rgb(255, 206, 178);
+  display: block;
+}
+span.run91 {
+  background-color: rgb(255, 204, 178);
+  display: block;
+}
+span.run92 {
+  background-color: rgb(255, 201, 178);
+  display: block;
+}
+span.run93 {
+  background-color: rgb(255, 198, 178);
+  display: block;
+}
+span.run94 {
+  background-color: rgb(255, 196, 178);
+  display: block;
+}
+span.run95 {
+  background-color: rgb(255, 192, 178);
+  display: block;
+}
+span.run96 {
+  background-color: rgb(255, 189, 178);
+  display: block;
+}
+span.run97 {
+  background-color: rgb(255, 187, 178);
+  display: block;
+}
+span.run98 {
+  background-color: rgb(255, 184, 178);
+  display: block;
+}
+span.run99 {
+  background-color: rgb(255, 182, 178);
+  display: block;
+}
+span.run100 {
+  background-color: rgb(255, 178, 178);
+  display: block;
+}
+</style>
+    </head>
+  <body><h3>C0 code coverage information</h3>
+    <p>Generated on Fri Sep 25 21:45:03 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+      </p>
+    <hr/>
+    <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
+</span><span class='marked1'>and this: this line is also marked as covered.
+</span><span class='inferred0'>Lines considered as run by rcov, but not reported by Ruby, look like this,
+</span><span class='inferred1'>and this: these lines were inferred by rcov (using simple heuristics).
+</span><span class='uncovered0'>Finally, here&apos;s a line marked as not executed.
+</span></pre>                       
+<table class='report'><thead><tr><td class='heading'>Name</td>
+      <td class='heading'>Total lines</td>
+      <td class='heading'>Lines of code</td>
+      <td class='heading'>Total coverage</td>
+      <td class='heading'>Code coverage</td>
+      </tr>
+    </thead>
+  <tbody><tr class='light'><td><a href='-Library-Ruby-Gems-1_8-gems-activesupport-2_2_2-lib-active_support-core_ext-time-calculations_rb.html'>/Library/Ruby/Gems/1.8/gems/activesupport-2.2.2/lib/active_support/core_ext/time/calculations.rb</a>
+        </td>
+      <td class='lines_total'><tt>303</tt>
+        </td>
+      <td class='lines_code'><tt>203</tt>
+        </td>
+      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_total'>57.1%</tt>
+              &nbsp;</td>
+            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='57'/>
+                  <td class='uncovered' width='43'/>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_code'>38.9%</tt>
+              &nbsp;</td>
+            <td><table cellspacing='0' class='percent_graph' cellpadding='0' width='100'><tr><td class='covered' width='39'/>
+                  <td class='uncovered' width='61'/>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<pre><span class="marked1"><a name="line1"></a>  1 require 'active_support/duration'
+</span><span class="inferred0"><a name="line2"></a>  2 
+</span><span class="marked1"><a name="line3"></a>  3 module ActiveSupport #:nodoc:
+</span><span class="marked0"><a name="line4"></a>  4   module CoreExtensions #:nodoc:
+</span><span class="marked1"><a name="line5"></a>  5     module Time #:nodoc:
+</span><span class="inferred0"><a name="line6"></a>  6       # Enables the use of time calculations within Time itself
+</span><span class="marked1"><a name="line7"></a>  7       module Calculations
+</span><span class="marked0"><a name="line8"></a>  8         def self.included(base) #:nodoc:
+</span><span class="marked1"><a name="line9"></a>  9           base.extend ClassMethods
+</span><span class="inferred0"><a name="line10"></a> 10 
+</span><span class="marked1"><a name="line11"></a> 11           base.class_eval do
+</span><span class="marked0"><a name="line12"></a> 12             alias_method :plus_without_duration, :+
+</span><span class="marked1"><a name="line13"></a> 13             alias_method :+, :plus_with_duration
+</span><span class="inferred0"><a name="line14"></a> 14 
+</span><span class="marked1"><a name="line15"></a> 15             alias_method :minus_without_duration, :-
+</span><span class="marked0"><a name="line16"></a> 16             alias_method :-, :minus_with_duration
+</span><span class="inferred1"><a name="line17"></a> 17 
+</span><span class="marked0"><a name="line18"></a> 18             alias_method :minus_without_coercion, :-
+</span><span class="marked1"><a name="line19"></a> 19             alias_method :-, :minus_with_coercion
+</span><span class="inferred0"><a name="line20"></a> 20 
+</span><span class="marked1"><a name="line21"></a> 21             alias_method :compare_without_coercion, :&lt;=&gt;
+</span><span class="marked0"><a name="line22"></a> 22             alias_method :&lt;=&gt;, :compare_with_coercion
+</span><span class="inferred1"><a name="line23"></a> 23           end
+</span><span class="inferred0"><a name="line24"></a> 24         end
+</span><span class="inferred1"><a name="line25"></a> 25 
+</span><span class="marked0"><a name="line26"></a> 26         COMMON_YEAR_DAYS_IN_MONTH = [nil, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+</span><span class="inferred1"><a name="line27"></a> 27 
+</span><span class="marked0"><a name="line28"></a> 28         module ClassMethods
+</span><span class="inferred1"><a name="line29"></a> 29           # Overriding case equality method so that it returns true for ActiveSupport::TimeWithZone instances
+</span><span class="marked0"><a name="line30"></a> 30           def ===(other)
+</span><span class="uncovered1"><a name="line31"></a> 31             other.is_a?(::Time)
+</span><span class="uncovered0"><a name="line32"></a> 32           end
+</span><span class="inferred1"><a name="line33"></a> 33 
+</span><span class="inferred0"><a name="line34"></a> 34           # Return the number of days in the given month.
+</span><span class="inferred1"><a name="line35"></a> 35           # If no year is specified, it will use the current year.
+</span><span class="marked0"><a name="line36"></a> 36           def days_in_month(month, year = now.year)
+</span><span class="uncovered1"><a name="line37"></a> 37             return 29 if month == 2 &amp;&amp; ::Date.gregorian_leap?(year)
+</span><span class="uncovered0"><a name="line38"></a> 38             COMMON_YEAR_DAYS_IN_MONTH[month]
+</span><span class="uncovered1"><a name="line39"></a> 39           end
+</span><span class="inferred0"><a name="line40"></a> 40 
+</span><span class="inferred1"><a name="line41"></a> 41           # Returns a new Time if requested year can be accommodated by Ruby's Time class
+</span><span class="inferred0"><a name="line42"></a> 42           # (i.e., if year is within either 1970..2038 or 1902..2038, depending on system architecture);
+</span><span class="inferred1"><a name="line43"></a> 43           # otherwise returns a DateTime
+</span><span class="marked0"><a name="line44"></a> 44           def time_with_datetime_fallback(utc_or_local, year, month=1, day=1, hour=0, min=0, sec=0, usec=0)
+</span><span class="uncovered1"><a name="line45"></a> 45             ::Time.send(utc_or_local, year, month, day, hour, min, sec, usec)
+</span><span class="uncovered0"><a name="line46"></a> 46           rescue
+</span><span class="uncovered1"><a name="line47"></a> 47             offset = utc_or_local.to_sym == :local ? ::DateTime.local_offset : 0
+</span><span class="uncovered0"><a name="line48"></a> 48             ::DateTime.civil(year, month, day, hour, min, sec, offset)
+</span><span class="uncovered1"><a name="line49"></a> 49           end
+</span><span class="inferred0"><a name="line50"></a> 50 
+</span><span class="inferred1"><a name="line51"></a> 51           # Wraps class method +time_with_datetime_fallback+ with +utc_or_local+ set to &lt;tt&gt;:utc&lt;/tt&gt;.
+</span><span class="marked0"><a name="line52"></a> 52           def utc_time(*args)
+</span><span class="uncovered1"><a name="line53"></a> 53             time_with_datetime_fallback(:utc, *args)
+</span><span class="uncovered0"><a name="line54"></a> 54           end
+</span><span class="inferred1"><a name="line55"></a> 55 
+</span><span class="inferred0"><a name="line56"></a> 56           # Wraps class method +time_with_datetime_fallback+ with +utc_or_local+ set to &lt;tt&gt;:local&lt;/tt&gt;.
+</span><span class="marked1"><a name="line57"></a> 57           def local_time(*args)
+</span><span class="uncovered0"><a name="line58"></a> 58             time_with_datetime_fallback(:local, *args)
+</span><span class="uncovered1"><a name="line59"></a> 59           end
+</span><span class="uncovered0"><a name="line60"></a> 60         end
+</span><span class="inferred1"><a name="line61"></a> 61 
+</span><span class="inferred0"><a name="line62"></a> 62         # Tells whether the Time object's time lies in the past
+</span><span class="marked1"><a name="line63"></a> 63         def past?
+</span><span class="uncovered0"><a name="line64"></a> 64           self &lt; ::Time.current
+</span><span class="uncovered1"><a name="line65"></a> 65         end
+</span><span class="inferred0"><a name="line66"></a> 66 
+</span><span class="inferred1"><a name="line67"></a> 67         # Tells whether the Time object's time is today
+</span><span class="marked0"><a name="line68"></a> 68         def today?
+</span><span class="uncovered1"><a name="line69"></a> 69           self.to_date == ::Date.current
+</span><span class="uncovered0"><a name="line70"></a> 70         end
+</span><span class="inferred1"><a name="line71"></a> 71 
+</span><span class="inferred0"><a name="line72"></a> 72         # Tells whether the Time object's time lies in the future
+</span><span class="marked1"><a name="line73"></a> 73         def future?
+</span><span class="uncovered0"><a name="line74"></a> 74           self &gt; ::Time.current
+</span><span class="uncovered1"><a name="line75"></a> 75         end
+</span><span class="inferred0"><a name="line76"></a> 76 
+</span><span class="inferred1"><a name="line77"></a> 77         # Seconds since midnight: Time.now.seconds_since_midnight
+</span><span class="marked0"><a name="line78"></a> 78         def seconds_since_midnight
+</span><span class="uncovered1"><a name="line79"></a> 79           self.to_i - self.change(:hour =&gt; 0).to_i + (self.usec/1.0e+6)
+</span><span class="uncovered0"><a name="line80"></a> 80         end
+</span><span class="inferred1"><a name="line81"></a> 81 
+</span><span class="inferred0"><a name="line82"></a> 82         # Returns a new Time where one or more of the elements have been changed according to the +options+ parameter. The time options
+</span><span class="inferred1"><a name="line83"></a> 83         # (hour, minute, sec, usec) reset cascadingly, so if only the hour is passed, then minute, sec, and usec is set to 0. If the hour and
+</span><span class="inferred0"><a name="line84"></a> 84         # minute is passed, then sec and usec is set to 0.
+</span><span class="marked1"><a name="line85"></a> 85         def change(options)
+</span><span class="uncovered0"><a name="line86"></a> 86           ::Time.send(
+</span><span class="uncovered1"><a name="line87"></a> 87             self.utc? ? :utc_time : :local_time,
+</span><span class="uncovered0"><a name="line88"></a> 88             options[:year]  || self.year,
+</span><span class="uncovered1"><a name="line89"></a> 89             options[:month] || self.month,
+</span><span class="uncovered0"><a name="line90"></a> 90             options[:day]   || self.day,
+</span><span class="uncovered1"><a name="line91"></a> 91             options[:hour]  || self.hour,
+</span><span class="uncovered0"><a name="line92"></a> 92             options[:min]   || (options[:hour] ? 0 : self.min),
+</span><span class="uncovered1"><a name="line93"></a> 93             options[:sec]   || ((options[:hour] || options[:min]) ? 0 : self.sec),
+</span><span class="uncovered0"><a name="line94"></a> 94             options[:usec]  || ((options[:hour] || options[:min] || options[:sec]) ? 0 : self.usec)
+</span><span class="uncovered1"><a name="line95"></a> 95           )
+</span><span class="uncovered0"><a name="line96"></a> 96         end
+</span><span class="inferred1"><a name="line97"></a> 97 
+</span><span class="inferred0"><a name="line98"></a> 98         # Uses Date to provide precise Time calculations for years, months, and days.
+</span><span class="inferred1"><a name="line99"></a> 99         # The +options+ parameter takes a hash with any of these keys: &lt;tt&gt;:years&lt;/tt&gt;,
+</span><span class="inferred0"><a name="line100"></a>100         # &lt;tt&gt;:months&lt;/tt&gt;, &lt;tt&gt;:weeks&lt;/tt&gt;, &lt;tt&gt;:days&lt;/tt&gt;, &lt;tt&gt;:hours&lt;/tt&gt;,
+</span><span class="inferred1"><a name="line101"></a>101         # &lt;tt&gt;:minutes&lt;/tt&gt;, &lt;tt&gt;:seconds&lt;/tt&gt;.
+</span><span class="marked0"><a name="line102"></a>102         def advance(options)
+</span><span class="uncovered1"><a name="line103"></a>103           unless options[:weeks].nil?
+</span><span class="uncovered0"><a name="line104"></a>104             options[:weeks], partial_weeks = options[:weeks].divmod(1)
+</span><span class="uncovered1"><a name="line105"></a>105             options[:days] = (options[:days] || 0) + 7 * partial_weeks
+</span><span class="uncovered0"><a name="line106"></a>106           end
+</span><span class="uncovered1"><a name="line107"></a>107           
+</span><span class="uncovered0"><a name="line108"></a>108           unless options[:days].nil?
+</span><span class="uncovered1"><a name="line109"></a>109             options[:days], partial_days = options[:days].divmod(1)
+</span><span class="uncovered0"><a name="line110"></a>110             options[:hours] = (options[:hours] || 0) + 24 * partial_days
+</span><span class="uncovered1"><a name="line111"></a>111           end
+</span><span class="uncovered0"><a name="line112"></a>112           
+</span><span class="uncovered1"><a name="line113"></a>113           d = to_date.advance(options)
+</span><span class="uncovered0"><a name="line114"></a>114           time_advanced_by_date = change(:year =&gt; d.year, :month =&gt; d.month, :day =&gt; d.day)
+</span><span class="uncovered1"><a name="line115"></a>115           seconds_to_advance = (options[:seconds] || 0) + (options[:minutes] || 0) * 60 + (options[:hours] || 0) * 3600
+</span><span class="uncovered0"><a name="line116"></a>116           seconds_to_advance == 0 ? time_advanced_by_date : time_advanced_by_date.since(seconds_to_advance)
+</span><span class="uncovered1"><a name="line117"></a>117         end
+</span><span class="inferred0"><a name="line118"></a>118 
+</span><span class="inferred1"><a name="line119"></a>119         # Returns a new Time representing the time a number of seconds ago, this is basically a wrapper around the Numeric extension
+</span><span class="marked0"><a name="line120"></a>120         def ago(seconds)
+</span><span class="uncovered1"><a name="line121"></a>121           self.since(-seconds)
+</span><span class="uncovered0"><a name="line122"></a>122         end
+</span><span class="inferred1"><a name="line123"></a>123 
+</span><span class="inferred0"><a name="line124"></a>124         # Returns a new Time representing the time a number of seconds since the instance time, this is basically a wrapper around
+</span><span class="inferred1"><a name="line125"></a>125         # the Numeric extension.
+</span><span class="marked0"><a name="line126"></a>126         def since(seconds)
+</span><span class="uncovered1"><a name="line127"></a>127           f = seconds.since(self)
+</span><span class="uncovered0"><a name="line128"></a>128           if ActiveSupport::Duration === seconds
+</span><span class="uncovered1"><a name="line129"></a>129             f
+</span><span class="uncovered0"><a name="line130"></a>130           else
+</span><span class="uncovered1"><a name="line131"></a>131             initial_dst = self.dst? ? 1 : 0
+</span><span class="uncovered0"><a name="line132"></a>132             final_dst   = f.dst? ? 1 : 0
+</span><span class="uncovered1"><a name="line133"></a>133             (seconds.abs &gt;= 86400 &amp;&amp; initial_dst != final_dst) ? f + (initial_dst - final_dst).hours : f
+</span><span class="uncovered0"><a name="line134"></a>134           end
+</span><span class="uncovered1"><a name="line135"></a>135         rescue
+</span><span class="uncovered0"><a name="line136"></a>136           self.to_datetime.since(seconds)
+</span><span class="uncovered1"><a name="line137"></a>137         end
+</span><span class="marked0"><a name="line138"></a>138         alias :in :since
+</span><span class="inferred1"><a name="line139"></a>139 
+</span><span class="inferred0"><a name="line140"></a>140         # Returns a new Time representing the time a number of specified months ago
+</span><span class="marked1"><a name="line141"></a>141         def months_ago(months)
+</span><span class="uncovered0"><a name="line142"></a>142           advance(:months =&gt; -months)
+</span><span class="uncovered1"><a name="line143"></a>143         end
+</span><span class="inferred0"><a name="line144"></a>144 
+</span><span class="inferred1"><a name="line145"></a>145         # Returns a new Time representing the time a number of specified months in the future
+</span><span class="marked0"><a name="line146"></a>146         def months_since(months)
+</span><span class="uncovered1"><a name="line147"></a>147           advance(:months =&gt; months)
+</span><span class="uncovered0"><a name="line148"></a>148         end
+</span><span class="inferred1"><a name="line149"></a>149 
+</span><span class="inferred0"><a name="line150"></a>150         # Returns a new Time representing the time a number of specified years ago
+</span><span class="marked1"><a name="line151"></a>151         def years_ago(years)
+</span><span class="uncovered0"><a name="line152"></a>152           advance(:years =&gt; -years)
+</span><span class="uncovered1"><a name="line153"></a>153         end
+</span><span class="inferred0"><a name="line154"></a>154 
+</span><span class="inferred1"><a name="line155"></a>155         # Returns a new Time representing the time a number of specified years in the future
+</span><span class="marked0"><a name="line156"></a>156         def years_since(years)
+</span><span class="uncovered1"><a name="line157"></a>157           advance(:years =&gt; years)
+</span><span class="uncovered0"><a name="line158"></a>158         end
+</span><span class="inferred1"><a name="line159"></a>159 
+</span><span class="inferred0"><a name="line160"></a>160         # Short-hand for years_ago(1)
+</span><span class="marked1"><a name="line161"></a>161         def last_year
+</span><span class="uncovered0"><a name="line162"></a>162           years_ago(1)
+</span><span class="uncovered1"><a name="line163"></a>163         end
+</span><span class="inferred0"><a name="line164"></a>164 
+</span><span class="inferred1"><a name="line165"></a>165         # Short-hand for years_since(1)
+</span><span class="marked0"><a name="line166"></a>166         def next_year
+</span><span class="uncovered1"><a name="line167"></a>167           years_since(1)
+</span><span class="uncovered0"><a name="line168"></a>168         end
+</span><span class="inferred1"><a name="line169"></a>169 
+</span><span class="inferred0"><a name="line170"></a>170 
+</span><span class="inferred1"><a name="line171"></a>171         # Short-hand for months_ago(1)
+</span><span class="marked0"><a name="line172"></a>172         def last_month
+</span><span class="uncovered1"><a name="line173"></a>173           months_ago(1)
+</span><span class="uncovered0"><a name="line174"></a>174         end
+</span><span class="inferred1"><a name="line175"></a>175 
+</span><span class="inferred0"><a name="line176"></a>176         # Short-hand for months_since(1)
+</span><span class="marked1"><a name="line177"></a>177         def next_month
+</span><span class="uncovered0"><a name="line178"></a>178           months_since(1)
+</span><span class="uncovered1"><a name="line179"></a>179         end
+</span><span class="inferred0"><a name="line180"></a>180 
+</span><span class="inferred1"><a name="line181"></a>181         # Returns a new Time representing the &quot;start&quot; of this week (Monday, 0:00)
+</span><span class="marked0"><a name="line182"></a>182         def beginning_of_week
+</span><span class="uncovered1"><a name="line183"></a>183           days_to_monday = self.wday!=0 ? self.wday-1 : 6
+</span><span class="uncovered0"><a name="line184"></a>184           (self - days_to_monday.days).midnight
+</span><span class="uncovered1"><a name="line185"></a>185         end
+</span><span class="marked0"><a name="line186"></a>186         alias :monday :beginning_of_week
+</span><span class="marked1"><a name="line187"></a>187         alias :at_beginning_of_week :beginning_of_week
+</span><span class="inferred0"><a name="line188"></a>188 
+</span><span class="inferred1"><a name="line189"></a>189         # Returns a new Time representing the end of this week (Sunday, 23:59:59)
+</span><span class="marked0"><a name="line190"></a>190         def end_of_week
+</span><span class="uncovered1"><a name="line191"></a>191           days_to_sunday = self.wday!=0 ? 7-self.wday : 0
+</span><span class="uncovered0"><a name="line192"></a>192           (self + days_to_sunday.days).end_of_day
+</span><span class="uncovered1"><a name="line193"></a>193         end
+</span><span class="marked0"><a name="line194"></a>194         alias :at_end_of_week :end_of_week
+</span><span class="inferred1"><a name="line195"></a>195 
+</span><span class="inferred0"><a name="line196"></a>196         # Returns a new Time representing the start of the given day in next week (default is Monday).
+</span><span class="marked1"><a name="line197"></a>197         def next_week(day = :monday)
+</span><span class="uncovered0"><a name="line198"></a>198           days_into_week = { :monday =&gt; 0, :tuesday =&gt; 1, :wednesday =&gt; 2, :thursday =&gt; 3, :friday =&gt; 4, :saturday =&gt; 5, :sunday =&gt; 6}
+</span><span class="uncovered1"><a name="line199"></a>199           since(1.week).beginning_of_week.since(days_into_week[day].day).change(:hour =&gt; 0)
+</span><span class="uncovered0"><a name="line200"></a>200         end
+</span><span class="inferred1"><a name="line201"></a>201 
+</span><span class="inferred0"><a name="line202"></a>202         # Returns a new Time representing the start of the day (0:00)
+</span><span class="marked1"><a name="line203"></a>203         def beginning_of_day
+</span><span class="uncovered0"><a name="line204"></a>204           (self - self.seconds_since_midnight).change(:usec =&gt; 0)
+</span><span class="uncovered1"><a name="line205"></a>205         end
+</span><span class="marked0"><a name="line206"></a>206         alias :midnight :beginning_of_day
+</span><span class="marked1"><a name="line207"></a>207         alias :at_midnight :beginning_of_day
+</span><span class="marked0"><a name="line208"></a>208         alias :at_beginning_of_day :beginning_of_day
+</span><span class="inferred1"><a name="line209"></a>209 
+</span><span class="inferred0"><a name="line210"></a>210         # Returns a new Time representing the end of the day (23:59:59)
+</span><span class="marked1"><a name="line211"></a>211         def end_of_day
+</span><span class="uncovered0"><a name="line212"></a>212           change(:hour =&gt; 23, :min =&gt; 59, :sec =&gt; 59)
+</span><span class="uncovered1"><a name="line213"></a>213         end
+</span><span class="inferred0"><a name="line214"></a>214 
+</span><span class="inferred1"><a name="line215"></a>215         # Returns a new Time representing the start of the month (1st of the month, 0:00)
+</span><span class="marked0"><a name="line216"></a>216         def beginning_of_month
+</span><span class="uncovered1"><a name="line217"></a>217           #self - ((self.mday-1).days + self.seconds_since_midnight)
+</span><span class="uncovered0"><a name="line218"></a>218           change(:day =&gt; 1,:hour =&gt; 0, :min =&gt; 0, :sec =&gt; 0, :usec =&gt; 0)
+</span><span class="uncovered1"><a name="line219"></a>219         end
+</span><span class="marked0"><a name="line220"></a>220         alias :at_beginning_of_month :beginning_of_month
+</span><span class="inferred1"><a name="line221"></a>221 
+</span><span class="inferred0"><a name="line222"></a>222         # Returns a new Time representing the end of the month (last day of the month, 0:00)
+</span><span class="marked1"><a name="line223"></a>223         def end_of_month
+</span><span class="uncovered0"><a name="line224"></a>224           #self - ((self.mday-1).days + self.seconds_since_midnight)
+</span><span class="uncovered1"><a name="line225"></a>225           last_day = ::Time.days_in_month( self.month, self.year )
+</span><span class="uncovered0"><a name="line226"></a>226           change(:day =&gt; last_day, :hour =&gt; 23, :min =&gt; 59, :sec =&gt; 59, :usec =&gt; 0)
+</span><span class="uncovered1"><a name="line227"></a>227         end
+</span><span class="marked0"><a name="line228"></a>228         alias :at_end_of_month :end_of_month
+</span><span class="inferred1"><a name="line229"></a>229 
+</span><span class="inferred0"><a name="line230"></a>230         # Returns  a new Time representing the start of the quarter (1st of january, april, july, october, 0:00)
+</span><span class="marked1"><a name="line231"></a>231         def beginning_of_quarter
+</span><span class="uncovered0"><a name="line232"></a>232           beginning_of_month.change(:month =&gt; [10, 7, 4, 1].detect { |m| m &lt;= self.month })
+</span><span class="uncovered1"><a name="line233"></a>233         end
+</span><span class="marked0"><a name="line234"></a>234         alias :at_beginning_of_quarter :beginning_of_quarter
+</span><span class="inferred1"><a name="line235"></a>235 
+</span><span class="inferred0"><a name="line236"></a>236         # Returns a new Time representing the end of the quarter (last day of march, june, september, december, 23:59:59)
+</span><span class="marked1"><a name="line237"></a>237         def end_of_quarter
+</span><span class="uncovered0"><a name="line238"></a>238           beginning_of_month.change(:month =&gt; [3, 6, 9, 12].detect { |m| m &gt;= self.month }).end_of_month
+</span><span class="uncovered1"><a name="line239"></a>239         end
+</span><span class="marked0"><a name="line240"></a>240         alias :at_end_of_quarter :end_of_quarter
+</span><span class="inferred1"><a name="line241"></a>241 
+</span><span class="inferred0"><a name="line242"></a>242         # Returns  a new Time representing the start of the year (1st of january, 0:00)
+</span><span class="marked1"><a name="line243"></a>243         def beginning_of_year
+</span><span class="uncovered0"><a name="line244"></a>244           change(:month =&gt; 1,:day =&gt; 1,:hour =&gt; 0, :min =&gt; 0, :sec =&gt; 0, :usec =&gt; 0)
+</span><span class="uncovered1"><a name="line245"></a>245         end
+</span><span class="marked0"><a name="line246"></a>246         alias :at_beginning_of_year :beginning_of_year
+</span><span class="inferred1"><a name="line247"></a>247 
+</span><span class="inferred0"><a name="line248"></a>248         # Returns a new Time representing the end of the year (31st of december, 23:59:59)
+</span><span class="marked1"><a name="line249"></a>249         def end_of_year
+</span><span class="uncovered0"><a name="line250"></a>250           change(:month =&gt; 12,:day =&gt; 31,:hour =&gt; 23, :min =&gt; 59, :sec =&gt; 59)
+</span><span class="uncovered1"><a name="line251"></a>251         end
+</span><span class="marked0"><a name="line252"></a>252         alias :at_end_of_year :end_of_year
+</span><span class="inferred1"><a name="line253"></a>253 
+</span><span class="inferred0"><a name="line254"></a>254         # Convenience method which returns a new Time representing the time 1 day ago
+</span><span class="marked1"><a name="line255"></a>255         def yesterday
+</span><span class="uncovered0"><a name="line256"></a>256           advance(:days =&gt; -1)
+</span><span class="uncovered1"><a name="line257"></a>257         end
+</span><span class="inferred0"><a name="line258"></a>258 
+</span><span class="inferred1"><a name="line259"></a>259         # Convenience method which returns a new Time representing the time 1 day since the instance time
+</span><span class="marked0"><a name="line260"></a>260         def tomorrow
+</span><span class="uncovered1"><a name="line261"></a>261           advance(:days =&gt; 1)
+</span><span class="uncovered0"><a name="line262"></a>262         end
+</span><span class="inferred1"><a name="line263"></a>263 
+</span><span class="marked0"><a name="line264"></a>264         def plus_with_duration(other) #:nodoc:
+</span><span class="uncovered1"><a name="line265"></a>265           if ActiveSupport::Duration === other
+</span><span class="uncovered0"><a name="line266"></a>266             other.since(self)
+</span><span class="uncovered1"><a name="line267"></a>267           else
+</span><span class="uncovered0"><a name="line268"></a>268             plus_without_duration(other)
+</span><span class="uncovered1"><a name="line269"></a>269           end
+</span><span class="uncovered0"><a name="line270"></a>270         end
+</span><span class="inferred1"><a name="line271"></a>271 
+</span><span class="marked0"><a name="line272"></a>272         def minus_with_duration(other) #:nodoc:
+</span><span class="marked1"><a name="line273"></a>273           if ActiveSupport::Duration === other
+</span><span class="uncovered0"><a name="line274"></a>274             other.until(self)
+</span><span class="inferred1"><a name="line275"></a>275           else
+</span><span class="marked0"><a name="line276"></a>276             minus_without_duration(other)
+</span><span class="inferred1"><a name="line277"></a>277           end
+</span><span class="marked0"><a name="line278"></a>278         end
+</span><span class="inferred1"><a name="line279"></a>279 
+</span><span class="inferred0"><a name="line280"></a>280         # Time#- can also be used to determine the number of seconds between two Time instances.
+</span><span class="inferred1"><a name="line281"></a>281         # We're layering on additional behavior so that ActiveSupport::TimeWithZone instances
+</span><span class="inferred0"><a name="line282"></a>282         # are coerced into values that Time#- will recognize
+</span><span class="marked1"><a name="line283"></a>283         def minus_with_coercion(other)
+</span><span class="marked0"><a name="line284"></a>284           other = other.comparable_time if other.respond_to?(:comparable_time)
+</span><span class="marked1"><a name="line285"></a>285           minus_without_coercion(other)
+</span><span class="inferred0"><a name="line286"></a>286         end
+</span><span class="inferred1"><a name="line287"></a>287 
+</span><span class="inferred0"><a name="line288"></a>288         # Layers additional behavior on Time#&lt;=&gt; so that DateTime and ActiveSupport::TimeWithZone instances
+</span><span class="inferred1"><a name="line289"></a>289         # can be chronologically compared with a Time
+</span><span class="marked0"><a name="line290"></a>290         def compare_with_coercion(other)
+</span><span class="uncovered1"><a name="line291"></a>291           # if other is an ActiveSupport::TimeWithZone, coerce a Time instance from it so we can do &lt;=&gt; comparison
+</span><span class="uncovered0"><a name="line292"></a>292           other = other.comparable_time if other.respond_to?(:comparable_time)
+</span><span class="uncovered1"><a name="line293"></a>293           if other.acts_like?(:date)
+</span><span class="uncovered0"><a name="line294"></a>294             # other is a Date/DateTime, so coerce self #to_datetime and hand off to DateTime#&lt;=&gt;
+</span><span class="uncovered1"><a name="line295"></a>295             to_datetime.compare_without_coercion(other)
+</span><span class="uncovered0"><a name="line296"></a>296           else
+</span><span class="uncovered1"><a name="line297"></a>297             compare_without_coercion(other)
+</span><span class="uncovered0"><a name="line298"></a>298           end
+</span><span class="uncovered1"><a name="line299"></a>299         end
+</span><span class="uncovered0"><a name="line300"></a>300       end
+</span><span class="uncovered1"><a name="line301"></a>301     end
+</span><span class="uncovered0"><a name="line302"></a>302   end
+</span><span class="uncovered1"><a name="line303"></a>303 end
+</span></pre><hr/>
+    <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
+   version 0.8.1.2.</p>
+<p><a href='http://validator.w3.org/check/referer'><img src='http://www.w3.org/Icons/valid-xhtml10' height='31' alt='Valid XHTML 1.0!' width='88'/>
+        </a>
+      <a href='http://jigsaw.w3.org/css-validator/check/referer'><img src='http://jigsaw.w3.org/css-validator/images/vcss' alt='Valid CSS!' style='border:0;width:88px;height:31px'/>
+        </a>
+      </p>
+    </body>
+  </html>
