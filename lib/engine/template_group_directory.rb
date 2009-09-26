@@ -1,17 +1,17 @@
 module Slippers
   class TemplateGroupDirectory < TemplateGroup
-    def initialize(directory_path, params={})
-      @directory_path = directory_path
+    def initialize(directory_paths, params={})
+      @directory_paths = directory_paths
       @super_group = params[:super_group]
     end
-    attr_reader :directory_path
+    attr_reader :directory_paths
     
     def find(subtemplate)
-      file_name = @directory_path + '/' + subtemplate + '.st'
-      return find_renderer(subtemplate) unless File.exist?(file_name)
-      Engine.new(FileTemplate.new(file_name).template, :template_group => self)
-      
+      file_name = @directory_paths.map { |directory_path| directory_path + '/' + subtemplate + '.st' }.find { |f| File.exist? f}   
+      return Engine.new(FileTemplate.new(file_name).template, :template_group => self) if file_name
+      find_renderer_or_supergroup(subtemplate)      
     end
+    
     def has_registered?(class_name)
        return false unless @super_group
        @super_group.has_registered?(class_name)  
@@ -25,16 +25,17 @@ module Slippers
 
     def eql?(other)
       return false unless other
-      directory_path.eql?(other.directory_path)
+      directory_paths.eql?(other.directory_paths)
     end
     def hash
-      @directory_path.hash
+      @directory_paths.hash
     end
     
     private
-      def find_renderer(subtemplate)
-        file_name = @directory_path + '/' + subtemplate + '.rb'
-        return find_in_super_group(subtemplate) unless File.exist?(file_name)
+      def find_renderer_or_supergroup(subtemplate)
+        file_name = @directory_paths.map { |directory_path| directory_path + '/' + subtemplate + '.rb' }.find { |f| File.exist? f}   
+        return find_in_super_group(subtemplate) unless file_name
+
         renderer_name = subtemplate.split('/')[-1]
         load File.expand_path(file_name)
         create_renderer renderer_name

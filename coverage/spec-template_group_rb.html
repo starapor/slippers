@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Fri Sep 25 21:45:14 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Sat Sep 26 09:50:18 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -598,51 +598,51 @@ span.run100 {
       </tr>
     </tbody>
   </table>
-<pre><span class="marked1"><a name="line1"></a> 1 require File.dirname(__FILE__) + '/spec_helper'
-</span><span class="inferred0"><a name="line2"></a> 2 
-</span><span class="marked1"><a name="line3"></a> 3 describe Slippers::TemplateGroup do
-</span><span class="marked0"><a name="line4"></a> 4   it 'should find the right template' do
-</span><span class="marked1"><a name="line5"></a> 5     subtemplate = Slippers::Engine.new('Hello $first$ $last$')
-</span><span class="marked0"><a name="line6"></a> 6     template_group = Slippers::TemplateGroup.new(:templates =&gt; {:person =&gt; subtemplate})
-</span><span class="marked1"><a name="line7"></a> 7     template_group.find(:person).should eql(subtemplate)
-</span><span class="marked0"><a name="line8"></a> 8     template_group.find('person').should eql(subtemplate)
-</span><span class="inferred1"><a name="line9"></a> 9   end
-</span><span class="inferred0"><a name="line10"></a>10   
-</span><span class="marked1"><a name="line11"></a>11   it 'should return nil if it cannot find the right template' do
-</span><span class="marked0"><a name="line12"></a>12     template_group = Slippers::TemplateGroup.new()
-</span><span class="marked1"><a name="line13"></a>13     template_group.find(:not_this).should eql(nil)
-</span><span class="marked0"><a name="line14"></a>14     template_group.find('not_this').should eql(nil)
-</span><span class="inferred1"><a name="line15"></a>15   end
-</span><span class="inferred0"><a name="line16"></a>16   
-</span><span class="marked1"><a name="line17"></a>17   it 'should look in the super template group if it cannot find the template' do
-</span><span class="marked0"><a name="line18"></a>18     template = stub 'template'
-</span><span class="marked1"><a name="line19"></a>19     super_template_group = Slippers::TemplateGroup.new(:templates =&gt; {:person =&gt; template})
-</span><span class="marked0"><a name="line20"></a>20     template_group = Slippers::TemplateGroup.new(:templates =&gt; {}, :super_group =&gt; super_template_group)
-</span><span class="marked1"><a name="line21"></a>21     template_group.find(:person).should eql(template)
-</span><span class="marked0"><a name="line22"></a>22     template_group.find(:not_this).should eql(nil)
-</span><span class="inferred1"><a name="line23"></a>23   end
-</span><span class="inferred0"><a name="line24"></a>24   
-</span><span class="marked1"><a name="line25"></a>25   it 'should render an item if its class is registered' do
-</span><span class="marked0"><a name="line26"></a>26     date = Date.new(DateTime.now.year, 2, 4)
-</span><span class="marked1"><a name="line27"></a>27     rendered_text = &quot;rendered text&quot;
-</span><span class="marked0"><a name="line28"></a>28     template_group = Slippers::TemplateGroup.new(:templates =&gt; {Date =&gt; OpenStruct.new({:render =&gt; rendered_text})})
-</span><span class="inferred1"><a name="line29"></a>29     
-</span><span class="marked0"><a name="line30"></a>30     template_group.has_registered?(date.class).should be_true
-</span><span class="marked1"><a name="line31"></a>31     template_group.render(date).should eql(rendered_text)
-</span><span class="inferred0"><a name="line32"></a>32     
-</span><span class="marked1"><a name="line33"></a>33     template_group.has_registered?(template_group.class).should be_false
-</span><span class="marked0"><a name="line34"></a>34     template_group.render(template_group).should eql('')
-</span><span class="inferred1"><a name="line35"></a>35   end
-</span><span class="inferred0"><a name="line36"></a>36   
-</span><span class="marked1"><a name="line37"></a>37   it 'should not render an item if there are no templates' do
-</span><span class="marked0"><a name="line38"></a>38     date = Date.new(DateTime.now.year, 2, 4)
-</span><span class="marked1"><a name="line39"></a>39     template_group = Slippers::TemplateGroup.new()
-</span><span class="inferred0"><a name="line40"></a>40     
-</span><span class="marked1"><a name="line41"></a>41     template_group.has_registered?(date.class).should be_false
-</span><span class="marked0"><a name="line42"></a>42     template_group.render(date).should eql('')
-</span><span class="inferred1"><a name="line43"></a>43   end
-</span><span class="inferred0"><a name="line44"></a>44 
-</span><span class="inferred1"><a name="line45"></a>45 end
+<pre><span class="marked0"><a name="line1"></a> 1 require File.dirname(__FILE__) + '/spec_helper'
+</span><span class="inferred1"><a name="line2"></a> 2 
+</span><span class="marked0"><a name="line3"></a> 3 describe Slippers::TemplateGroup do
+</span><span class="marked1"><a name="line4"></a> 4   it 'should find the right template' do
+</span><span class="marked0"><a name="line5"></a> 5     subtemplate = Slippers::Engine.new('Hello $first$ $last$')
+</span><span class="marked1"><a name="line6"></a> 6     template_group = Slippers::TemplateGroup.new(:templates =&gt; {:person =&gt; subtemplate})
+</span><span class="marked0"><a name="line7"></a> 7     template_group.find(:person).should eql(subtemplate)
+</span><span class="marked1"><a name="line8"></a> 8     template_group.find('person').should eql(subtemplate)
+</span><span class="inferred0"><a name="line9"></a> 9   end
+</span><span class="inferred1"><a name="line10"></a>10   
+</span><span class="marked0"><a name="line11"></a>11   it 'should return nil if it cannot find the right template' do
+</span><span class="marked1"><a name="line12"></a>12     template_group = Slippers::TemplateGroup.new()
+</span><span class="marked0"><a name="line13"></a>13     template_group.find(:not_this).should eql(nil)
+</span><span class="marked1"><a name="line14"></a>14     template_group.find('not_this').should eql(nil)
+</span><span class="inferred0"><a name="line15"></a>15   end
+</span><span class="inferred1"><a name="line16"></a>16   
+</span><span class="marked0"><a name="line17"></a>17   it 'should look in the super template group if it cannot find the template' do
+</span><span class="marked1"><a name="line18"></a>18     template = stub 'template'
+</span><span class="marked0"><a name="line19"></a>19     super_template_group = Slippers::TemplateGroup.new(:templates =&gt; {:person =&gt; template})
+</span><span class="marked1"><a name="line20"></a>20     template_group = Slippers::TemplateGroup.new(:templates =&gt; {}, :super_group =&gt; super_template_group)
+</span><span class="marked0"><a name="line21"></a>21     template_group.find(:person).should eql(template)
+</span><span class="marked1"><a name="line22"></a>22     template_group.find(:not_this).should eql(nil)
+</span><span class="inferred0"><a name="line23"></a>23   end
+</span><span class="inferred1"><a name="line24"></a>24   
+</span><span class="marked0"><a name="line25"></a>25   it 'should render an item if its class is registered' do
+</span><span class="marked1"><a name="line26"></a>26     date = Date.new(DateTime.now.year, 2, 4)
+</span><span class="marked0"><a name="line27"></a>27     rendered_text = &quot;rendered text&quot;
+</span><span class="marked1"><a name="line28"></a>28     template_group = Slippers::TemplateGroup.new(:templates =&gt; {Date =&gt; OpenStruct.new({:render =&gt; rendered_text})})
+</span><span class="inferred0"><a name="line29"></a>29     
+</span><span class="marked1"><a name="line30"></a>30     template_group.has_registered?(date.class).should be_true
+</span><span class="marked0"><a name="line31"></a>31     template_group.render(date).should eql(rendered_text)
+</span><span class="inferred1"><a name="line32"></a>32     
+</span><span class="marked0"><a name="line33"></a>33     template_group.has_registered?(template_group.class).should be_false
+</span><span class="marked1"><a name="line34"></a>34     template_group.render(template_group).should eql('')
+</span><span class="inferred0"><a name="line35"></a>35   end
+</span><span class="inferred1"><a name="line36"></a>36   
+</span><span class="marked0"><a name="line37"></a>37   it 'should not render an item if there are no templates' do
+</span><span class="marked1"><a name="line38"></a>38     date = Date.new(DateTime.now.year, 2, 4)
+</span><span class="marked0"><a name="line39"></a>39     template_group = Slippers::TemplateGroup.new()
+</span><span class="inferred1"><a name="line40"></a>40     
+</span><span class="marked0"><a name="line41"></a>41     template_group.has_registered?(date.class).should be_false
+</span><span class="marked1"><a name="line42"></a>42     template_group.render(date).should eql('')
+</span><span class="inferred0"><a name="line43"></a>43   end
+</span><span class="inferred1"><a name="line44"></a>44 
+</span><span class="inferred0"><a name="line45"></a>45 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>
