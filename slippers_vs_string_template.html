@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>Slippers vs String Template</title>
+	
+	<link href="slippers.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<h2>Slippers vs String Template</h2>
+<div>
+	Slippers is a strict templating language for ruby, based on string template's philosophy and using it's syntax. But just how similar are the two? This page should highlight the similarities as well as distinguish the differences. Not all string template features are supported in slippers, and these have been listed at the bottom of the page.
+</div>
+<h2>Creating Templates with Code</h2>
+<table border="1">
+	<tr><th>String Template</th>
+		<td>
+			<pre>
+StringTemplate template = new StringTemplate("this is my $template$");
+template.SetAttribute("template", "actual template");
+template.ToString();
+			</pre>
+		</td>
+	</tr>
+	<tr><th>Slippers</th>
+		<td>
+			<pre>
+template = Slippers::Engine.new("this is my $template$")
+template.render(:template => "actual template")
+			</pre>
+		</td>
+	</tr>
+</table>
+
+<h2>Loading Templates from a file</h2>
+<table border="1">
+	<tr><th>String Template</th>
+		<td>
+			<pre>
+StringTemplateGroup group = new StringTemplateGroup("myGroup", "/tmp");
+StringTemplate query = group.getInstanceOf("theQuery");
+query.setAttribute("column", "name");
+query.setAttribute("column", "email");
+query.setAttribute("table", "User");
+query.ToString()				
+			</pre>
+		</td>
+	</tr>
+	<tr>
+		<th>Slippers</th>
+		<td>
+			<pre>
+template_group = Slippers::TemplateGroupDirectory.new(['tmp'])
+query = template_group.find('theQuery')
+st = Slippers::Engine.new(template_group)
+st.render(:column => ["name", "email"], :table => "User")
+			</pre>
+		</td>
+	</tr>
+</table>
+
+<h2>Template Group Files</h2>
+<table border="1">
+		<tr><th>String Template</th>
+			<td>
+				<pre>
+String templates = "group simple; vardef(type,name) ...";
+StringTemplateGroup group = new StringTemplateGroup(new StringReader(templates));
+StringTemplate t = group.getInstanceOf("vardef");
+t.setAttribute("type", "int");
+t.setAttribute("name", "foo");
+				</pre>
+			</td>
+		</tr>
+		<tr>
+			<th>Slippers</th>
+			<td>
+				<pre>
+templates = {:vardef => "...", :method => "..."}
+group = Slippers::TemplateGroup.new(:templates => templates)
+t = group.find(:vardef)
+t.render(:type => "int", :name => "foo")
+			</pre>
+		</td>
+	</tr>
+</table>
+
+
+<h2>Template Group inheritance</h2>
+<table border="1">
+	<tr><th>String Template</th>
+		<td>
+			<pre>
+StringTemplateGroup supergroup = new StringTemplateGroup("super");
+StringTemplateGroup subgroup = new StringTemplateGroup("sub");
+supergroup.defineTemplate("bold", "<b>$it$</b>");
+subgroup.setSuperGroup(supergroup);
+StringTemplate st = new StringTemplate(subgroup, "$name:bold()$");
+st.setAttribute("name", "Terence");
+st.toString() === "<b>Terence</b>";	
+			</pre>
+		</td>
+	</tr>
+	<tr>
+		<th>Slippers</th>
+		<td>
+			<pre>
+supergroup = Slippers::TemplateGroup.new(:templates => {:bold => "<b>$it$</b>"})
+subgroup = Slippers::TemplateGroup.new(:templates => {}, :super_group => supergroup)
+st = Slippers::Engine.new("$name:bold()$", :template_group => template_group)
+st.render(:name => "Sarah") === <b>Sarah</b>				
+			</pre>
+		</td>
+	</tr>
+</table>
+
+<h2>Object Rendering</h2>
+<table border="1">
+	<tr><th>String Template</th>
+		<td>
+			<pre>
+ public class DateRenderer implements AttributeRenderer {
+ 	public String toString(Object o) {
+ 		SimpleDateFormat f = new SimpleDateFormat("yyyy.MM.dd");
+ 		return f.format(((Calendar)o).getTime());
+ 	}
+ }
+ ...
+ StringTemplate st =new StringTemplate("date: $created$");
+ st.setAttribute("created", new GregorianCalendar(2005, 07-1, 05));
+ st.registerRenderer(GregorianCalendar.class, new DateRenderer());
+ String expecting = "date: 2005.07.05";
+ String result = st.toString();			
+			</pre>
+		</td>
+	</tr>
+	<tr>
+		<th>Slippers</th>
+		<td>
+			<pre>
+class DateRenderer
+	def render(date)
+		date.year + "." + date.month + "." + date.day
+	end
+end
+...
+template_group = Slippers::TemplateGroup.new(:templates => {Date => DateRenderer.new})
+engine = Slippers::Engine.new("date: $created$", :template_group => template_group)
+engine.render(:created => Date.new(2005,7,5)).should eql("date: 2005.07.05")
+
+ALSO
+template_group = Slippers::TemplateGroup.new(:templates => {:date => DateRenderer.new})
+engine = Slippers::Engine.new("date: $created:date()$", :template_group => template_group)
+engine.render(:created => Date.new(2005,7,5)).should eql("date: 2005.07.05")
+			</pre>
+		</td>
+	</tr>
+</table>
+
+<h2>Not Supported Functions</h2>
+<ul>
+<li>Template regions</li>
+<li>Conditionally included subtemplates
+<div>
+$if(member)$
+	$gutter/top_gutter_logged_in()$
+$else$
+	$gutter/top_gutter_logged_out()$
+$endif$
+</div>
+</li>
+</ul>
+</body>
+</html>
+
+
