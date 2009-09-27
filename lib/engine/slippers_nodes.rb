@@ -7,9 +7,10 @@ module Slippers
 
     def value_of(item)
       return '' if to_s == ''
+      return item.to_s if text_value == 'it'
       return item[to_sym] if item.respond_to?('[]'.to_sym) && item[to_sym]
       return item.send(to_s) if item.respond_to?(to_s)
-      ''
+      Slippers::Engine::DEFAULT_STRING
     end
 
     def render(object_to_render, template_group)

@@ -61,8 +61,13 @@ describe SlippersParser do
     @parser.parse("should parse $person/name()$").eval(name, template_group).should eql("should parse fred flinestone")
     @parser.parse("should parse $fred:person/name()$").eval(people, template_group).should eql("should parse fred flinestone")
   end
-
   
+  it 'should render the object if the keyword it is used' do
+    supergroup = Slippers::TemplateGroup.new(:templates => {:bold => Slippers::Engine.new("<b>$it$</b>")})
+    subgroup = Slippers::TemplateGroup.new(:templates => {}, :super_group => supergroup)
+    @parser.parse("<b>$it$</b>").eval("Sarah", subgroup).should eql('<b>Sarah</b>')
+    @parser.parse("$name:bold()$").eval({:name => "Sarah"}, subgroup).should eql('<b>Sarah</b>')
+  end
 end
 
 

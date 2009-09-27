@@ -6,6 +6,13 @@ describe Slippers::TemplateGroup do
     template_group = Slippers::TemplateGroup.new(:templates => {:person => subtemplate})
     template_group.find(:person).should eql(subtemplate)
     template_group.find('person').should eql(subtemplate)
+  end  
+  
+  it 'should wrap a template string in the engine if it is not one' do
+    subtemplate = Slippers::Engine.new('Hello $first$ $last$')
+    template_group = Slippers::TemplateGroup.new(:templates => {:person => 'Hello $first$ $last$'})
+    template_group.find(:person).should eql(subtemplate)
+    template_group.find('person').should eql(subtemplate)
   end
   
   it 'should return nil if it cannot find the right template' do
@@ -15,7 +22,7 @@ describe Slippers::TemplateGroup do
   end
   
   it 'should look in the super template group if it cannot find the template' do
-    template = stub 'template'
+    template = Slippers::Engine.new('Hello $first$ $last$')
     super_template_group = Slippers::TemplateGroup.new(:templates => {:person => template})
     template_group = Slippers::TemplateGroup.new(:templates => {}, :super_group => super_template_group)
     template_group.find(:person).should eql(template)
@@ -41,5 +48,5 @@ describe Slippers::TemplateGroup do
     template_group.has_registered?(date.class).should be_false
     template_group.render(date).should eql('')
   end
-
+ 
 end

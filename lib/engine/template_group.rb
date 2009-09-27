@@ -7,7 +7,7 @@ module Slippers
     
     def find(subtemplate)
       return nil unless @templates
-      return @templates[subtemplate.to_sym] if @templates.include?(subtemplate.to_sym)
+      return create_template(subtemplate.to_sym) if @templates.include?(subtemplate.to_sym)
       find_in_super_group(subtemplate)
     end
     
@@ -29,6 +29,12 @@ module Slippers
       def find_in_super_group(subtemplate)
         return nil unless @super_group 
         @super_group.find(subtemplate)
+      end
+      
+      def create_template(subtemplate)
+        template = @templates[subtemplate]
+        return template unless template.is_a?(String)
+        Slippers::Engine.new(template)
       end
   end
 end

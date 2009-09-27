@@ -1,0 +1,85 @@
+=How does Slippers and string template marry up
+==Creating Templates with Code
+StringTemplate template = new StringTemplate("this is my $template$")
+template.SetAttribute("template", "actual template")
+template.ToString()
+vs
+template = Slippers::Engine.new("this is my $template$")
+template.render(:template => "actual template")
+
+==Loading Templates from a file
+StringTemplateGroup group = new StringTemplateGroup("myGroup", "/tmp");
+StringTemplate query = group.getInstanceOf("theQuery");
+query.setAttribute("column", "name");
+query.setAttribute("column", "email");
+query.setAttribute("table", "User");
+query.ToString()
+vs
+template_group = Slippers::TemplateGroupDirectory.new(['tmp'])
+query = template_group.find('theQuery')
+Slippers::Engine.new(template_group).render(:column => ["name", "email"], :table => "User")
+
+==Template Group Files
+String templates = "group simple; vardef(type,name) ..."; // templates from above
+// Use the constructor that accepts a Reader
+StringTemplateGroup group = new StringTemplateGroup(new StringReader(templates));
+StringTemplate t = group.getInstanceOf("vardef");
+t.setAttribute("type", "int");
+t.setAttribute("name", "foo");
+vs
+group = Slippers::TemplateGroup.new(:templates => {:vardef => "...", :method => "..."})
+t = group.find(:vardef)
+t.render(:type => "int", :name => "foo")
+
+==Template Group inheritance
+StringTemplateGroup supergroup = new StringTemplateGroup("super");
+StringTemplateGroup subgroup = new StringTemplateGroup("sub");
+supergroup.defineTemplate("bold", "<b>$it$</b>");
+subgroup.setSuperGroup(supergroup);
+StringTemplate st = new StringTemplate(subgroup, "$name:bold()$");
+st.setAttribute("name", "Terence");
+String expecting = "<b>Terence</b>";	
+vs
+supergroup = Slippers::TemplateGroup.new(:templates => {:bold => "<b>$it$</b>"})
+subgroup = Slippers::TemplateGroup.new(:templates => {}, :super_group => supergroup)
+Slippers::Engine.new("$name:bold()$", :template_group => template_group).render(:name => "Sarah") === <b>Sarah</b>
+
+==Object Rendering
+public class DateRenderer implements AttributeRenderer {
+	public String toString(Object o) {
+		SimpleDateFormat f = new SimpleDateFormat("yyyy.MM.dd");
+		return f.format(((Calendar)o).getTime());
+	}
+}
+...
+StringTemplate st =new StringTemplate("date: $created$");
+st.setAttribute("created", new GregorianCalendar(2005, 07-1, 05));
+st.registerRenderer(GregorianCalendar.class, new DateRenderer());
+String expecting = "date: 2005.07.05";
+String result = st.toString();
+vs
+class DateRenderer
+	def render(date)
+		date.year + "." + date.month + "." + date.day
+	end
+end
+...
+engine = Slippers::Engine.new("date: $created$", :template_group => Slippers::TemplateGroup.new(:templates => {Date => DateRenderer.new}))
+engine.render(:created => Date.new(2005,7,5)).should eql("date: 2005.07.05")
+
+ALSO
+engine = Slippers::Engine.new("date: $created:date()$", :template_group => Slippers::TemplateGroup.new(:templates => {:date => DateRenderer.new}))
+engine.render(:created => Date.new(2005,7,5)).should eql("date: 2005.07.05")
+
+
+==Not Supported Functions
+*Template regions
+*Conditionally included subtemplates
+$if(member)$
+$gutter/top_gutter_logged_in()$
+$else$
+$gutter/top_gutter_logged_out()$
+$endif$
+
+
+

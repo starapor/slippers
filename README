@@ -48,3 +48,5 @@ Examples
     engine = Slippers::Engine.new("Introducing $name:name()$ who is $dob$.", :template_group => template_group)
     engine.render(person) #=> "Introducing Fred Flinstone who is 34 years old."
 
+
+

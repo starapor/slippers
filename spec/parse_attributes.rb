@@ -38,8 +38,12 @@ describe SlippersParser do
     @parser.parse('this is $name$').eval(people).should eql("this is fredbarney")
   end
   
-  it "should substitute in an empty string when the attribute cannot be found" do  
+  it "should render the default string when the attribute cannot be found on the object to render" do  
+    Slippers::Engine::DEFAULT_STRING.should eql('') 
     @parser.parse("This is the $adjective$ template with $message$.").eval(OpenStruct.new).should eql("This is the  template with .")
+    @parser.parse("$not_me$").eval(:object).should eql('')
+    Slippers::Engine::DEFAULT_STRING = "foo"
+    @parser.parse("$not_me$").eval(:object).should eql('foo')
   end
   
   it "should convert attribute to string" do
@@ -63,12 +67,7 @@ describe SlippersParser do
   it 'should return an empty string if the template is not correctly formed' do
     @parser.parse("$not_properly_formed").should eql(nil)
   end
-  
-  it 'should render an empty string if it cannot find the attribute to render' do
-    @parser.parse("$not_me$").eval(:object).should eql('')
-  end
-  
-   
+
 end
 
 
