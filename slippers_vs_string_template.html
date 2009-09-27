@@ -13,22 +13,24 @@
 <div>
 	Slippers is a strict templating language for ruby, based on string template's philosophy and using it's syntax. But just how similar are the two? This page should highlight the similarities as well as distinguish the differences. Not all string template features are supported in slippers, and these have been listed at the bottom of the page.
 </div>
+
 <h2>Creating Templates with Code</h2>
 <table border="1">
-	<tr><th>String Template</th>
+	<tr><th><a href="http://www.antlr.org/wiki/display/ST/Defining+Templates#DefiningTemplates-CreatingTemplatesWithCode">String Template</a></th>
 		<td>
 			<pre>
-StringTemplate template = new StringTemplate("this is my $template$");
-template.SetAttribute("template", "actual template");
-template.ToString();
+StringTemplate query = new StringTemplate("SELECT $column$ FROM $table$;");
+query.setAttribute("column", "name");
+query.setAttribute("table", "User");
+query.toString() === "SELECT name FROM User;"
 			</pre>
 		</td>
 	</tr>
 	<tr><th>Slippers</th>
 		<td>
 			<pre>
-template = Slippers::Engine.new("this is my $template$")
-template.render(:template => "actual template")
+template = Slippers::Engine.new("SELECT $column$ FROM $table$;")
+template.render(:column => "name", :table => "User") === "SELECT name FROM User;"
 			</pre>
 		</td>
 	</tr>
@@ -36,7 +38,7 @@ template.render(:template => "actual template")
 
 <h2>Loading Templates from a file</h2>
 <table border="1">
-	<tr><th>String Template</th>
+	<tr><th><a href="http://www.antlr.org/wiki/display/ST/Defining+Templates#DefiningTemplates-LoadingTemplatesFromFiles">String Template</a></th>
 		<td>
 			<pre>
 StringTemplateGroup group = new StringTemplateGroup("myGroup", "/tmp");
@@ -44,7 +46,7 @@ StringTemplate query = group.getInstanceOf("theQuery");
 query.setAttribute("column", "name");
 query.setAttribute("column", "email");
 query.setAttribute("table", "User");
-query.ToString()				
+query.toString()				
 			</pre>
 		</td>
 	</tr>
@@ -63,7 +65,7 @@ st.render(:column => ["name", "email"], :table => "User")
 
 <h2>Template Group Files</h2>
 <table border="1">
-		<tr><th>String Template</th>
+		<tr><th><a href="http://www.antlr.org/wiki/display/ST/Group+Files">String Template</a></th>
 			<td>
 				<pre>
 String templates = "group simple; vardef(type,name) ...";
@@ -90,7 +92,7 @@ t.render(:type => "int", :name => "foo")
 
 <h2>Template Group inheritance</h2>
 <table border="1">
-	<tr><th>String Template</th>
+	<tr><th><a href="http://www.antlr.org/wiki/display/ST/Template+inheritance">String Template</a></th>
 		<td>
 			<pre>
 StringTemplateGroup supergroup = new StringTemplateGroup("super");
@@ -118,7 +120,7 @@ st.render(:name => "Sarah") === <b>Sarah</b>
 
 <h2>Object Rendering</h2>
 <table border="1">
-	<tr><th>String Template</th>
+	<tr><th><a href="http://www.antlr.org/wiki/display/ST/Object+rendering">String Template</a></th>
 		<td>
 			<pre>
  public class DateRenderer implements AttributeRenderer {
@@ -161,16 +163,11 @@ engine.render(:created => Date.new(2005,7,5)).should eql("date: 2005.07.05")
 
 <h2>Not Supported Functions</h2>
 <ul>
-<li>Template regions</li>
-<li>Conditionally included subtemplates
-<div>
-$if(member)$
-	$gutter/top_gutter_logged_in()$
-$else$
-	$gutter/top_gutter_logged_out()$
-$endif$
-</div>
-</li>
+<li><a href="http://www.antlr.org/wiki/display/ST/Setting+the+expression+delimiters">Setting the expression delimiters</a></li>
+<li><a href="http://www.antlr.org/wiki/display/ST/Template+regions">Template regions</a></li>
+<li><a href="http://www.antlr.org/wiki/display/ST/Conditionally+included+subtemplates">Conditionally included subtemplates</a></li>
+<li><a href="http://www.antlr.org/wiki/display/ST/Expressions">Expressions</a> and <a href="http://www.antlr.org/wiki/display/ST/Expression+options">Expression Options</a></li>
+<li>Automatic Formatting like <a href="http://www.antlr.org/wiki/display/ST/Auto-indentation">Auto Indentation</a> and <a href="http://www.antlr.org/wiki/display/ST/Automatic+line+wrapping">Auto line wrapping</a> and <a href="http://www.antlr.org/wiki/display/ST/Output+Filters">Output filters</a></li>
 </ul>
 </body>
 </html>
