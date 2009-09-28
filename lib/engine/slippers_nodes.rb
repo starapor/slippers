@@ -14,17 +14,25 @@ module Slippers
     end
 
     def render(object_to_render, template_group)
+      substitue_null_values(object_to_render)
       return template_group.render(object_to_render) if template_group && template_group.has_registered?(object_to_render.class)
-      return object_to_render.join(seperator) if object_to_render.respond_to?('join')
+      return object_to_render.compact.join(seperator) if seperator && object_to_render.respond_to?('join')
       object_to_render.to_s
+    end
+    
+    def substitue_null_values(object_to_render)
+      return unless null_values && object_to_render.respond_to?('map!')
+      object_to_render.map!{|x| if x then x else null_values end }
     end
     
     def to_sym
       attribute.to_sym
     end
     
+    def null_values
+    end
+    
     def seperator
-      ""
     end
     
     def attribute
@@ -35,7 +43,10 @@ module Slippers
   class AttributeWithExpressionOptionNode < Treetop::Runtime::SyntaxNode
     include AttributeToRenderNode
     def seperator
-      seperator_value.to_s
+      seperator_value.seps.to_s if seperator_value.elements
+    end
+    def null_values
+      null_subtitute.nulls.to_s if null_subtitute.elements
     end
   end
   

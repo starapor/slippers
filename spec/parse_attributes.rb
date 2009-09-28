@@ -69,9 +69,11 @@ describe SlippersParser do
     @parser.parse("$not_properly_formed").should eql(nil)
   end  
   
-  it 'should use the specified seperator to seperate list items' do
+  it 'should use the specified expression options to render list items' do
+    @parser.parse('$list; null="-1", seperator=", "$').eval(:list => [1,2,nil,3]).should eql("1, 2, -1, 3")
     @parser.parse('$list; seperator=", "$').eval(:list => [1,2,3]).should eql("1, 2, 3")
-    @parser.parse('$list; seperator="!!"$').eval(:list => [1,2,3]).should eql("1!!2!!3")
+    @parser.parse('$list; seperator="!!"$').eval(:list => [1,2,3,nil]).should eql("1!!2!!3")
+    @parser.parse('$list; null="-1"$').eval(:list => [1,nil,3]).should eql("1-13")
   end
 
 end

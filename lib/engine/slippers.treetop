@@ -33,7 +33,23 @@ grammar Slippers
   end
   
   rule expression_option
-    attribute:anything_except_keywords '; seperator="' seperator_value:anything_except_keywords '"' <AttributeWithExpressionOptionNode>
+    attribute:anything_except_keywords ';' space null_subtitute:('null="' nulls:anything_except_keywords '"')? (",")? space seperator_value:('seperator="' seps:anything_except_keywords '"' )?  <AttributeWithExpressionOptionNode>
+  end
+  
+  rule seperators
+    'seperator="' seperator_value:anything_except_keywords '"' {
+      def eval
+        seperator_value.to_s
+      end
+    }
+  end
+  
+  rule null_values
+    'null="' null_subtitute:anything_except_keywords '"' {
+      def eval
+        null_subtitute.to_s
+      end
+    }
   end
 	
   rule some_text

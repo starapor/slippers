@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Mon Sep 28 22:16:46 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Mon Sep 28 23:48:17 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -598,63 +598,63 @@ span.run100 {
       </tr>
     </tbody>
   </table>
-<pre><span class="marked1"><a name="line1"></a> 1 module Slippers
-</span><span class="marked0"><a name="line2"></a> 2   class TemplateGroupDirectory &lt; TemplateGroup
-</span><span class="marked1"><a name="line3"></a> 3     def initialize(directory_paths, params={})
-</span><span class="marked0"><a name="line4"></a> 4       @directory_paths = directory_paths
-</span><span class="marked1"><a name="line5"></a> 5       @super_group = params[:super_group]
-</span><span class="inferred0"><a name="line6"></a> 6     end
-</span><span class="marked1"><a name="line7"></a> 7     attr_reader :directory_paths
-</span><span class="inferred0"><a name="line8"></a> 8     
-</span><span class="marked1"><a name="line9"></a> 9     def find(subtemplate)
-</span><span class="marked0"><a name="line10"></a>10       file_name = @directory_paths.map { |directory_path| directory_path + '/' + subtemplate + '.st' }.find { |f| File.exist? f}   
-</span><span class="marked1"><a name="line11"></a>11       return Engine.new(FileTemplate.new(file_name).template, :template_group =&gt; self) if file_name
-</span><span class="marked0"><a name="line12"></a>12       find_renderer_or_supergroup(subtemplate)      
-</span><span class="inferred1"><a name="line13"></a>13     end
-</span><span class="inferred0"><a name="line14"></a>14     
-</span><span class="marked1"><a name="line15"></a>15     def has_registered?(class_name)
-</span><span class="marked0"><a name="line16"></a>16        return false unless @super_group
-</span><span class="uncovered1"><a name="line17"></a>17        @super_group.has_registered?(class_name)  
-</span><span class="uncovered0"><a name="line18"></a>18     end
-</span><span class="inferred1"><a name="line19"></a>19     
-</span><span class="marked0"><a name="line20"></a>20     def render(item)
-</span><span class="uncovered1"><a name="line21"></a>21       return '' unless @super_group
-</span><span class="uncovered0"><a name="line22"></a>22       @super_group.render(item)
-</span><span class="uncovered1"><a name="line23"></a>23     end
-</span><span class="inferred0"><a name="line24"></a>24     
-</span><span class="inferred1"><a name="line25"></a>25 
-</span><span class="marked0"><a name="line26"></a>26     def eql?(other)
-</span><span class="marked1"><a name="line27"></a>27       return false unless other
-</span><span class="marked0"><a name="line28"></a>28       directory_paths.eql?(other.directory_paths)
-</span><span class="inferred1"><a name="line29"></a>29     end
-</span><span class="marked0"><a name="line30"></a>30     def hash
-</span><span class="uncovered1"><a name="line31"></a>31       @directory_paths.hash
-</span><span class="uncovered0"><a name="line32"></a>32     end
-</span><span class="inferred1"><a name="line33"></a>33     
-</span><span class="marked0"><a name="line34"></a>34     private
-</span><span class="marked1"><a name="line35"></a>35       def find_renderer_or_supergroup(subtemplate)
-</span><span class="marked0"><a name="line36"></a>36         file_name = @directory_paths.map { |directory_path| directory_path + '/' + subtemplate + '.rb' }.find { |f| File.exist? f}   
-</span><span class="marked1"><a name="line37"></a>37         return find_in_super_group(subtemplate) unless file_name
-</span><span class="inferred0"><a name="line38"></a>38 
-</span><span class="marked1"><a name="line39"></a>39         renderer_name = subtemplate.split('/')[-1]
-</span><span class="marked0"><a name="line40"></a>40         load File.expand_path(file_name)
-</span><span class="marked1"><a name="line41"></a>41         create_renderer renderer_name
-</span><span class="inferred0"><a name="line42"></a>42       end
-</span><span class="inferred1"><a name="line43"></a>43       
-</span><span class="marked0"><a name="line44"></a>44       def find_in_super_group(subtemplate)
-</span><span class="marked1"><a name="line45"></a>45         return nil unless @super_group 
-</span><span class="marked0"><a name="line46"></a>46         @super_group.find(subtemplate)
-</span><span class="inferred1"><a name="line47"></a>47       end
-</span><span class="inferred0"><a name="line48"></a>48       
-</span><span class="marked1"><a name="line49"></a>49       def create_renderer(renderer_name)
-</span><span class="marked0"><a name="line50"></a>50         camelCase = renderer_name.to_s.gsub(/\/(.?)/) { &quot;::#{$1.upcase}&quot; }.gsub(/(?:^|_)(.)/) { $1.upcase }
-</span><span class="marked1"><a name="line51"></a>51         classes = camelCase.split('::')
-</span><span class="marked0"><a name="line52"></a>52         classes.shift if classes.empty? or classes.first.empty?
-</span><span class="marked1"><a name="line53"></a>53         const = classes.inject(Object){ |constant, class_name| constant.const_get(class_name) }
-</span><span class="marked0"><a name="line54"></a>54         const.new
-</span><span class="inferred1"><a name="line55"></a>55       end
-</span><span class="inferred0"><a name="line56"></a>56   end
-</span><span class="inferred1"><a name="line57"></a>57 end
+<pre><span class="marked0"><a name="line1"></a> 1 module Slippers
+</span><span class="marked1"><a name="line2"></a> 2   class TemplateGroupDirectory &lt; TemplateGroup
+</span><span class="marked0"><a name="line3"></a> 3     def initialize(directory_paths, params={})
+</span><span class="marked1"><a name="line4"></a> 4       @directory_paths = directory_paths
+</span><span class="marked0"><a name="line5"></a> 5       @super_group = params[:super_group]
+</span><span class="inferred1"><a name="line6"></a> 6     end
+</span><span class="marked0"><a name="line7"></a> 7     attr_reader :directory_paths
+</span><span class="inferred1"><a name="line8"></a> 8     
+</span><span class="marked0"><a name="line9"></a> 9     def find(subtemplate)
+</span><span class="marked1"><a name="line10"></a>10       file_name = @directory_paths.map { |directory_path| directory_path + '/' + subtemplate + '.st' }.find { |f| File.exist? f}   
+</span><span class="marked0"><a name="line11"></a>11       return Engine.new(FileTemplate.new(file_name).template, :template_group =&gt; self) if file_name
+</span><span class="marked1"><a name="line12"></a>12       find_renderer_or_supergroup(subtemplate)      
+</span><span class="inferred0"><a name="line13"></a>13     end
+</span><span class="inferred1"><a name="line14"></a>14     
+</span><span class="marked0"><a name="line15"></a>15     def has_registered?(class_name)
+</span><span class="marked1"><a name="line16"></a>16        return false unless @super_group
+</span><span class="uncovered0"><a name="line17"></a>17        @super_group.has_registered?(class_name)  
+</span><span class="uncovered1"><a name="line18"></a>18     end
+</span><span class="inferred0"><a name="line19"></a>19     
+</span><span class="marked1"><a name="line20"></a>20     def render(item)
+</span><span class="uncovered0"><a name="line21"></a>21       return '' unless @super_group
+</span><span class="uncovered1"><a name="line22"></a>22       @super_group.render(item)
+</span><span class="uncovered0"><a name="line23"></a>23     end
+</span><span class="inferred1"><a name="line24"></a>24     
+</span><span class="inferred0"><a name="line25"></a>25 
+</span><span class="marked1"><a name="line26"></a>26     def eql?(other)
+</span><span class="marked0"><a name="line27"></a>27       return false unless other
+</span><span class="marked1"><a name="line28"></a>28       directory_paths.eql?(other.directory_paths)
+</span><span class="inferred0"><a name="line29"></a>29     end
+</span><span class="marked1"><a name="line30"></a>30     def hash
+</span><span class="uncovered0"><a name="line31"></a>31       @directory_paths.hash
+</span><span class="uncovered1"><a name="line32"></a>32     end
+</span><span class="inferred0"><a name="line33"></a>33     
+</span><span class="marked1"><a name="line34"></a>34     private
+</span><span class="marked0"><a name="line35"></a>35       def find_renderer_or_supergroup(subtemplate)
+</span><span class="marked1"><a name="line36"></a>36         file_name = @directory_paths.map { |directory_path| directory_path + '/' + subtemplate + '.rb' }.find { |f| File.exist? f}   
+</span><span class="marked0"><a name="line37"></a>37         return find_in_super_group(subtemplate) unless file_name
+</span><span class="inferred1"><a name="line38"></a>38 
+</span><span class="marked0"><a name="line39"></a>39         renderer_name = subtemplate.split('/')[-1]
+</span><span class="marked1"><a name="line40"></a>40         load File.expand_path(file_name)
+</span><span class="marked0"><a name="line41"></a>41         create_renderer renderer_name
+</span><span class="inferred1"><a name="line42"></a>42       end
+</span><span class="inferred0"><a name="line43"></a>43       
+</span><span class="marked1"><a name="line44"></a>44       def find_in_super_group(subtemplate)
+</span><span class="marked0"><a name="line45"></a>45         return nil unless @super_group 
+</span><span class="marked1"><a name="line46"></a>46         @super_group.find(subtemplate)
+</span><span class="inferred0"><a name="line47"></a>47       end
+</span><span class="inferred1"><a name="line48"></a>48       
+</span><span class="marked0"><a name="line49"></a>49       def create_renderer(renderer_name)
+</span><span class="marked1"><a name="line50"></a>50         camelCase = renderer_name.to_s.gsub(/\/(.?)/) { &quot;::#{$1.upcase}&quot; }.gsub(/(?:^|_)(.)/) { $1.upcase }
+</span><span class="marked0"><a name="line51"></a>51         classes = camelCase.split('::')
+</span><span class="marked1"><a name="line52"></a>52         classes.shift if classes.empty? or classes.first.empty?
+</span><span class="marked0"><a name="line53"></a>53         const = classes.inject(Object){ |constant, class_name| constant.const_get(class_name) }
+</span><span class="marked1"><a name="line54"></a>54         const.new
+</span><span class="inferred0"><a name="line55"></a>55       end
+</span><span class="inferred1"><a name="line56"></a>56   end
+</span><span class="inferred0"><a name="line57"></a>57 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>
