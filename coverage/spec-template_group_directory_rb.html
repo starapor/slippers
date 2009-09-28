@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Sun Sep 27 10:08:52 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Mon Sep 28 22:16:47 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -598,49 +598,49 @@ span.run100 {
       </tr>
     </tbody>
   </table>
-<pre><span class="marked1"><a name="line1"></a> 1 require File.dirname(__FILE__) + '/spec_helper'
-</span><span class="inferred0"><a name="line2"></a> 2 
-</span><span class="marked1"><a name="line3"></a> 3 describe Slippers::TemplateGroupDirectory do
-</span><span class="inferred0"><a name="line4"></a> 4   
-</span><span class="marked1"><a name="line5"></a> 5   it 'should find the file in the directory folder' do
-</span><span class="marked0"><a name="line6"></a> 6     template_group = Slippers::TemplateGroupDirectory.new(['spec/views'])
-</span><span class="marked1"><a name="line7"></a> 7     template_group.find('index').should eql(Slippers::Engine.new('Hey foo', :template_group =&gt; template_group))
-</span><span class="marked0"><a name="line8"></a> 8     template_group.find('person/age').should eql(Slippers::Engine.new('The age for him is $age$', :template_group =&gt; template_group))
-</span><span class="inferred1"><a name="line9"></a> 9   end
-</span><span class="inferred0"><a name="line10"></a>10 
-</span><span class="marked1"><a name="line11"></a>11   it 'should return nil if it cannot find the file in the directory folder' do
-</span><span class="marked0"><a name="line12"></a>12     template_group = Slippers::TemplateGroupDirectory.new(['spec/views'])
-</span><span class="marked1"><a name="line13"></a>13     template_group.find('person/not_found').should eql(nil)
-</span><span class="inferred0"><a name="line14"></a>14   end
-</span><span class="inferred1"><a name="line15"></a>15 
-</span><span class="marked0"><a name="line16"></a>16   it 'should read the st template file and return a new slipers engine for it' do
-</span><span class="marked1"><a name="line17"></a>17     template_group = Slippers::TemplateGroupDirectory.new(['spec/views'])
-</span><span class="marked0"><a name="line18"></a>18     template_group.find('index').should eql(Slippers::Engine.new('Hey foo', :template_group =&gt; template_group))
-</span><span class="marked1"><a name="line19"></a>19     template_group.find('person/age').should eql(Slippers::Engine.new('The age for him is $age$', :template_group =&gt; template_group))
-</span><span class="inferred0"><a name="line20"></a>20   end
-</span><span class="inferred1"><a name="line21"></a>21   
-</span><span class="marked0"><a name="line22"></a>22   it 'should load the ruby file found in the directory folder' do
-</span><span class="marked1"><a name="line23"></a>23     template_group = Slippers::TemplateGroupDirectory.new(['spec/views'])
-</span><span class="marked0"><a name="line24"></a>24     template_group.find('person/date_renderer').class.should eql(DateRenderer)
-</span><span class="marked1"><a name="line25"></a>25     template_group.find('money').class.should eql(Money)
-</span><span class="inferred0"><a name="line26"></a>26   end
-</span><span class="inferred1"><a name="line27"></a>27   
-</span><span class="marked0"><a name="line28"></a>28   it 'should look in the super template group if it cannot find the template' do
-</span><span class="marked1"><a name="line29"></a>29     template = stub 'template'
-</span><span class="marked0"><a name="line30"></a>30     super_template_group = Slippers::TemplateGroup.new(:templates =&gt; {:person =&gt; template})
-</span><span class="marked1"><a name="line31"></a>31     template_group = Slippers::TemplateGroupDirectory.new(['spec/views'], :super_group =&gt; super_template_group)
-</span><span class="marked0"><a name="line32"></a>32     template_group.find('person').should eql(template)
-</span><span class="marked1"><a name="line33"></a>33     template_group.find('not_this').should eql(nil)
-</span><span class="inferred0"><a name="line34"></a>34   end
-</span><span class="inferred1"><a name="line35"></a>35   
-</span><span class="marked0"><a name="line36"></a>36   it 'should look in all the directories provided for the template' do
-</span><span class="marked1"><a name="line37"></a>37     template_group = Slippers::TemplateGroupDirectory.new(['examples/blog', 'spec/views'])
-</span><span class="marked0"><a name="line38"></a>38     template_group.find('index').should eql(Slippers::Engine.new('Hey foo', :template_group =&gt; template_group))
-</span><span class="marked1"><a name="line39"></a>39     template_group.find('person/age').should eql(Slippers::Engine.new('The age for him is $age$', :template_group =&gt; template_group))
-</span><span class="inferred0"><a name="line40"></a>40   end
-</span><span class="inferred1"><a name="line41"></a>41   
-</span><span class="inferred0"><a name="line42"></a>42 
-</span><span class="inferred1"><a name="line43"></a>43 end
+<pre><span class="marked0"><a name="line1"></a> 1 require File.dirname(__FILE__) + '/spec_helper'
+</span><span class="inferred1"><a name="line2"></a> 2 
+</span><span class="marked0"><a name="line3"></a> 3 describe Slippers::TemplateGroupDirectory do
+</span><span class="inferred1"><a name="line4"></a> 4   
+</span><span class="marked0"><a name="line5"></a> 5   it 'should find the file in the directory folder' do
+</span><span class="marked1"><a name="line6"></a> 6     template_group = Slippers::TemplateGroupDirectory.new(['spec/views'])
+</span><span class="marked0"><a name="line7"></a> 7     template_group.find('index').should eql(Slippers::Engine.new('Hey foo', :template_group =&gt; template_group))
+</span><span class="marked1"><a name="line8"></a> 8     template_group.find('person/age').should eql(Slippers::Engine.new('The age for him is $age$', :template_group =&gt; template_group))
+</span><span class="inferred0"><a name="line9"></a> 9   end
+</span><span class="inferred1"><a name="line10"></a>10 
+</span><span class="marked0"><a name="line11"></a>11   it 'should return nil if it cannot find the file in the directory folder' do
+</span><span class="marked1"><a name="line12"></a>12     template_group = Slippers::TemplateGroupDirectory.new(['spec/views'])
+</span><span class="marked0"><a name="line13"></a>13     template_group.find('person/not_found').should eql(nil)
+</span><span class="inferred1"><a name="line14"></a>14   end
+</span><span class="inferred0"><a name="line15"></a>15 
+</span><span class="marked1"><a name="line16"></a>16   it 'should read the st template file and return a new slipers engine for it' do
+</span><span class="marked0"><a name="line17"></a>17     template_group = Slippers::TemplateGroupDirectory.new(['spec/views'])
+</span><span class="marked1"><a name="line18"></a>18     template_group.find('index').should eql(Slippers::Engine.new('Hey foo', :template_group =&gt; template_group))
+</span><span class="marked0"><a name="line19"></a>19     template_group.find('person/age').should eql(Slippers::Engine.new('The age for him is $age$', :template_group =&gt; template_group))
+</span><span class="inferred1"><a name="line20"></a>20   end
+</span><span class="inferred0"><a name="line21"></a>21   
+</span><span class="marked1"><a name="line22"></a>22   it 'should load the ruby file found in the directory folder' do
+</span><span class="marked0"><a name="line23"></a>23     template_group = Slippers::TemplateGroupDirectory.new(['spec/views'])
+</span><span class="marked1"><a name="line24"></a>24     template_group.find('person/date_renderer').class.should eql(DateRenderer)
+</span><span class="marked0"><a name="line25"></a>25     template_group.find('money').class.should eql(Money)
+</span><span class="inferred1"><a name="line26"></a>26   end
+</span><span class="inferred0"><a name="line27"></a>27   
+</span><span class="marked1"><a name="line28"></a>28   it 'should look in the super template group if it cannot find the template' do
+</span><span class="marked0"><a name="line29"></a>29     template = stub 'template'
+</span><span class="marked1"><a name="line30"></a>30     super_template_group = Slippers::TemplateGroup.new(:templates =&gt; {:person =&gt; template})
+</span><span class="marked0"><a name="line31"></a>31     template_group = Slippers::TemplateGroupDirectory.new(['spec/views'], :super_group =&gt; super_template_group)
+</span><span class="marked1"><a name="line32"></a>32     template_group.find('person').should eql(template)
+</span><span class="marked0"><a name="line33"></a>33     template_group.find('not_this').should eql(nil)
+</span><span class="inferred1"><a name="line34"></a>34   end
+</span><span class="inferred0"><a name="line35"></a>35   
+</span><span class="marked1"><a name="line36"></a>36   it 'should look in all the directories provided for the template' do
+</span><span class="marked0"><a name="line37"></a>37     template_group = Slippers::TemplateGroupDirectory.new(['examples/blog', 'spec/views'])
+</span><span class="marked1"><a name="line38"></a>38     template_group.find('index').should eql(Slippers::Engine.new('Hey foo', :template_group =&gt; template_group))
+</span><span class="marked0"><a name="line39"></a>39     template_group.find('person/age').should eql(Slippers::Engine.new('The age for him is $age$', :template_group =&gt; template_group))
+</span><span class="inferred1"><a name="line40"></a>40   end
+</span><span class="inferred0"><a name="line41"></a>41   
+</span><span class="inferred1"><a name="line42"></a>42 
+</span><span class="inferred0"><a name="line43"></a>43 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>

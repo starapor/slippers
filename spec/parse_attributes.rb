@@ -44,6 +44,7 @@ describe SlippersParser do
     @parser.parse("$not_me$").eval(:object).should eql('')
     Slippers::Engine::DEFAULT_STRING = "foo"
     @parser.parse("$not_me$").eval(:object).should eql('foo')
+    Slippers::Engine::DEFAULT_STRING = ""
   end
   
   it "should convert attribute to string" do
@@ -66,6 +67,11 @@ describe SlippersParser do
   
   it 'should return an empty string if the template is not correctly formed' do
     @parser.parse("$not_properly_formed").should eql(nil)
+  end  
+  
+  it 'should use the specified seperator to seperate list items' do
+    @parser.parse('$list; seperator=", "$').eval(:list => [1,2,3]).should eql("1, 2, 3")
+    @parser.parse('$list; seperator="!!"$').eval(:list => [1,2,3]).should eql("1!!2!!3")
   end
 
 end

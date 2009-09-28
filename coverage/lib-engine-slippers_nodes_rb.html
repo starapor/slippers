@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Sun Sep 27 10:08:51 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Mon Sep 28 22:16:46 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -571,9 +571,9 @@ span.run100 {
     </thead>
   <tbody><tr class='light'><td><a href='lib-engine-slippers_nodes_rb.html'>lib/engine/slippers_nodes.rb</a>
         </td>
-      <td class='lines_total'><tt>83</tt>
+      <td class='lines_total'><tt>94</tt>
         </td>
-      <td class='lines_code'><tt>62</tt>
+      <td class='lines_code'><tt>72</tt>
         </td>
       <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_total'>100.0%</tt>
               &nbsp;</td>
@@ -606,81 +606,92 @@ span.run100 {
 </span><span class="marked1"><a name="line6"></a> 6     end
 </span><span class="inferred0"><a name="line7"></a> 7 
 </span><span class="marked1"><a name="line8"></a> 8     def value_of(item)
-</span><span class="marked0"><a name="line9"></a> 9       return '' if to_s == ''
-</span><span class="marked1"><a name="line10"></a>10       return item.to_s if text_value == 'it'
+</span><span class="marked0"><a name="line9"></a> 9       return '' if attribute == ''
+</span><span class="marked1"><a name="line10"></a>10       return item.to_s if attribute == 'it'
 </span><span class="marked0"><a name="line11"></a>11       return item[to_sym] if item.respond_to?('[]'.to_sym) &amp;&amp; item[to_sym]
-</span><span class="marked1"><a name="line12"></a>12       return item.send(to_s) if item.respond_to?(to_s)
+</span><span class="marked1"><a name="line12"></a>12       return item.send(attribute) if item.respond_to?(attribute)
 </span><span class="marked0"><a name="line13"></a>13       Slippers::Engine::DEFAULT_STRING
 </span><span class="inferred1"><a name="line14"></a>14     end
 </span><span class="inferred0"><a name="line15"></a>15 
 </span><span class="marked1"><a name="line16"></a>16     def render(object_to_render, template_group)
 </span><span class="marked0"><a name="line17"></a>17       return template_group.render(object_to_render) if template_group &amp;&amp; template_group.has_registered?(object_to_render.class)
-</span><span class="marked1"><a name="line18"></a>18       object_to_render.to_s
-</span><span class="inferred0"><a name="line19"></a>19     end
-</span><span class="inferred1"><a name="line20"></a>20     
-</span><span class="marked0"><a name="line21"></a>21     def to_sym
-</span><span class="marked1"><a name="line22"></a>22       text_value.to_sym
-</span><span class="marked0"><a name="line23"></a>23     end
-</span><span class="inferred1"><a name="line24"></a>24     
-</span><span class="marked0"><a name="line25"></a>25     def to_s
-</span><span class="marked1"><a name="line26"></a>26       text_value
-</span><span class="marked0"><a name="line27"></a>27     end
-</span><span class="inferred1"><a name="line28"></a>28 
-</span><span class="inferred0"><a name="line29"></a>29   end
-</span><span class="inferred1"><a name="line30"></a>30 
-</span><span class="marked0"><a name="line31"></a>31   class TemplateNode &lt; Treetop::Runtime::SyntaxNode
-</span><span class="inferred1"><a name="line32"></a>32 
-</span><span class="marked0"><a name="line33"></a>33     def eval(object_to_render, template_group)
-</span><span class="marked1"><a name="line34"></a>34       apply_attribute_to_subtemplate(object_to_render, template_group)
-</span><span class="marked0"><a name="line35"></a>35     end
-</span><span class="inferred1"><a name="line36"></a>36 
-</span><span class="marked0"><a name="line37"></a>37     def apply_attribute_to_subtemplate(item, template_group)
-</span><span class="marked1"><a name="line38"></a>38       return '' unless template_group
-</span><span class="marked0"><a name="line39"></a>39       subtemplate = template_group.find(template_path.to_s)
-</span><span class="marked1"><a name="line40"></a>40       return '' unless (subtemplate &amp;&amp; subtemplate.respond_to?('render')) 
-</span><span class="marked0"><a name="line41"></a>41       subtemplate.render(item)
-</span><span class="inferred1"><a name="line42"></a>42     end
-</span><span class="inferred0"><a name="line43"></a>43   end
-</span><span class="inferred1"><a name="line44"></a>44   
-</span><span class="marked0"><a name="line45"></a>45   class AnonymousTemplateNode &lt; Treetop::Runtime::SyntaxNode
-</span><span class="inferred1"><a name="line46"></a>46     
-</span><span class="marked0"><a name="line47"></a>47     def eval(object_to_render, template_group)
-</span><span class="marked1"><a name="line48"></a>48       apply_attribute_to_subtemplate(object_to_render, template_group)
-</span><span class="marked0"><a name="line49"></a>49     end
-</span><span class="inferred1"><a name="line50"></a>50     
-</span><span class="marked0"><a name="line51"></a>51     def apply_attribute_to_subtemplate(item, template_group)
-</span><span class="marked1"><a name="line52"></a>52       SlippersParser.new.parse(anonymous_template_words.to_s).eval(item, template_group)
-</span><span class="marked0"><a name="line53"></a>53     end
+</span><span class="marked1"><a name="line18"></a>18       return object_to_render.join(seperator) if object_to_render.respond_to?('join')
+</span><span class="marked0"><a name="line19"></a>19       object_to_render.to_s
+</span><span class="inferred1"><a name="line20"></a>20     end
+</span><span class="inferred0"><a name="line21"></a>21     
+</span><span class="marked1"><a name="line22"></a>22     def to_sym
+</span><span class="marked0"><a name="line23"></a>23       attribute.to_sym
+</span><span class="marked1"><a name="line24"></a>24     end
+</span><span class="inferred0"><a name="line25"></a>25     
+</span><span class="marked1"><a name="line26"></a>26     def seperator
+</span><span class="inferred0"><a name="line27"></a>27       &quot;&quot;
+</span><span class="inferred1"><a name="line28"></a>28     end
+</span><span class="inferred0"><a name="line29"></a>29     
+</span><span class="marked1"><a name="line30"></a>30     def attribute
+</span><span class="marked0"><a name="line31"></a>31       text_value
+</span><span class="marked1"><a name="line32"></a>32     end
+</span><span class="inferred0"><a name="line33"></a>33   end
+</span><span class="inferred1"><a name="line34"></a>34   
+</span><span class="marked0"><a name="line35"></a>35   class AttributeWithExpressionOptionNode &lt; Treetop::Runtime::SyntaxNode
+</span><span class="marked1"><a name="line36"></a>36     include AttributeToRenderNode
+</span><span class="marked0"><a name="line37"></a>37     def seperator
+</span><span class="marked1"><a name="line38"></a>38       seperator_value.to_s
+</span><span class="marked0"><a name="line39"></a>39     end
+</span><span class="inferred1"><a name="line40"></a>40   end
+</span><span class="inferred0"><a name="line41"></a>41   
+</span><span class="marked1"><a name="line42"></a>42   class TemplateNode &lt; Treetop::Runtime::SyntaxNode
+</span><span class="inferred0"><a name="line43"></a>43 
+</span><span class="marked1"><a name="line44"></a>44     def eval(object_to_render, template_group)
+</span><span class="marked0"><a name="line45"></a>45       apply_attribute_to_subtemplate(object_to_render, template_group)
+</span><span class="marked1"><a name="line46"></a>46     end
+</span><span class="inferred0"><a name="line47"></a>47 
+</span><span class="marked1"><a name="line48"></a>48     def apply_attribute_to_subtemplate(item, template_group)
+</span><span class="marked0"><a name="line49"></a>49       return '' unless template_group
+</span><span class="marked1"><a name="line50"></a>50       subtemplate = template_group.find(template_path.to_s)
+</span><span class="marked0"><a name="line51"></a>51       return '' unless (subtemplate &amp;&amp; subtemplate.respond_to?('render')) 
+</span><span class="marked1"><a name="line52"></a>52       subtemplate.render(item)
+</span><span class="inferred0"><a name="line53"></a>53     end
 </span><span class="inferred1"><a name="line54"></a>54   end
-</span><span class="inferred0"><a name="line55"></a>55 
-</span><span class="marked1"><a name="line56"></a>56   class ApplyAttributeToTemplateNode &lt; Treetop::Runtime::SyntaxNode
-</span><span class="inferred0"><a name="line57"></a>57 
+</span><span class="inferred0"><a name="line55"></a>55   
+</span><span class="marked1"><a name="line56"></a>56   class AnonymousTemplateNode &lt; Treetop::Runtime::SyntaxNode
+</span><span class="inferred0"><a name="line57"></a>57     
 </span><span class="marked1"><a name="line58"></a>58     def eval(object_to_render, template_group)
-</span><span class="marked0"><a name="line59"></a>59       [object_to_render].flatten.inject('') { |rendered, item| rendered + find_attribute_and_render(item, template_group) }
+</span><span class="marked0"><a name="line59"></a>59       apply_attribute_to_subtemplate(object_to_render, template_group)
 </span><span class="marked1"><a name="line60"></a>60     end
-</span><span class="inferred0"><a name="line61"></a>61 
-</span><span class="marked1"><a name="line62"></a>62     def find_attribute_and_render(item, template_group)
-</span><span class="marked0"><a name="line63"></a>63       object_to_render = attribute.value_of(item)
-</span><span class="marked1"><a name="line64"></a>64       [object_to_render].flatten.inject('') { |rendered, i| rendered + template.apply_attribute_to_subtemplate(i, template_group).to_s }
-</span><span class="inferred0"><a name="line65"></a>65     end
-</span><span class="inferred1"><a name="line66"></a>66   end
-</span><span class="inferred0"><a name="line67"></a>67 
-</span><span class="marked1"><a name="line68"></a>68   class TemplatedExpressionNode &lt; Treetop::Runtime::SyntaxNode
-</span><span class="inferred0"><a name="line69"></a>69 
-</span><span class="marked1"><a name="line70"></a>70     def eval(object_to_render, template_group)
-</span><span class="marked0"><a name="line71"></a>71       foo.eval(object_to_render, template_group)
-</span><span class="marked1"><a name="line72"></a>72     end
-</span><span class="inferred0"><a name="line73"></a>73 
-</span><span class="inferred1"><a name="line74"></a>74   end
-</span><span class="inferred0"><a name="line75"></a>75 
-</span><span class="marked1"><a name="line76"></a>76   class ExpressionNode &lt; Treetop::Runtime::SyntaxNode
-</span><span class="inferred0"><a name="line77"></a>77 
-</span><span class="marked1"><a name="line78"></a>78     def eval(object_to_render, template_group=nil)
-</span><span class="marked0"><a name="line79"></a>79       before.eval(object_to_render, template_group) + templated_expression.eval(object_to_render, template_group) + space.eval + after.eval(object_to_render, template_group)
-</span><span class="marked1"><a name="line80"></a>80     end
-</span><span class="inferred0"><a name="line81"></a>81 
-</span><span class="inferred1"><a name="line82"></a>82   end
-</span><span class="inferred0"><a name="line83"></a>83 end
+</span><span class="inferred0"><a name="line61"></a>61     
+</span><span class="marked1"><a name="line62"></a>62     def apply_attribute_to_subtemplate(item, template_group)
+</span><span class="marked0"><a name="line63"></a>63       SlippersParser.new.parse(anonymous_template_words.to_s).eval(item, template_group)
+</span><span class="marked1"><a name="line64"></a>64     end
+</span><span class="inferred0"><a name="line65"></a>65   end
+</span><span class="inferred1"><a name="line66"></a>66 
+</span><span class="marked0"><a name="line67"></a>67   class ApplyAttributeToTemplateNode &lt; Treetop::Runtime::SyntaxNode
+</span><span class="inferred1"><a name="line68"></a>68 
+</span><span class="marked0"><a name="line69"></a>69     def eval(object_to_render, template_group)
+</span><span class="marked1"><a name="line70"></a>70       [object_to_render].flatten.inject('') { |rendered, item| rendered + find_attribute_and_render(item, template_group) }
+</span><span class="marked0"><a name="line71"></a>71     end
+</span><span class="inferred1"><a name="line72"></a>72 
+</span><span class="marked0"><a name="line73"></a>73     def find_attribute_and_render(item, template_group)
+</span><span class="marked1"><a name="line74"></a>74       object_to_render = attribute.value_of(item)
+</span><span class="marked0"><a name="line75"></a>75       [object_to_render].flatten.inject('') { |rendered, i| rendered + template.apply_attribute_to_subtemplate(i, template_group).to_s }
+</span><span class="inferred1"><a name="line76"></a>76     end
+</span><span class="inferred0"><a name="line77"></a>77   end
+</span><span class="inferred1"><a name="line78"></a>78 
+</span><span class="marked0"><a name="line79"></a>79   class TemplatedExpressionNode &lt; Treetop::Runtime::SyntaxNode
+</span><span class="inferred1"><a name="line80"></a>80 
+</span><span class="marked0"><a name="line81"></a>81     def eval(object_to_render, template_group)
+</span><span class="marked1"><a name="line82"></a>82       foo.eval(object_to_render, template_group)
+</span><span class="marked0"><a name="line83"></a>83     end
+</span><span class="inferred1"><a name="line84"></a>84 
+</span><span class="inferred0"><a name="line85"></a>85   end
+</span><span class="inferred1"><a name="line86"></a>86 
+</span><span class="marked0"><a name="line87"></a>87   class ExpressionNode &lt; Treetop::Runtime::SyntaxNode
+</span><span class="inferred1"><a name="line88"></a>88 
+</span><span class="marked0"><a name="line89"></a>89     def eval(object_to_render, template_group=nil)
+</span><span class="marked1"><a name="line90"></a>90       before.eval(object_to_render, template_group) + templated_expression.eval(object_to_render, template_group) + space.eval + after.eval(object_to_render, template_group)
+</span><span class="marked0"><a name="line91"></a>91     end
+</span><span class="inferred1"><a name="line92"></a>92 
+</span><span class="inferred0"><a name="line93"></a>93   end
+</span><span class="inferred1"><a name="line94"></a>94 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>

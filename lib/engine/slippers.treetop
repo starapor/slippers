@@ -9,7 +9,7 @@ grammar Slippers
   end
   
   rule foo
-    apply_attribute_to_template / template / attribute
+    apply_attribute_to_template / template / expression_option / attribute
   end
   
   rule apply_attribute_to_template 
@@ -29,7 +29,11 @@ grammar Slippers
   end
 	  
   rule attribute
-  	anything_except_keywords <AttributeToRenderNode>
+  	 anything_except_keywords <AttributeToRenderNode>
+  end
+  
+  rule expression_option
+    attribute:anything_except_keywords '; seperator="' seperator_value:anything_except_keywords '"' <AttributeWithExpressionOptionNode>
   end
 	
   rule some_text
@@ -138,7 +142,7 @@ grammar Slippers
   end
   
   rule not_keyword
-  !(apply_op / delimiter / brackets) . {
+  !(apply_op / delimiter / brackets / ';' / '"') . {
     def to_s
       text_value
     end

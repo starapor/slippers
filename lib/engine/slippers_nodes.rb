@@ -6,28 +6,39 @@ module Slippers
     end
 
     def value_of(item)
-      return '' if to_s == ''
-      return item.to_s if text_value == 'it'
+      return '' if attribute == ''
+      return item.to_s if attribute == 'it'
       return item[to_sym] if item.respond_to?('[]'.to_sym) && item[to_sym]
-      return item.send(to_s) if item.respond_to?(to_s)
+      return item.send(attribute) if item.respond_to?(attribute)
       Slippers::Engine::DEFAULT_STRING
     end
 
     def render(object_to_render, template_group)
       return template_group.render(object_to_render) if template_group && template_group.has_registered?(object_to_render.class)
+      return object_to_render.join(seperator) if object_to_render.respond_to?('join')
       object_to_render.to_s
     end
     
     def to_sym
-      text_value.to_sym
+      attribute.to_sym
     end
     
-    def to_s
+    def seperator
+      ""
+    end
+    
+    def attribute
       text_value
     end
-
   end
-
+  
+  class AttributeWithExpressionOptionNode < Treetop::Runtime::SyntaxNode
+    include AttributeToRenderNode
+    def seperator
+      seperator_value.to_s
+    end
+  end
+  
   class TemplateNode < Treetop::Runtime::SyntaxNode
 
     def eval(object_to_render, template_group)

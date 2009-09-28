@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Sun Sep 27 10:08:52 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Mon Sep 28 22:16:47 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -598,41 +598,41 @@ span.run100 {
       </tr>
     </tbody>
   </table>
-<pre><span class="marked1"><a name="line1"></a> 1 require File.dirname(__FILE__) + '/spec_helper'
-</span><span class="inferred0"><a name="line2"></a> 2 
-</span><span class="marked1"><a name="line3"></a> 3 class Foo
-</span><span class="inferred0"><a name="line4"></a> 4 end
-</span><span class="marked1"><a name="line5"></a> 5 class FooRenderer
-</span><span class="marked0"><a name="line6"></a> 6   def render(object)
-</span><span class="marked1"><a name="line7"></a> 7     &quot;foo renderer&quot;
-</span><span class="marked0"><a name="line8"></a> 8   end
-</span><span class="inferred1"><a name="line9"></a> 9 end
-</span><span class="marked0"><a name="line10"></a>10 describe SlippersParser do
-</span><span class="inferred1"><a name="line11"></a>11   
-</span><span class="marked0"><a name="line12"></a>12   before(:each) do
-</span><span class="marked1"><a name="line13"></a>13     @parser = SlippersParser.new
-</span><span class="inferred0"><a name="line14"></a>14   end
-</span><span class="inferred1"><a name="line15"></a>15   
-</span><span class="marked0"><a name="line16"></a>16   it 'should return an empty string if the subtemplate does not respond to render' do
-</span><span class="marked1"><a name="line17"></a>17     template_group = Slippers::TemplateGroup.new(:templates =&gt; {:not_a_renderer =&gt; stub('renderer')})    
-</span><span class="marked0"><a name="line18"></a>18     @parser.parse(&quot;$not_a_renderer()$&quot;).eval(stub('object'), template_group).should eql('')
-</span><span class="inferred1"><a name="line19"></a>19   end
-</span><span class="inferred0"><a name="line20"></a>20     
-</span><span class="marked1"><a name="line21"></a>21   it 'should find a renderer based on the type of the object to render' do
-</span><span class="marked0"><a name="line22"></a>22     foo = Foo.new
-</span><span class="marked1"><a name="line23"></a>23     template_group = Slippers::TemplateGroup.new(:templates =&gt; {:foo =&gt; FooRenderer.new})    
-</span><span class="marked0"><a name="line24"></a>24     @parser.parse(&quot;$foo()$&quot;).eval(foo, template_group).should eql('foo renderer')
-</span><span class="marked1"><a name="line25"></a>25     @parser.parse(&quot;$foobar:foo()$&quot;).eval({:foobar =&gt; foo}, template_group).should eql('foo renderer')
-</span><span class="inferred0"><a name="line26"></a>26   end    
-</span><span class="inferred1"><a name="line27"></a>27   
-</span><span class="marked0"><a name="line28"></a>28   it 'should find a renderer based on the type of the object to render' do
-</span><span class="marked1"><a name="line29"></a>29     foo = Foo.new
-</span><span class="marked0"><a name="line30"></a>30     template_group = Slippers::TemplateGroup.new(:templates =&gt; {Foo =&gt; FooRenderer.new})    
-</span><span class="marked1"><a name="line31"></a>31     @parser.parse(&quot;$foobar$&quot;).eval({:foobar =&gt; foo}, template_group).should eql('foo renderer')
-</span><span class="inferred0"><a name="line32"></a>32   end
-</span><span class="inferred1"><a name="line33"></a>33 end
-</span><span class="inferred0"><a name="line34"></a>34 
-</span><span class="inferred1"><a name="line35"></a>35 
+<pre><span class="marked0"><a name="line1"></a> 1 require File.dirname(__FILE__) + '/spec_helper'
+</span><span class="inferred1"><a name="line2"></a> 2 
+</span><span class="marked0"><a name="line3"></a> 3 class Foo
+</span><span class="inferred1"><a name="line4"></a> 4 end
+</span><span class="marked0"><a name="line5"></a> 5 class FooRenderer
+</span><span class="marked1"><a name="line6"></a> 6   def render(object)
+</span><span class="marked0"><a name="line7"></a> 7     &quot;foo renderer&quot;
+</span><span class="marked1"><a name="line8"></a> 8   end
+</span><span class="inferred0"><a name="line9"></a> 9 end
+</span><span class="marked1"><a name="line10"></a>10 describe SlippersParser do
+</span><span class="inferred0"><a name="line11"></a>11   
+</span><span class="marked1"><a name="line12"></a>12   before(:each) do
+</span><span class="marked0"><a name="line13"></a>13     @parser = SlippersParser.new
+</span><span class="inferred1"><a name="line14"></a>14   end
+</span><span class="inferred0"><a name="line15"></a>15   
+</span><span class="marked1"><a name="line16"></a>16   it 'should return an empty string if the subtemplate does not respond to render' do
+</span><span class="marked0"><a name="line17"></a>17     template_group = Slippers::TemplateGroup.new(:templates =&gt; {:not_a_renderer =&gt; stub('renderer')})    
+</span><span class="marked1"><a name="line18"></a>18     @parser.parse(&quot;$not_a_renderer()$&quot;).eval(stub('object'), template_group).should eql('')
+</span><span class="inferred0"><a name="line19"></a>19   end
+</span><span class="inferred1"><a name="line20"></a>20     
+</span><span class="marked0"><a name="line21"></a>21   it 'should find a renderer based on the type of the object to render' do
+</span><span class="marked1"><a name="line22"></a>22     foo = Foo.new
+</span><span class="marked0"><a name="line23"></a>23     template_group = Slippers::TemplateGroup.new(:templates =&gt; {:foo =&gt; FooRenderer.new})    
+</span><span class="marked1"><a name="line24"></a>24     @parser.parse(&quot;$foo()$&quot;).eval(foo, template_group).should eql('foo renderer')
+</span><span class="marked0"><a name="line25"></a>25     @parser.parse(&quot;$foobar:foo()$&quot;).eval({:foobar =&gt; foo}, template_group).should eql('foo renderer')
+</span><span class="inferred1"><a name="line26"></a>26   end    
+</span><span class="inferred0"><a name="line27"></a>27   
+</span><span class="marked1"><a name="line28"></a>28   it 'should find a renderer based on the type of the object to render' do
+</span><span class="marked0"><a name="line29"></a>29     foo = Foo.new
+</span><span class="marked1"><a name="line30"></a>30     template_group = Slippers::TemplateGroup.new(:templates =&gt; {Foo =&gt; FooRenderer.new})    
+</span><span class="marked0"><a name="line31"></a>31     @parser.parse(&quot;$foobar$&quot;).eval({:foobar =&gt; foo}, template_group).should eql('foo renderer')
+</span><span class="inferred1"><a name="line32"></a>32   end
+</span><span class="inferred0"><a name="line33"></a>33 end
+</span><span class="inferred1"><a name="line34"></a>34 
+</span><span class="inferred0"><a name="line35"></a>35 
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>
