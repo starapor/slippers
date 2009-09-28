@@ -48,5 +48,9 @@ Examples
     engine = Slippers::Engine.new("Introducing $name:name()$ who is $dob$.", :template_group => template_group)
     engine.render(person) #=> "Introducing Fred Flinstone who is 34 years old."
 
+8. Use the specified expression options to render list items
+  template = 'This is a list of values $values; null="-1", seperator=", "$'
+  engine = Slippers::Engine.new(template)
+  engine.render(:values => [1,2,3,nil]) #=> "This is a list of values 1, 2, 3, -1"
 
 
