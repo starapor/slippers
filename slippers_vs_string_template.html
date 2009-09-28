@@ -161,12 +161,32 @@ engine.render(:created => Date.new(2005,7,5)).should eql("date: 2005.07.05")
 	</tr>
 </table>
 
+<h2>Expression Options</h2>
+<table border="1">
+	<tr><th><a href="http://www.antlr.org/wiki/display/ST/Expressions">String Template</a></th>
+		<td>
+			<pre>
+$values; null="-1", separator=", "$
+			</pre>
+		</td>
+	</tr>
+	<tr>
+		<th>Slippers</th>
+		<td>
+			<pre>
+ template = 'This is a list of values $values; null="-1", seperator=", "$'
+ engine = Slippers::Engine.new(template)
+ engine.render(:values => [1,2,3,nil]) === "This is a list of values 1, 2, 3, -1"
+			</pre>
+		</td>
+	</tr>
+</table>
+
 <h2>Not Supported Functions</h2>
 <ul>
 <li><a href="http://www.antlr.org/wiki/display/ST/Setting+the+expression+delimiters">Setting the expression delimiters</a></li>
 <li><a href="http://www.antlr.org/wiki/display/ST/Template+regions">Template regions</a></li>
 <li><a href="http://www.antlr.org/wiki/display/ST/Conditionally+included+subtemplates">Conditionally included subtemplates</a></li>
-<li><a href="http://www.antlr.org/wiki/display/ST/Expressions">Expressions</a> and <a href="http://www.antlr.org/wiki/display/ST/Expression+options">Expression Options</a></li>
 <li>Automatic Formatting like <a href="http://www.antlr.org/wiki/display/ST/Auto-indentation">Auto Indentation</a> and <a href="http://www.antlr.org/wiki/display/ST/Automatic+line+wrapping">Auto line wrapping</a> and <a href="http://www.antlr.org/wiki/display/ST/Output+Filters">Output filters</a></li>
 </ul>
 </body>
