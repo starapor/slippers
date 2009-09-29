@@ -1,7 +1,7 @@
 grammar Slippers
 	
   rule expression
-	 before:some_text expression_to_render space after:expression <ExpressionNode> / some_text
+   before:some_text expression_to_render space after:expression <ExpressionNode> / some_text
   end
   
   rule expression_to_render 
@@ -41,7 +41,7 @@ grammar Slippers
   end
   
   rule conditional_template
-    "$if(" if_clause:attribute  ")$" if_expression:some_text else_clause:("$else$" else_expression:some_text)? "$end$" <ConditionalTemplateNode>
+    "$if(" if_clause:attribute ")$" if_expression:expression else_clause:('$else$' else_expression:expression)? '$end$' <ConditionalTemplateNode>
     
   end
 	
@@ -133,7 +133,7 @@ grammar Slippers
   rule escape 
     '\\'
   end
-  
+    
   rule not_delimiter 
     escape delimiter / !delimiter . {
       def to_s
@@ -151,7 +151,7 @@ grammar Slippers
   end
   
   rule not_keyword
-  !(apply_op / delimiter / brackets / ';' / '"' / ")" ) . {
+  !(apply_op / delimiter / brackets / ';' / '"' / ")" / "if" / "else" / "end" ) . {
     def to_s
       text_value
     end

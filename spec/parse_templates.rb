@@ -17,11 +17,11 @@ describe SlippersParser do
   it 'should parse the subtemplate found within the delimiters' do
     template = Slippers::Engine.new('template for this')
     template_with_underscore = Slippers::Engine.new('template with underscore')
-    predefined_templates = {:template => template, :template_with_underscore => template_with_underscore, :template2 => template}
+    predefined_templates = {:template => template, :template_with_underscore => template_with_underscore, :template_2 => template}
     template_group = Slippers::TemplateGroup.new(:templates => predefined_templates)
     
     @parser.parse('$template()$').eval(nil, template_group).should eql('template for this')
-    @parser.parse('$template2()$').eval(nil, template_group).should eql('template for this')
+    @parser.parse('$template_2()$').eval(nil, template_group).should eql('template for this')
     @parser.parse('Stuff before $template()$ and after').eval(nil, template_group).should eql('Stuff before template for this and after')
     @parser.parse('then there is $template_with_underscore()$').eval(nil, template_group).should eql('then there is template with underscore')
   end 

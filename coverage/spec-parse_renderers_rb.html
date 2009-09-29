@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Tue Sep 29 08:16:18 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Tue Sep 29 20:55:34 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -614,8 +614,8 @@ span.run100 {
 </span><span class="inferred1"><a name="line14"></a>14   end
 </span><span class="inferred0"><a name="line15"></a>15   
 </span><span class="marked1"><a name="line16"></a>16   it 'should return an empty string if the subtemplate does not respond to render' do
-</span><span class="marked0"><a name="line17"></a>17     template_group = Slippers::TemplateGroup.new(:templates =&gt; {:not_a_renderer =&gt; stub('renderer')})    
-</span><span class="marked1"><a name="line18"></a>18     @parser.parse(&quot;$not_a_renderer()$&quot;).eval(stub('object'), template_group).should eql('')
+</span><span class="marked0"><a name="line17"></a>17     template_group = Slippers::TemplateGroup.new(:templates =&gt; {:not_this_one =&gt; stub('renderer')})    
+</span><span class="marked1"><a name="line18"></a>18     @parser.parse(&quot;$not_this_one()$&quot;).eval(stub('object'), template_group).should eql('')
 </span><span class="inferred0"><a name="line19"></a>19   end
 </span><span class="inferred1"><a name="line20"></a>20     
 </span><span class="marked0"><a name="line21"></a>21   it 'should find a renderer based on the type of the object to render' do

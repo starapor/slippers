@@ -76,13 +76,21 @@ describe SlippersParser do
     @parser.parse('$list; null="-1"$').eval(:list => [1,nil,3]).should eql("1-13")
   end
   
-  it 'should conditionally parse a template' do
+  it 'should conditionally parse some text' do
+    @parser.parse("$if(greeting)$ Hello $end$").eval(:greeting => true).should eql(" Hello ")
     @parser.parse("$if(greeting)$ Hello $end$").eval(:greeting => true).should eql(" Hello ")
     @parser.parse("$if(greeting)$ Hello $end$").eval(:greeting => false).should eql("")
     @parser.parse("$if(greeting)$ Hello $end$").eval(:greeting => nil).should eql("")
     @parser.parse("$if(greeting)$Hello$else$Goodbye$end$").eval(:greeting => true).should eql("Hello")
     @parser.parse("$if(greeting)$ Hello $else$ Goodbye $end$").eval(:greeting => false).should eql(" Goodbye ")
     @parser.parse("$if(greeting)$ Hello $end$").eval(:greetingzzzz => true).should eql("")
+    @parser.parse("$if(greeting)$ $greeting$ $end$").eval(:greeting => 'Hi').should eql(" Hi ")
+  end
+
+  it 'should conditionally parse a template' do
+    @parser.parse("$if(greeting)$ $greeting$ $end$").eval(:greeting => 'Hi').should eql(" Hi ")
+    @parser.parse("$if(greeting)$$greeting$ $else$ Nothing to see here $end$").eval(:greeting => 'Hi').should eql("Hi ")
+    @parser.parse("$if(greeting)$$greeting$ $else$ Nothing to see here $end$").eval(:greeting => nil).should eql(" Nothing to see here ")
   end
 
 end
