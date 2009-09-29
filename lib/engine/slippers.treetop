@@ -1,7 +1,11 @@
 grammar Slippers
 	
   rule expression
-	 before:some_text templated_expression space after:expression <ExpressionNode> / some_text
+	 before:some_text expression_to_render space after:expression <ExpressionNode> / some_text
+  end
+  
+  rule expression_to_render 
+    conditional_template / templated_expression
   end
   
   rule templated_expression
@@ -36,20 +40,9 @@ grammar Slippers
     attribute:anything_except_keywords ';' space null_subtitute:('null="' nulls:anything_except_keywords '"')? (",")? space seperator_value:('seperator="' seps:anything_except_keywords '"' )?  <AttributeWithExpressionOptionNode>
   end
   
-  rule seperators
-    'seperator="' seperator_value:anything_except_keywords '"' {
-      def eval
-        seperator_value.to_s
-      end
-    }
-  end
-  
-  rule null_values
-    'null="' null_subtitute:anything_except_keywords '"' {
-      def eval
-        null_subtitute.to_s
-      end
-    }
+  rule conditional_template
+    "$if(" if_clause:attribute  ")$" if_expression:some_text else_clause:("$else$" else_expression:some_text)? "$end$" <ConditionalTemplateNode>
+    
   end
 	
   rule some_text
@@ -158,7 +151,7 @@ grammar Slippers
   end
   
   rule not_keyword
-  !(apply_op / delimiter / brackets / ';' / '"') . {
+  !(apply_op / delimiter / brackets / ';' / '"' / ")" ) . {
     def to_s
       text_value
     end

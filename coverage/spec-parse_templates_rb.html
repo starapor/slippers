@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Mon Sep 28 23:48:18 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Tue Sep 29 08:16:18 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -598,79 +598,79 @@ span.run100 {
       </tr>
     </tbody>
   </table>
-<pre><span class="marked0"><a name="line1"></a> 1 require File.dirname(__FILE__) + '/spec_helper'
-</span><span class="inferred1"><a name="line2"></a> 2 
-</span><span class="marked0"><a name="line3"></a> 3 class Person
-</span><span class="marked1"><a name="line4"></a> 4   def initialize(first, last)
-</span><span class="marked0"><a name="line5"></a> 5     @first, @last = first, last
-</span><span class="marked1"><a name="line6"></a> 6   end
-</span><span class="marked0"><a name="line7"></a> 7   attr_reader :first, :last
-</span><span class="inferred1"><a name="line8"></a> 8   
-</span><span class="inferred0"><a name="line9"></a> 9 end
-</span><span class="inferred1"><a name="line10"></a>10 
-</span><span class="marked0"><a name="line11"></a>11 describe SlippersParser do
-</span><span class="inferred1"><a name="line12"></a>12   
-</span><span class="marked0"><a name="line13"></a>13   before(:each) do
-</span><span class="marked1"><a name="line14"></a>14     @parser = SlippersParser.new
-</span><span class="inferred0"><a name="line15"></a>15   end
-</span><span class="inferred1"><a name="line16"></a>16 
-</span><span class="marked0"><a name="line17"></a>17   it 'should parse the subtemplate found within the delimiters' do
-</span><span class="marked1"><a name="line18"></a>18     template = Slippers::Engine.new('template for this')
-</span><span class="marked0"><a name="line19"></a>19     template_with_underscore = Slippers::Engine.new('template with underscore')
-</span><span class="marked1"><a name="line20"></a>20     predefined_templates = {:template =&gt; template, :template_with_underscore =&gt; template_with_underscore, :template2 =&gt; template}
-</span><span class="marked0"><a name="line21"></a>21     template_group = Slippers::TemplateGroup.new(:templates =&gt; predefined_templates)
-</span><span class="inferred1"><a name="line22"></a>22     
-</span><span class="marked0"><a name="line23"></a>23     @parser.parse('$template()$').eval(nil, template_group).should eql('template for this')
-</span><span class="marked1"><a name="line24"></a>24     @parser.parse('$template2()$').eval(nil, template_group).should eql('template for this')
-</span><span class="marked0"><a name="line25"></a>25     @parser.parse('Stuff before $template()$ and after').eval(nil, template_group).should eql('Stuff before template for this and after')
-</span><span class="marked1"><a name="line26"></a>26     @parser.parse('then there is $template_with_underscore()$').eval(nil, template_group).should eql('then there is template with underscore')
-</span><span class="inferred0"><a name="line27"></a>27   end 
-</span><span class="inferred1"><a name="line28"></a>28 
-</span><span class="marked0"><a name="line29"></a>29    it 'should apply the attribute to a subtemplate when parsing it' do
-</span><span class="marked1"><a name="line30"></a>30      person = OpenStruct.new({:name =&gt; Person.new('fred', 'flinstone')})
-</span><span class="marked0"><a name="line31"></a>31      subtemplate = Slippers::Engine.new('Hello $first$ $last$')
-</span><span class="marked1"><a name="line32"></a>32      template_group = Slippers::TemplateGroup.new(:templates =&gt; {:person =&gt; subtemplate})
-</span><span class="inferred0"><a name="line33"></a>33      
-</span><span class="marked1"><a name="line34"></a>34      @parser.parse('$name:person()$').eval(person, template_group).should eql('Hello fred flinstone')
-</span><span class="inferred0"><a name="line35"></a>35    end
-</span><span class="inferred1"><a name="line36"></a>36   
-</span><span class="marked0"><a name="line37"></a>37   it 'should parse an anonymous subtemplate' do
-</span><span class="marked1"><a name="line38"></a>38     @parser.parse('$people:{template for this $name$}$').eval(:people =&gt; {:name =&gt; 'fred'}).should eql('template for this fred')
-</span><span class="marked0"><a name="line39"></a>39     @parser.parse('$people:{template for this &quot;$name$&quot;}$').eval(:people =&gt; {:name =&gt; 'fred'}).should eql('template for this &quot;fred&quot;')
-</span><span class="marked1"><a name="line40"></a>40     @parser.parse('${template for this $name$}$').eval(:name =&gt; 'fred').should eql('template for this fred')
-</span><span class="inferred0"><a name="line41"></a>41   end
-</span><span class="inferred1"><a name="line42"></a>42   
-</span><span class="marked0"><a name="line43"></a>43   it &quot;should apply a list of objects to subtemplates&quot; do
-</span><span class="marked1"><a name="line44"></a>44     people = [ Person.new('fred', 'flinstone'), Person.new('barney', 'rubble') ]
-</span><span class="marked0"><a name="line45"></a>45     subtemplate = Slippers::Engine.new('this is $first$ $last$ ')
-</span><span class="marked1"><a name="line46"></a>46     template_group = Slippers::TemplateGroup.new(:templates =&gt; {:person =&gt; subtemplate})
-</span><span class="marked0"><a name="line47"></a>47     object_to_render = OpenStruct.new({:people =&gt; people})
-</span><span class="inferred1"><a name="line48"></a>48 
-</span><span class="marked0"><a name="line49"></a>49     @parser.parse('$people:person()$').eval(object_to_render, template_group).should eql(&quot;this is fred flinstone this is barney rubble &quot;)
-</span><span class="inferred1"><a name="line50"></a>50   end
-</span><span class="inferred0"><a name="line51"></a>51 
-</span><span class="marked1"><a name="line52"></a>52   it &quot;should render an empty string when the subtemplate cannot be found&quot; do
-</span><span class="marked0"><a name="line53"></a>53     @parser.parse(&quot;This is the unknown template $unknown()$!&quot;).eval(Person.new('fred', 'flinstone')).should eql(&quot;This is the unknown template !&quot;)
-</span><span class="marked1"><a name="line54"></a>54     @parser.parse(&quot;This is the unknown template $first:unknown()$!&quot;).eval(Person.new('fred', 'flinstone')).should eql(&quot;This is the unknown template !&quot;)
-</span><span class="inferred0"><a name="line55"></a>55   end
-</span><span class="inferred1"><a name="line56"></a>56   
-</span><span class="marked0"><a name="line57"></a>57   it &quot;should parse the file template from the template group&quot; do
-</span><span class="marked1"><a name="line58"></a>58     template_group = Slippers::TemplateGroupDirectory.new(['spec/views'])
-</span><span class="marked0"><a name="line59"></a>59     name = OpenStruct.new({:first =&gt; 'fred', :last =&gt; 'flinestone'})
-</span><span class="marked1"><a name="line60"></a>60     people = OpenStruct.new({:fred =&gt; name})
-</span><span class="marked0"><a name="line61"></a>61     @parser.parse(&quot;should parse $person/name()$&quot;).eval(name, template_group).should eql(&quot;should parse fred flinestone&quot;)
-</span><span class="marked1"><a name="line62"></a>62     @parser.parse(&quot;should parse $fred:person/name()$&quot;).eval(people, template_group).should eql(&quot;should parse fred flinestone&quot;)
-</span><span class="inferred0"><a name="line63"></a>63   end
-</span><span class="inferred1"><a name="line64"></a>64   
-</span><span class="marked0"><a name="line65"></a>65   it 'should render the object if the keyword it is used' do
-</span><span class="marked1"><a name="line66"></a>66     supergroup = Slippers::TemplateGroup.new(:templates =&gt; {:bold =&gt; Slippers::Engine.new(&quot;&lt;b&gt;$it$&lt;/b&gt;&quot;)})
-</span><span class="marked0"><a name="line67"></a>67     subgroup = Slippers::TemplateGroup.new(:templates =&gt; {}, :super_group =&gt; supergroup)
-</span><span class="marked1"><a name="line68"></a>68     @parser.parse(&quot;&lt;b&gt;$it$&lt;/b&gt;&quot;).eval(&quot;Sarah&quot;, subgroup).should eql('&lt;b&gt;Sarah&lt;/b&gt;')
-</span><span class="marked0"><a name="line69"></a>69     @parser.parse(&quot;$name:bold()$&quot;).eval({:name =&gt; &quot;Sarah&quot;}, subgroup).should eql('&lt;b&gt;Sarah&lt;/b&gt;')
-</span><span class="inferred1"><a name="line70"></a>70   end
-</span><span class="inferred0"><a name="line71"></a>71 end
-</span><span class="inferred1"><a name="line72"></a>72 
-</span><span class="inferred0"><a name="line73"></a>73 
+<pre><span class="marked1"><a name="line1"></a> 1 require File.dirname(__FILE__) + '/spec_helper'
+</span><span class="inferred0"><a name="line2"></a> 2 
+</span><span class="marked1"><a name="line3"></a> 3 class Person
+</span><span class="marked0"><a name="line4"></a> 4   def initialize(first, last)
+</span><span class="marked1"><a name="line5"></a> 5     @first, @last = first, last
+</span><span class="marked0"><a name="line6"></a> 6   end
+</span><span class="marked1"><a name="line7"></a> 7   attr_reader :first, :last
+</span><span class="inferred0"><a name="line8"></a> 8   
+</span><span class="inferred1"><a name="line9"></a> 9 end
+</span><span class="inferred0"><a name="line10"></a>10 
+</span><span class="marked1"><a name="line11"></a>11 describe SlippersParser do
+</span><span class="inferred0"><a name="line12"></a>12   
+</span><span class="marked1"><a name="line13"></a>13   before(:each) do
+</span><span class="marked0"><a name="line14"></a>14     @parser = SlippersParser.new
+</span><span class="inferred1"><a name="line15"></a>15   end
+</span><span class="inferred0"><a name="line16"></a>16 
+</span><span class="marked1"><a name="line17"></a>17   it 'should parse the subtemplate found within the delimiters' do
+</span><span class="marked0"><a name="line18"></a>18     template = Slippers::Engine.new('template for this')
+</span><span class="marked1"><a name="line19"></a>19     template_with_underscore = Slippers::Engine.new('template with underscore')
+</span><span class="marked0"><a name="line20"></a>20     predefined_templates = {:template =&gt; template, :template_with_underscore =&gt; template_with_underscore, :template2 =&gt; template}
+</span><span class="marked1"><a name="line21"></a>21     template_group = Slippers::TemplateGroup.new(:templates =&gt; predefined_templates)
+</span><span class="inferred0"><a name="line22"></a>22     
+</span><span class="marked1"><a name="line23"></a>23     @parser.parse('$template()$').eval(nil, template_group).should eql('template for this')
+</span><span class="marked0"><a name="line24"></a>24     @parser.parse('$template2()$').eval(nil, template_group).should eql('template for this')
+</span><span class="marked1"><a name="line25"></a>25     @parser.parse('Stuff before $template()$ and after').eval(nil, template_group).should eql('Stuff before template for this and after')
+</span><span class="marked0"><a name="line26"></a>26     @parser.parse('then there is $template_with_underscore()$').eval(nil, template_group).should eql('then there is template with underscore')
+</span><span class="inferred1"><a name="line27"></a>27   end 
+</span><span class="inferred0"><a name="line28"></a>28 
+</span><span class="marked1"><a name="line29"></a>29    it 'should apply the attribute to a subtemplate when parsing it' do
+</span><span class="marked0"><a name="line30"></a>30      person = OpenStruct.new({:name =&gt; Person.new('fred', 'flinstone')})
+</span><span class="marked1"><a name="line31"></a>31      subtemplate = Slippers::Engine.new('Hello $first$ $last$')
+</span><span class="marked0"><a name="line32"></a>32      template_group = Slippers::TemplateGroup.new(:templates =&gt; {:person =&gt; subtemplate})
+</span><span class="inferred1"><a name="line33"></a>33      
+</span><span class="marked0"><a name="line34"></a>34      @parser.parse('$name:person()$').eval(person, template_group).should eql('Hello fred flinstone')
+</span><span class="inferred1"><a name="line35"></a>35    end
+</span><span class="inferred0"><a name="line36"></a>36   
+</span><span class="marked1"><a name="line37"></a>37   it 'should parse an anonymous subtemplate' do
+</span><span class="marked0"><a name="line38"></a>38     @parser.parse('$people:{template for this $name$}$').eval(:people =&gt; {:name =&gt; 'fred'}).should eql('template for this fred')
+</span><span class="marked1"><a name="line39"></a>39     @parser.parse('$people:{template for this &quot;$name$&quot;}$').eval(:people =&gt; {:name =&gt; 'fred'}).should eql('template for this &quot;fred&quot;')
+</span><span class="marked0"><a name="line40"></a>40     @parser.parse('${template for this $name$}$').eval(:name =&gt; 'fred').should eql('template for this fred')
+</span><span class="inferred1"><a name="line41"></a>41   end
+</span><span class="inferred0"><a name="line42"></a>42   
+</span><span class="marked1"><a name="line43"></a>43   it &quot;should apply a list of objects to subtemplates&quot; do
+</span><span class="marked0"><a name="line44"></a>44     people = [ Person.new('fred', 'flinstone'), Person.new('barney', 'rubble') ]
+</span><span class="marked1"><a name="line45"></a>45     subtemplate = Slippers::Engine.new('this is $first$ $last$ ')
+</span><span class="marked0"><a name="line46"></a>46     template_group = Slippers::TemplateGroup.new(:templates =&gt; {:person =&gt; subtemplate})
+</span><span class="marked1"><a name="line47"></a>47     object_to_render = OpenStruct.new({:people =&gt; people})
+</span><span class="inferred0"><a name="line48"></a>48 
+</span><span class="marked1"><a name="line49"></a>49     @parser.parse('$people:person()$').eval(object_to_render, template_group).should eql(&quot;this is fred flinstone this is barney rubble &quot;)
+</span><span class="inferred0"><a name="line50"></a>50   end
+</span><span class="inferred1"><a name="line51"></a>51 
+</span><span class="marked0"><a name="line52"></a>52   it &quot;should render an empty string when the subtemplate cannot be found&quot; do
+</span><span class="marked1"><a name="line53"></a>53     @parser.parse(&quot;This is the unknown template $unknown()$!&quot;).eval(Person.new('fred', 'flinstone')).should eql(&quot;This is the unknown template !&quot;)
+</span><span class="marked0"><a name="line54"></a>54     @parser.parse(&quot;This is the unknown template $first:unknown()$!&quot;).eval(Person.new('fred', 'flinstone')).should eql(&quot;This is the unknown template !&quot;)
+</span><span class="inferred1"><a name="line55"></a>55   end
+</span><span class="inferred0"><a name="line56"></a>56   
+</span><span class="marked1"><a name="line57"></a>57   it &quot;should parse the file template from the template group&quot; do
+</span><span class="marked0"><a name="line58"></a>58     template_group = Slippers::TemplateGroupDirectory.new(['spec/views'])
+</span><span class="marked1"><a name="line59"></a>59     name = OpenStruct.new({:first =&gt; 'fred', :last =&gt; 'flinestone'})
+</span><span class="marked0"><a name="line60"></a>60     people = OpenStruct.new({:fred =&gt; name})
+</span><span class="marked1"><a name="line61"></a>61     @parser.parse(&quot;should parse $person/name()$&quot;).eval(name, template_group).should eql(&quot;should parse fred flinestone&quot;)
+</span><span class="marked0"><a name="line62"></a>62     @parser.parse(&quot;should parse $fred:person/name()$&quot;).eval(people, template_group).should eql(&quot;should parse fred flinestone&quot;)
+</span><span class="inferred1"><a name="line63"></a>63   end
+</span><span class="inferred0"><a name="line64"></a>64   
+</span><span class="marked1"><a name="line65"></a>65   it 'should render the object if the keyword it is used' do
+</span><span class="marked0"><a name="line66"></a>66     supergroup = Slippers::TemplateGroup.new(:templates =&gt; {:bold =&gt; Slippers::Engine.new(&quot;&lt;b&gt;$it$&lt;/b&gt;&quot;)})
+</span><span class="marked1"><a name="line67"></a>67     subgroup = Slippers::TemplateGroup.new(:templates =&gt; {}, :super_group =&gt; supergroup)
+</span><span class="marked0"><a name="line68"></a>68     @parser.parse(&quot;&lt;b&gt;$it$&lt;/b&gt;&quot;).eval(&quot;Sarah&quot;, subgroup).should eql('&lt;b&gt;Sarah&lt;/b&gt;')
+</span><span class="marked1"><a name="line69"></a>69     @parser.parse(&quot;$name:bold()$&quot;).eval({:name =&gt; &quot;Sarah&quot;}, subgroup).should eql('&lt;b&gt;Sarah&lt;/b&gt;')
+</span><span class="inferred0"><a name="line70"></a>70   end
+</span><span class="inferred1"><a name="line71"></a>71 end
+</span><span class="inferred0"><a name="line72"></a>72 
+</span><span class="inferred1"><a name="line73"></a>73 
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>

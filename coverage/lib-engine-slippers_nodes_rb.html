@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Mon Sep 28 23:48:17 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Tue Sep 29 08:16:18 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -571,9 +571,9 @@ span.run100 {
     </thead>
   <tbody><tr class='light'><td><a href='lib-engine-slippers_nodes_rb.html'>lib/engine/slippers_nodes.rb</a>
         </td>
-      <td class='lines_total'><tt>105</tt>
+      <td class='lines_total'><tt>119</tt>
         </td>
-      <td class='lines_code'><tt>81</tt>
+      <td class='lines_code'><tt>91</tt>
         </td>
       <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_total'>100.0%</tt>
               &nbsp;</td>
@@ -686,23 +686,37 @@ span.run100 {
 </span><span class="marked1"><a name="line86"></a> 86       [object_to_render].flatten.inject('') { |rendered, i| rendered + template.apply_attribute_to_subtemplate(i, template_group).to_s }
 </span><span class="inferred0"><a name="line87"></a> 87     end
 </span><span class="inferred1"><a name="line88"></a> 88   end
-</span><span class="inferred0"><a name="line89"></a> 89 
-</span><span class="marked1"><a name="line90"></a> 90   class TemplatedExpressionNode &lt; Treetop::Runtime::SyntaxNode
+</span><span class="inferred0"><a name="line89"></a> 89   
+</span><span class="marked1"><a name="line90"></a> 90   class ConditionalTemplateNode &lt; Treetop::Runtime::SyntaxNode
 </span><span class="inferred0"><a name="line91"></a> 91 
 </span><span class="marked1"><a name="line92"></a> 92     def eval(object_to_render, template_group)
-</span><span class="marked0"><a name="line93"></a> 93       foo.eval(object_to_render, template_group)
-</span><span class="marked1"><a name="line94"></a> 94     end
-</span><span class="inferred0"><a name="line95"></a> 95 
-</span><span class="inferred1"><a name="line96"></a> 96   end
-</span><span class="inferred0"><a name="line97"></a> 97 
-</span><span class="marked1"><a name="line98"></a> 98   class ExpressionNode &lt; Treetop::Runtime::SyntaxNode
-</span><span class="inferred0"><a name="line99"></a> 99 
-</span><span class="marked1"><a name="line100"></a>100     def eval(object_to_render, template_group=nil)
-</span><span class="marked0"><a name="line101"></a>101       before.eval(object_to_render, template_group) + templated_expression.eval(object_to_render, template_group) + space.eval + after.eval(object_to_render, template_group)
-</span><span class="marked1"><a name="line102"></a>102     end
+</span><span class="marked0"><a name="line93"></a> 93       attribute = if_clause.value_of(object_to_render)
+</span><span class="marked1"><a name="line94"></a> 94       if (attribute &amp;&amp; attribute != Slippers::Engine::DEFAULT_STRING) then
+</span><span class="marked0"><a name="line95"></a> 95         if_expression.eval(object_to_render, template_group)
+</span><span class="inferred1"><a name="line96"></a> 96       else
+</span><span class="marked0"><a name="line97"></a> 97         if else_clause.elements then else_clause.else_expression.eval(object_to_render, template_group) else Slippers::Engine::DEFAULT_STRING end
+</span><span class="inferred1"><a name="line98"></a> 98       end
+</span><span class="inferred0"><a name="line99"></a> 99     end
+</span><span class="inferred1"><a name="line100"></a>100 
+</span><span class="inferred0"><a name="line101"></a>101 
+</span><span class="inferred1"><a name="line102"></a>102   end
 </span><span class="inferred0"><a name="line103"></a>103 
-</span><span class="inferred1"><a name="line104"></a>104   end
-</span><span class="inferred0"><a name="line105"></a>105 end
+</span><span class="marked1"><a name="line104"></a>104   class TemplatedExpressionNode &lt; Treetop::Runtime::SyntaxNode
+</span><span class="inferred0"><a name="line105"></a>105 
+</span><span class="marked1"><a name="line106"></a>106     def eval(object_to_render, template_group)
+</span><span class="marked0"><a name="line107"></a>107       foo.eval(object_to_render, template_group)
+</span><span class="marked1"><a name="line108"></a>108     end
+</span><span class="inferred0"><a name="line109"></a>109 
+</span><span class="inferred1"><a name="line110"></a>110   end
+</span><span class="inferred0"><a name="line111"></a>111 
+</span><span class="marked1"><a name="line112"></a>112   class ExpressionNode &lt; Treetop::Runtime::SyntaxNode
+</span><span class="inferred0"><a name="line113"></a>113 
+</span><span class="marked1"><a name="line114"></a>114     def eval(object_to_render, template_group=nil)
+</span><span class="marked0"><a name="line115"></a>115       before.eval(object_to_render, template_group) + expression_to_render.eval(object_to_render, template_group) + space.eval + after.eval(object_to_render, template_group)
+</span><span class="marked1"><a name="line116"></a>116     end
+</span><span class="inferred0"><a name="line117"></a>117 
+</span><span class="inferred1"><a name="line118"></a>118   end
+</span><span class="inferred0"><a name="line119"></a>119 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>

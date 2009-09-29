@@ -75,6 +75,15 @@ describe SlippersParser do
     @parser.parse('$list; seperator="!!"$').eval(:list => [1,2,3,nil]).should eql("1!!2!!3")
     @parser.parse('$list; null="-1"$').eval(:list => [1,nil,3]).should eql("1-13")
   end
+  
+  it 'should conditionally parse a template' do
+    @parser.parse("$if(greeting)$ Hello $end$").eval(:greeting => true).should eql(" Hello ")
+    @parser.parse("$if(greeting)$ Hello $end$").eval(:greeting => false).should eql("")
+    @parser.parse("$if(greeting)$ Hello $end$").eval(:greeting => nil).should eql("")
+    @parser.parse("$if(greeting)$Hello$else$Goodbye$end$").eval(:greeting => true).should eql("Hello")
+    @parser.parse("$if(greeting)$ Hello $else$ Goodbye $end$").eval(:greeting => false).should eql(" Goodbye ")
+    @parser.parse("$if(greeting)$ Hello $end$").eval(:greetingzzzz => true).should eql("")
+  end
 
 end
 

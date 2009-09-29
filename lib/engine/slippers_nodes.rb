@@ -86,6 +86,20 @@ module Slippers
       [object_to_render].flatten.inject('') { |rendered, i| rendered + template.apply_attribute_to_subtemplate(i, template_group).to_s }
     end
   end
+  
+  class ConditionalTemplateNode < Treetop::Runtime::SyntaxNode
+
+    def eval(object_to_render, template_group)
+      attribute = if_clause.value_of(object_to_render)
+      if (attribute && attribute != Slippers::Engine::DEFAULT_STRING) then
+        if_expression.eval(object_to_render, template_group)
+      else
+        if else_clause.elements then else_clause.else_expression.eval(object_to_render, template_group) else Slippers::Engine::DEFAULT_STRING end
+      end
+    end
+
+
+  end
 
   class TemplatedExpressionNode < Treetop::Runtime::SyntaxNode
 
@@ -98,7 +112,7 @@ module Slippers
   class ExpressionNode < Treetop::Runtime::SyntaxNode
 
     def eval(object_to_render, template_group=nil)
-      before.eval(object_to_render, template_group) + templated_expression.eval(object_to_render, template_group) + space.eval + after.eval(object_to_render, template_group)
+      before.eval(object_to_render, template_group) + expression_to_render.eval(object_to_render, template_group) + space.eval + after.eval(object_to_render, template_group)
     end
 
   end
