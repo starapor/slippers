@@ -3,7 +3,11 @@ module Slippers
     def initialize(params={})
       @templates = params[:templates]
       @super_group = params[:super_group]
+      @missing_handler = params[:missing_template_handler] || Slippers::Engine::MISSING_HANDLER
+      @default_string = params[:default_string] || Slippers::Engine::DEFAULT_STRING
     end
+    
+    attr_reader :missing_handler, :default_string
     
     def find(subtemplate)
       return nil unless @templates

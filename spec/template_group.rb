@@ -2,12 +2,12 @@ require File.dirname(__FILE__) + '/spec_helper'
 
 describe Slippers::TemplateGroup do
   it 'should find the right template' do
-    subtemplate = Slippers::Engine.new('Hello $first$ $last$')
-    template_group = Slippers::TemplateGroup.new(:templates => {:person => subtemplate})
-    template_group.find(:person).should eql(subtemplate)
-    template_group.find('person').should eql(subtemplate)
-  end  
-  
+     subtemplate = Slippers::Engine.new('Hello $first$ $last$')
+     template_group = Slippers::TemplateGroup.new(:templates => {:person => subtemplate})
+     template_group.find(:person).should eql(subtemplate)
+     template_group.find('person').should eql(subtemplate)
+   end  
+   
   it 'should wrap a template string in the engine if it is not one' do
     subtemplate = Slippers::Engine.new('Hello $first$ $last$')
     template_group = Slippers::TemplateGroup.new(:templates => {:person => 'Hello $first$ $last$'})
@@ -48,5 +48,25 @@ describe Slippers::TemplateGroup do
     template_group.has_registered?(date.class).should be_false
     template_group.render(date).should eql('')
   end
- 
+  
+  it 'missing handler should be the provided handler' do
+    missing_handler = Proc.new{ |foo| foo.to_s }
+    template_group = Slippers::TemplateGroup.new(:missing_template_handler => missing_handler)
+    template_group.missing_handler.should eql(missing_handler)
+  end  
+  
+  it 'missing handler should be the default handler when none is provided' do
+    template_group = Slippers::TemplateGroup.new()
+    template_group.missing_handler.should eql(Slippers::Engine::MISSING_HANDLER)
+  end  
+  
+  it 'default string should be the provided default' do
+    template_group = Slippers::TemplateGroup.new(:default_string => "Hello Mum")
+    template_group.default_string.should eql("Hello Mum")
+  end  
+  
+  it 'missing handler should be the default handler when none is provided' do
+    template_group = Slippers::TemplateGroup.new()
+    template_group.default_string.should eql(Slippers::Engine::DEFAULT_STRING)
+  end  
 end

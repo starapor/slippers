@@ -39,5 +39,32 @@ describe Slippers::TemplateGroupDirectory do
     template_group.find('person/age').should eql(Slippers::Engine.new('The age for him is $age$', :template_group => template_group))
   end
   
+  it 'should accept missing handlers' do 
+    template_group = Slippers::TemplateGroupDirectory.new(['spec/views'], :missing_template_handler => nil, :default_string => nil)
+    template_group.find('index').should eql(Slippers::Engine.new('Hey foo', :template_group => template_group))
+    template_group.find('person/age').should eql(Slippers::Engine.new('The age for him is $age$', :template_group => template_group))   
+  end
+  
+  it 'missing handler should be the provided handler' do
+    missing_handler = Proc.new{ |foo| foo.to_s }
+    template_group = Slippers::TemplateGroupDirectory.new(['spec/views'], :missing_template_handler => missing_handler)
+    template_group.missing_handler.should eql(missing_handler)
+  end  
+  
+  it 'missing handler should be the default handler when none is provided' do
+    template_group = template_group = Slippers::TemplateGroupDirectory.new(['spec/views'])
+    template_group.missing_handler.should eql(Slippers::Engine::MISSING_HANDLER)
+  end  
+  
+  it 'default string should be the provided default' do
+    template_group = Slippers::TemplateGroupDirectory.new(['spec/views'], :default_string => "Hello Mum")
+    template_group.default_string.should eql("Hello Mum")
+  end  
+  
+  it 'missing handler should be the default handler when none is provided' do
+    template_group = Slippers::TemplateGroupDirectory.new(['spec/views'])
+    template_group.default_string.should eql(Slippers::Engine::DEFAULT_STRING)
+  end  
+  
 
 end

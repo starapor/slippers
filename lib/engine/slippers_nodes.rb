@@ -2,15 +2,15 @@ module Slippers
   module AttributeToRenderNode
 
     def eval(object_to_render, template_group)
-      [object_to_render].flatten.inject('') { |rendered, item| rendered + render(value_of(item), template_group) }
+      [object_to_render].flatten.inject('') { |rendered, item| rendered + render(value_of(item, template_group), template_group) }
     end
 
-    def value_of(item)
-      return '' if attribute == ''
+    def value_of(item, template_group)
+      return default_string(template_group) if attribute == ''
       return item.to_s if attribute == 'it'
       return item[to_sym] if item.respond_to?('[]'.to_sym) && item[to_sym]
       return item.send(attribute) if item.respond_to?(attribute)
-      Slippers::Engine::DEFAULT_STRING
+      default_string(template_group)
     end
 
     def render(object_to_render, template_group)
@@ -38,6 +38,12 @@ module Slippers
     def attribute
       text_value
     end
+    
+    private
+      def default_string(template_group)
+        return Slippers::Engine::DEFAULT_STRING unless template_group
+        template_group.default_string
+      end
   end
   
   class AttributeWithExpressionOptionNode < Treetop::Runtime::SyntaxNode
@@ -57,11 +63,17 @@ module Slippers
     end
 
     def apply_attribute_to_subtemplate(item, template_group)
-      return '' unless template_group
+      return invoke_misisng_handler unless template_group
       subtemplate = template_group.find(template_path.to_s)
-      return '' unless (subtemplate && subtemplate.respond_to?('render')) 
+      return invoke_misisng_handler(template_group.missing_handler) unless (subtemplate && subtemplate.respond_to?('render')) 
       subtemplate.render(item)
     end
+    
+    private
+      def invoke_misisng_handler(missing_handler=Slippers::Engine::MISSING_HANDLER)
+        return missing_handler.call(template_path.to_s) if missing_handler.arity == 1
+        missing_handler.call
+      end
   end
   
   class AnonymousTemplateNode < Treetop::Runtime::SyntaxNode
@@ -82,7 +94,7 @@ module Slippers
     end
 
     def find_attribute_and_render(item, template_group)
-      object_to_render = attribute.value_of(item)
+      object_to_render = attribute.value_of(item, template_group)
       [object_to_render].flatten.inject('') { |rendered, i| rendered + template.apply_attribute_to_subtemplate(i, template_group).to_s }
     end
   end
@@ -90,15 +102,19 @@ module Slippers
   class ConditionalTemplateNode < Treetop::Runtime::SyntaxNode
 
     def eval(object_to_render, template_group)
-      attribute = if_clause.value_of(object_to_render)
-      if (attribute && attribute != Slippers::Engine::DEFAULT_STRING) then
+      attribute = if_clause.value_of(object_to_render, template_group)
+      if (attribute && attribute != default_string(template_group)) then
         if_expression.eval(object_to_render, template_group)
       else
-        if else_clause.elements then else_clause.else_expression.eval(object_to_render, template_group) else Slippers::Engine::DEFAULT_STRING end
+        if else_clause.elements then else_clause.else_expression.eval(object_to_render, template_group) else default_string(template_group) end
       end
     end
 
-
+    private
+      def default_string(template_group)
+        return Slippers::Engine::DEFAULT_STRING unless template_group
+        template_group.default_string
+      end
   end
 
   class TemplatedExpressionNode < Treetop::Runtime::SyntaxNode

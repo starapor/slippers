@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Tue Sep 29 20:55:34 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Wed Sep 30 08:18:27 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -571,9 +571,9 @@ span.run100 {
     </thead>
   <tbody><tr class='light'><td><a href='spec-template_group_rb.html'>spec/template_group.rb</a>
         </td>
-      <td class='lines_total'><tt>52</tt>
+      <td class='lines_total'><tt>72</tt>
         </td>
-      <td class='lines_code'><tt>42</tt>
+      <td class='lines_code'><tt>59</tt>
         </td>
       <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_total'>100.0%</tt>
               &nbsp;</td>
@@ -602,12 +602,12 @@ span.run100 {
 </span><span class="inferred1"><a name="line2"></a> 2 
 </span><span class="marked0"><a name="line3"></a> 3 describe Slippers::TemplateGroup do
 </span><span class="marked1"><a name="line4"></a> 4   it 'should find the right template' do
-</span><span class="marked0"><a name="line5"></a> 5     subtemplate = Slippers::Engine.new('Hello $first$ $last$')
-</span><span class="marked1"><a name="line6"></a> 6     template_group = Slippers::TemplateGroup.new(:templates =&gt; {:person =&gt; subtemplate})
-</span><span class="marked0"><a name="line7"></a> 7     template_group.find(:person).should eql(subtemplate)
-</span><span class="marked1"><a name="line8"></a> 8     template_group.find('person').should eql(subtemplate)
-</span><span class="inferred0"><a name="line9"></a> 9   end  
-</span><span class="inferred1"><a name="line10"></a>10   
+</span><span class="marked0"><a name="line5"></a> 5      subtemplate = Slippers::Engine.new('Hello $first$ $last$')
+</span><span class="marked1"><a name="line6"></a> 6      template_group = Slippers::TemplateGroup.new(:templates =&gt; {:person =&gt; subtemplate})
+</span><span class="marked0"><a name="line7"></a> 7      template_group.find(:person).should eql(subtemplate)
+</span><span class="marked1"><a name="line8"></a> 8      template_group.find('person').should eql(subtemplate)
+</span><span class="inferred0"><a name="line9"></a> 9    end  
+</span><span class="inferred1"><a name="line10"></a>10    
 </span><span class="marked0"><a name="line11"></a>11   it 'should wrap a template string in the engine if it is not one' do
 </span><span class="marked1"><a name="line12"></a>12     subtemplate = Slippers::Engine.new('Hello $first$ $last$')
 </span><span class="marked0"><a name="line13"></a>13     template_group = Slippers::TemplateGroup.new(:templates =&gt; {:person =&gt; 'Hello $first$ $last$'})
@@ -648,8 +648,28 @@ span.run100 {
 </span><span class="marked1"><a name="line48"></a>48     template_group.has_registered?(date.class).should be_false
 </span><span class="marked0"><a name="line49"></a>49     template_group.render(date).should eql('')
 </span><span class="inferred1"><a name="line50"></a>50   end
-</span><span class="inferred0"><a name="line51"></a>51  
-</span><span class="inferred1"><a name="line52"></a>52 end
+</span><span class="inferred0"><a name="line51"></a>51   
+</span><span class="marked1"><a name="line52"></a>52   it 'missing handler should be the provided handler' do
+</span><span class="marked0"><a name="line53"></a>53     missing_handler = Proc.new{ |foo| foo.to_s }
+</span><span class="marked1"><a name="line54"></a>54     template_group = Slippers::TemplateGroup.new(:missing_template_handler =&gt; missing_handler)
+</span><span class="marked0"><a name="line55"></a>55     template_group.missing_handler.should eql(missing_handler)
+</span><span class="inferred1"><a name="line56"></a>56   end  
+</span><span class="inferred0"><a name="line57"></a>57   
+</span><span class="marked1"><a name="line58"></a>58   it 'missing handler should be the default handler when none is provided' do
+</span><span class="marked0"><a name="line59"></a>59     template_group = Slippers::TemplateGroup.new()
+</span><span class="marked1"><a name="line60"></a>60     template_group.missing_handler.should eql(Slippers::Engine::MISSING_HANDLER)
+</span><span class="inferred0"><a name="line61"></a>61   end  
+</span><span class="inferred1"><a name="line62"></a>62   
+</span><span class="marked0"><a name="line63"></a>63   it 'default string should be the provided default' do
+</span><span class="marked1"><a name="line64"></a>64     template_group = Slippers::TemplateGroup.new(:default_string =&gt; &quot;Hello Mum&quot;)
+</span><span class="marked0"><a name="line65"></a>65     template_group.default_string.should eql(&quot;Hello Mum&quot;)
+</span><span class="inferred1"><a name="line66"></a>66   end  
+</span><span class="inferred0"><a name="line67"></a>67   
+</span><span class="marked1"><a name="line68"></a>68   it 'missing handler should be the default handler when none is provided' do
+</span><span class="marked0"><a name="line69"></a>69     template_group = Slippers::TemplateGroup.new()
+</span><span class="marked1"><a name="line70"></a>70     template_group.default_string.should eql(Slippers::Engine::DEFAULT_STRING)
+</span><span class="inferred0"><a name="line71"></a>71   end  
+</span><span class="inferred1"><a name="line72"></a>72 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>

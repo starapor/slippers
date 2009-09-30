@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Tue Sep 29 20:55:34 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Wed Sep 30 08:18:27 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -571,9 +571,9 @@ span.run100 {
     </thead>
   <tbody><tr class='light'><td><a href='spec-parse_templates_rb.html'>spec/parse_templates.rb</a>
         </td>
-      <td class='lines_total'><tt>73</tt>
+      <td class='lines_total'><tt>81</tt>
         </td>
-      <td class='lines_code'><tt>57</tt>
+      <td class='lines_code'><tt>64</tt>
         </td>
       <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_total'>100.0%</tt>
               &nbsp;</td>
@@ -649,28 +649,36 @@ span.run100 {
 </span><span class="marked1"><a name="line49"></a>49     @parser.parse('$people:person()$').eval(object_to_render, template_group).should eql(&quot;this is fred flinstone this is barney rubble &quot;)
 </span><span class="inferred0"><a name="line50"></a>50   end
 </span><span class="inferred1"><a name="line51"></a>51 
-</span><span class="marked0"><a name="line52"></a>52   it &quot;should render an empty string when the subtemplate cannot be found&quot; do
-</span><span class="marked1"><a name="line53"></a>53     @parser.parse(&quot;This is the unknown template $unknown()$!&quot;).eval(Person.new('fred', 'flinstone')).should eql(&quot;This is the unknown template !&quot;)
-</span><span class="marked0"><a name="line54"></a>54     @parser.parse(&quot;This is the unknown template $first:unknown()$!&quot;).eval(Person.new('fred', 'flinstone')).should eql(&quot;This is the unknown template !&quot;)
-</span><span class="inferred1"><a name="line55"></a>55   end
-</span><span class="inferred0"><a name="line56"></a>56   
-</span><span class="marked1"><a name="line57"></a>57   it &quot;should parse the file template from the template group&quot; do
-</span><span class="marked0"><a name="line58"></a>58     template_group = Slippers::TemplateGroupDirectory.new(['spec/views'])
-</span><span class="marked1"><a name="line59"></a>59     name = OpenStruct.new({:first =&gt; 'fred', :last =&gt; 'flinestone'})
-</span><span class="marked0"><a name="line60"></a>60     people = OpenStruct.new({:fred =&gt; name})
-</span><span class="marked1"><a name="line61"></a>61     @parser.parse(&quot;should parse $person/name()$&quot;).eval(name, template_group).should eql(&quot;should parse fred flinestone&quot;)
-</span><span class="marked0"><a name="line62"></a>62     @parser.parse(&quot;should parse $fred:person/name()$&quot;).eval(people, template_group).should eql(&quot;should parse fred flinestone&quot;)
+</span><span class="marked0"><a name="line52"></a>52   it &quot;should call the default missing handler when the subtemplate cannot be found and there is no template group&quot; do
+</span><span class="marked1"><a name="line53"></a>53     Slippers::Engine::MISSING_HANDLER.call.should eql('')
+</span><span class="marked0"><a name="line54"></a>54     @parser.parse(&quot;This is the unknown template $unknown()$!&quot;).eval(Person.new('fred', 'flinstone')).should eql(&quot;This is the unknown template !&quot;)
+</span><span class="marked1"><a name="line55"></a>55     @parser.parse(&quot;This is the unknown template $first:unknown()$!&quot;).eval(Person.new('fred', 'flinstone')).should eql(&quot;This is the unknown template !&quot;)
+</span><span class="inferred0"><a name="line56"></a>56   end
+</span><span class="inferred1"><a name="line57"></a>57   
+</span><span class="marked0"><a name="line58"></a>58   it &quot;should call the missing handler when the subtemplate cannot be found&quot; do
+</span><span class="marked1"><a name="line59"></a>59     missing_handler = lambda { |template| &quot;Warning: the template [#{template}] is missing&quot; }
+</span><span class="marked0"><a name="line60"></a>60     template_group = Slippers::TemplateGroup.new(:missing_template_handler =&gt; missing_handler)
+</span><span class="marked1"><a name="line61"></a>61     @parser.parse(&quot;This is the unknown template $unknown()$!&quot;).eval(:object, template_group).should eql(&quot;This is the unknown template Warning: the template [unknown] is missing!&quot;)
+</span><span class="marked0"><a name="line62"></a>62     @parser.parse(&quot;This is the unknown template $first:unknown()$!&quot;).eval(Person.new('fred', 'flinstone'), template_group).should eql(&quot;This is the unknown template Warning: the template [unknown] is missing!&quot;)
 </span><span class="inferred1"><a name="line63"></a>63   end
 </span><span class="inferred0"><a name="line64"></a>64   
-</span><span class="marked1"><a name="line65"></a>65   it 'should render the object if the keyword it is used' do
-</span><span class="marked0"><a name="line66"></a>66     supergroup = Slippers::TemplateGroup.new(:templates =&gt; {:bold =&gt; Slippers::Engine.new(&quot;&lt;b&gt;$it$&lt;/b&gt;&quot;)})
-</span><span class="marked1"><a name="line67"></a>67     subgroup = Slippers::TemplateGroup.new(:templates =&gt; {}, :super_group =&gt; supergroup)
-</span><span class="marked0"><a name="line68"></a>68     @parser.parse(&quot;&lt;b&gt;$it$&lt;/b&gt;&quot;).eval(&quot;Sarah&quot;, subgroup).should eql('&lt;b&gt;Sarah&lt;/b&gt;')
-</span><span class="marked1"><a name="line69"></a>69     @parser.parse(&quot;$name:bold()$&quot;).eval({:name =&gt; &quot;Sarah&quot;}, subgroup).should eql('&lt;b&gt;Sarah&lt;/b&gt;')
-</span><span class="inferred0"><a name="line70"></a>70   end
-</span><span class="inferred1"><a name="line71"></a>71 end
-</span><span class="inferred0"><a name="line72"></a>72 
-</span><span class="inferred1"><a name="line73"></a>73 
+</span><span class="marked1"><a name="line65"></a>65   it &quot;should parse the file template from the template group&quot; do
+</span><span class="marked0"><a name="line66"></a>66     template_group = Slippers::TemplateGroupDirectory.new(['spec/views'])
+</span><span class="marked1"><a name="line67"></a>67     name = OpenStruct.new({:first =&gt; 'fred', :last =&gt; 'flinestone'})
+</span><span class="marked0"><a name="line68"></a>68     people = OpenStruct.new({:fred =&gt; name})
+</span><span class="marked1"><a name="line69"></a>69     @parser.parse(&quot;should parse $person/name()$&quot;).eval(name, template_group).should eql(&quot;should parse fred flinestone&quot;)
+</span><span class="marked0"><a name="line70"></a>70     @parser.parse(&quot;should parse $fred:person/name()$&quot;).eval(people, template_group).should eql(&quot;should parse fred flinestone&quot;)
+</span><span class="inferred1"><a name="line71"></a>71   end
+</span><span class="inferred0"><a name="line72"></a>72   
+</span><span class="marked1"><a name="line73"></a>73   it 'should render the object if the keyword it is used' do
+</span><span class="marked0"><a name="line74"></a>74     supergroup = Slippers::TemplateGroup.new(:templates =&gt; {:bold =&gt; Slippers::Engine.new(&quot;&lt;b&gt;$it$&lt;/b&gt;&quot;)})
+</span><span class="marked1"><a name="line75"></a>75     subgroup = Slippers::TemplateGroup.new(:templates =&gt; {}, :super_group =&gt; supergroup)
+</span><span class="marked0"><a name="line76"></a>76     @parser.parse(&quot;&lt;b&gt;$it$&lt;/b&gt;&quot;).eval(&quot;Sarah&quot;, subgroup).should eql('&lt;b&gt;Sarah&lt;/b&gt;')
+</span><span class="marked1"><a name="line77"></a>77     @parser.parse(&quot;$name:bold()$&quot;).eval({:name =&gt; &quot;Sarah&quot;}, subgroup).should eql('&lt;b&gt;Sarah&lt;/b&gt;')
+</span><span class="inferred0"><a name="line78"></a>78   end
+</span><span class="inferred1"><a name="line79"></a>79 end
+</span><span class="inferred0"><a name="line80"></a>80 
+</span><span class="inferred1"><a name="line81"></a>81 
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>

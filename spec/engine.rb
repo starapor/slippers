@@ -79,6 +79,13 @@ describe Slippers::Engine do
     engine = Slippers::Engine.new('$this_is_bad')
     engine.render(stub('object')).should eql('')
   end
+  
+  it "should handle missing handlers" do
+    template = "This is a string without any holes in it"
+    engine = Slippers::Engine.new(template, :missing_template_handler => nil, :default_string => nil)
+    engine.render.should eql("This is a string without any holes in it")
+  end
+  
 end
 
 class AgeRenderer  

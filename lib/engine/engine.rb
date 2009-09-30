@@ -3,6 +3,7 @@ Treetop.load File.dirname(__FILE__) + '/slippers'
 module Slippers
   class Engine
     DEFAULT_STRING = ''
+    MISSING_HANDLER = lambda { return "" }
     def initialize(template, params={})
       @main_template = Slippers::Template.new(template)
       @template_group = params[:template_group]

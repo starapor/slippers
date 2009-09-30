@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Tue Sep 29 20:55:34 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
+    <p>Generated on Wed Sep 30 08:18:26 +0100 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.2</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -571,9 +571,9 @@ span.run100 {
     </thead>
   <tbody><tr class='light'><td><a href='spec-parse_attributes_rb.html'>spec/parse_attributes.rb</a>
         </td>
-      <td class='lines_total'><tt>98</tt>
+      <td class='lines_total'><tt>101</tt>
         </td>
-      <td class='lines_code'><tt>81</tt>
+      <td class='lines_code'><tt>83</tt>
         </td>
       <td><table cellspacing='0' cellpadding='0' align='right'><tr><td><tt class='coverage_total'>100.0%</tt>
               &nbsp;</td>
@@ -598,104 +598,107 @@ span.run100 {
       </tr>
     </tbody>
   </table>
-<pre><span class="marked0"><a name="line1"></a> 1 require File.dirname(__FILE__) + '/spec_helper'
-</span><span class="inferred1"><a name="line2"></a> 2 
-</span><span class="marked0"><a name="line3"></a> 3 describe SlippersParser do
-</span><span class="inferred1"><a name="line4"></a> 4   
-</span><span class="marked0"><a name="line5"></a> 5   before(:each) do
-</span><span class="marked1"><a name="line6"></a> 6     @parser = SlippersParser.new
-</span><span class="inferred0"><a name="line7"></a> 7   end
-</span><span class="inferred1"><a name="line8"></a> 8   
-</span><span class="marked0"><a name="line9"></a> 9   it &quot;should return the string unparsed when there are no keywords in it&quot; do
-</span><span class="marked1"><a name="line10"></a>10     @parser.parse('').eval(nil).should eql('')
-</span><span class="marked0"><a name="line11"></a>11     @parser.parse('  ').eval(nil).should eql('  ')
-</span><span class="marked1"><a name="line12"></a>12     @parser.parse('this should be returned unchanged').eval.should eql('this should be returned unchanged')
-</span><span class="marked0"><a name="line13"></a>13     @parser.parse(' this should be returned unchanged ').eval.should eql(' this should be returned unchanged ')
-</span><span class="marked1"><a name="line14"></a>14     @parser.parse('this should be 1234567890 ').eval.should eql('this should be 1234567890 ')
-</span><span class="marked0"><a name="line15"></a>15     @parser.parse('this should be abc1234567890 ').eval.should eql('this should be abc1234567890 ')
-</span><span class="marked1"><a name="line16"></a>16     @parser.parse('this should be !@¬£%^&amp;*()').eval.should eql('this should be !@¬£%^&amp;*()')
-</span><span class="inferred0"><a name="line17"></a>17   end
-</span><span class="inferred1"><a name="line18"></a>18   
-</span><span class="marked0"><a name="line19"></a>19   it 'should find the keyword within the delimiters' do
-</span><span class="marked1"><a name="line20"></a>20     message = OpenStruct.new({:message =&gt; 'the message', :message2 =&gt; 'the second message', :name =&gt; 'fred', :full_name =&gt; 'fred flinstone'})
-</span><span class="marked0"><a name="line21"></a>21     @parser.parse('$message$').eval(message).should eql('the message')
-</span><span class="marked1"><a name="line22"></a>22     @parser.parse('$message$ for $name$').eval(message).should eql('the message for fred')
-</span><span class="marked0"><a name="line23"></a>23     @parser.parse('we want to find $message$').eval(message).should eql('we want to find the message')
-</span><span class="marked1"><a name="line24"></a>24     @parser.parse('$message$ has spoken').eval(message).should eql('the message has spoken')
-</span><span class="marked0"><a name="line25"></a>25     @parser.parse('Yes! $message$ has spoken').eval(message).should eql('Yes! the message has spoken')
-</span><span class="marked1"><a name="line26"></a>26     @parser.parse('Yes! $full_name$ has spoken').eval(message).should eql('Yes! fred flinstone has spoken')
-</span><span class="marked0"><a name="line27"></a>27     @parser.parse('Yes! $message2$ has spoken').eval(message).should eql('Yes! the second message has spoken')
-</span><span class="marked1"><a name="line28"></a>28     @parser.parse('Yes! &quot;$message2$&quot; has spoken').eval(message).should eql('Yes! &quot;the second message&quot; has spoken')
-</span><span class="marked0"><a name="line29"></a>29     @parser.parse('$$').eval(message).should eql('')
-</span><span class="inferred1"><a name="line30"></a>30   end
-</span><span class="inferred0"><a name="line31"></a>31   
-</span><span class="marked1"><a name="line32"></a>32   it 'should not match on escaped delimiters' do
-</span><span class="marked0"><a name="line33"></a>33     @parser.parse('stuff \$notmatched\$').eval(stub(:nothing)).should eql('stuff \$notmatched\$')
-</span><span class="inferred1"><a name="line34"></a>34   end
-</span><span class="inferred0"><a name="line35"></a>35   
-</span><span class="marked1"><a name="line36"></a>36   it &quot;should render a list of objects&quot; do
-</span><span class="marked0"><a name="line37"></a>37     people = [OpenStruct.new({:name =&gt; 'fred'}), OpenStruct.new({:name =&gt; 'barney'}) ]
-</span><span class="marked1"><a name="line38"></a>38     @parser.parse('this is $name$').eval(people).should eql(&quot;this is fredbarney&quot;)
-</span><span class="inferred0"><a name="line39"></a>39   end
-</span><span class="inferred1"><a name="line40"></a>40   
-</span><span class="marked0"><a name="line41"></a>41   it &quot;should render the default string when the attribute cannot be found on the object to render&quot; do  
-</span><span class="marked1"><a name="line42"></a>42     Slippers::Engine::DEFAULT_STRING.should eql('') 
-</span><span class="marked0"><a name="line43"></a>43     @parser.parse(&quot;This is the $adjective$ template with $message$.&quot;).eval(OpenStruct.new).should eql(&quot;This is the  template with .&quot;)
-</span><span class="marked1"><a name="line44"></a>44     @parser.parse(&quot;$not_me$&quot;).eval(:object).should eql('')
-</span><span class="marked0"><a name="line45"></a>45     Slippers::Engine::DEFAULT_STRING = &quot;foo&quot;
-</span><span class="marked1"><a name="line46"></a>46     @parser.parse(&quot;$not_me$&quot;).eval(:object).should eql('foo')
-</span><span class="marked0"><a name="line47"></a>47     Slippers::Engine::DEFAULT_STRING = &quot;&quot;
-</span><span class="inferred1"><a name="line48"></a>48   end
-</span><span class="inferred0"><a name="line49"></a>49   
-</span><span class="marked1"><a name="line50"></a>50   it &quot;should convert attribute to string&quot; do
-</span><span class="marked0"><a name="line51"></a>51     fred = OpenStruct.new({:name =&gt; 'fred', :dob =&gt; DateTime.new(1983, 1, 2)})
-</span><span class="marked1"><a name="line52"></a>52     template_group = Slippers::TemplateGroup.new(:templates =&gt; {:date =&gt; Slippers::Engine.new('$year$')} )
-</span><span class="marked0"><a name="line53"></a>53     @parser.parse(&quot;This is $name$ who was born in $dob:date()$&quot;).eval(fred, template_group).should eql('This is fred who was born in 1983')
-</span><span class="inferred1"><a name="line54"></a>54   end
-</span><span class="inferred0"><a name="line55"></a>55 
-</span><span class="marked1"><a name="line56"></a>56   it &quot;should render a hash&quot; do
-</span><span class="marked0"><a name="line57"></a>57     hash_object = {:title =&gt; 'Domain driven design', :author =&gt; 'Eric Evans', :find =&gt; 'method on a hash'}
-</span><span class="marked1"><a name="line58"></a>58     @parser.parse(&quot;should parse $title$ by $author$&quot;).eval(hash_object).should eql(&quot;should parse Domain driven design by Eric Evans&quot;)
-</span><span class="marked0"><a name="line59"></a>59     @parser.parse(&quot;should parse a symbol before a $find$&quot;).eval(hash_object).should eql('should parse a symbol before a method on a hash')
-</span><span class="inferred1"><a name="line60"></a>60   end
-</span><span class="inferred0"><a name="line61"></a>61 
-</span><span class="marked1"><a name="line62"></a>62   it &quot;should render a symbol on a hash before its methods&quot; do
-</span><span class="marked0"><a name="line63"></a>63     hash_object = {:find =&gt; 'method on a hash'}
-</span><span class="marked1"><a name="line64"></a>64     @parser.parse(&quot;should parse a symbol before a $find$&quot;).eval(hash_object).should eql('should parse a symbol before a method on a hash')
-</span><span class="marked0"><a name="line65"></a>65     @parser.parse(&quot;should still render the method $size$&quot;).eval(hash_object).should eql('should still render the method 1')
-</span><span class="inferred1"><a name="line66"></a>66   end
-</span><span class="inferred0"><a name="line67"></a>67   
-</span><span class="marked1"><a name="line68"></a>68   it 'should return an empty string if the template is not correctly formed' do
-</span><span class="marked0"><a name="line69"></a>69     @parser.parse(&quot;$not_properly_formed&quot;).should eql(nil)
-</span><span class="inferred1"><a name="line70"></a>70   end  
-</span><span class="inferred0"><a name="line71"></a>71   
-</span><span class="marked1"><a name="line72"></a>72   it 'should use the specified expression options to render list items' do
-</span><span class="marked0"><a name="line73"></a>73     @parser.parse('$list; null=&quot;-1&quot;, seperator=&quot;, &quot;$').eval(:list =&gt; [1,2,nil,3]).should eql(&quot;1, 2, -1, 3&quot;)
-</span><span class="marked1"><a name="line74"></a>74     @parser.parse('$list; seperator=&quot;, &quot;$').eval(:list =&gt; [1,2,3]).should eql(&quot;1, 2, 3&quot;)
-</span><span class="marked0"><a name="line75"></a>75     @parser.parse('$list; seperator=&quot;!!&quot;$').eval(:list =&gt; [1,2,3,nil]).should eql(&quot;1!!2!!3&quot;)
-</span><span class="marked1"><a name="line76"></a>76     @parser.parse('$list; null=&quot;-1&quot;$').eval(:list =&gt; [1,nil,3]).should eql(&quot;1-13&quot;)
-</span><span class="inferred0"><a name="line77"></a>77   end
-</span><span class="inferred1"><a name="line78"></a>78   
-</span><span class="marked0"><a name="line79"></a>79   it 'should conditionally parse some text' do
-</span><span class="marked1"><a name="line80"></a>80     @parser.parse(&quot;$if(greeting)$ Hello $end$&quot;).eval(:greeting =&gt; true).should eql(&quot; Hello &quot;)
-</span><span class="marked0"><a name="line81"></a>81     @parser.parse(&quot;$if(greeting)$ Hello $end$&quot;).eval(:greeting =&gt; true).should eql(&quot; Hello &quot;)
-</span><span class="marked1"><a name="line82"></a>82     @parser.parse(&quot;$if(greeting)$ Hello $end$&quot;).eval(:greeting =&gt; false).should eql(&quot;&quot;)
-</span><span class="marked0"><a name="line83"></a>83     @parser.parse(&quot;$if(greeting)$ Hello $end$&quot;).eval(:greeting =&gt; nil).should eql(&quot;&quot;)
-</span><span class="marked1"><a name="line84"></a>84     @parser.parse(&quot;$if(greeting)$Hello$else$Goodbye$end$&quot;).eval(:greeting =&gt; true).should eql(&quot;Hello&quot;)
-</span><span class="marked0"><a name="line85"></a>85     @parser.parse(&quot;$if(greeting)$ Hello $else$ Goodbye $end$&quot;).eval(:greeting =&gt; false).should eql(&quot; Goodbye &quot;)
-</span><span class="marked1"><a name="line86"></a>86     @parser.parse(&quot;$if(greeting)$ Hello $end$&quot;).eval(:greetingzzzz =&gt; true).should eql(&quot;&quot;)
-</span><span class="marked0"><a name="line87"></a>87     @parser.parse(&quot;$if(greeting)$ $greeting$ $end$&quot;).eval(:greeting =&gt; 'Hi').should eql(&quot; Hi &quot;)
-</span><span class="inferred1"><a name="line88"></a>88   end
-</span><span class="inferred0"><a name="line89"></a>89 
-</span><span class="marked1"><a name="line90"></a>90   it 'should conditionally parse a template' do
-</span><span class="marked0"><a name="line91"></a>91     @parser.parse(&quot;$if(greeting)$ $greeting$ $end$&quot;).eval(:greeting =&gt; 'Hi').should eql(&quot; Hi &quot;)
-</span><span class="marked1"><a name="line92"></a>92     @parser.parse(&quot;$if(greeting)$$greeting$ $else$ Nothing to see here $end$&quot;).eval(:greeting =&gt; 'Hi').should eql(&quot;Hi &quot;)
-</span><span class="marked0"><a name="line93"></a>93     @parser.parse(&quot;$if(greeting)$$greeting$ $else$ Nothing to see here $end$&quot;).eval(:greeting =&gt; nil).should eql(&quot; Nothing to see here &quot;)
-</span><span class="inferred1"><a name="line94"></a>94   end
-</span><span class="inferred0"><a name="line95"></a>95 
-</span><span class="inferred1"><a name="line96"></a>96 end
-</span><span class="inferred0"><a name="line97"></a>97 
-</span><span class="inferred1"><a name="line98"></a>98 
+<pre><span class="marked1"><a name="line1"></a>  1 require File.dirname(__FILE__) + '/spec_helper'
+</span><span class="inferred0"><a name="line2"></a>  2 
+</span><span class="marked1"><a name="line3"></a>  3 describe SlippersParser do
+</span><span class="inferred0"><a name="line4"></a>  4   
+</span><span class="marked1"><a name="line5"></a>  5   before(:each) do
+</span><span class="marked0"><a name="line6"></a>  6     @parser = SlippersParser.new
+</span><span class="inferred1"><a name="line7"></a>  7   end
+</span><span class="inferred0"><a name="line8"></a>  8   
+</span><span class="marked1"><a name="line9"></a>  9   it &quot;should return the string unparsed when there are no keywords in it&quot; do
+</span><span class="marked0"><a name="line10"></a> 10     @parser.parse('').eval(nil).should eql('')
+</span><span class="marked1"><a name="line11"></a> 11     @parser.parse('  ').eval(nil).should eql('  ')
+</span><span class="marked0"><a name="line12"></a> 12     @parser.parse('this should be returned unchanged').eval.should eql('this should be returned unchanged')
+</span><span class="marked1"><a name="line13"></a> 13     @parser.parse(' this should be returned unchanged ').eval.should eql(' this should be returned unchanged ')
+</span><span class="marked0"><a name="line14"></a> 14     @parser.parse('this should be 1234567890 ').eval.should eql('this should be 1234567890 ')
+</span><span class="marked1"><a name="line15"></a> 15     @parser.parse('this should be abc1234567890 ').eval.should eql('this should be abc1234567890 ')
+</span><span class="marked0"><a name="line16"></a> 16     @parser.parse('this should be !@¬£%^&amp;*()').eval.should eql('this should be !@¬£%^&amp;*()')
+</span><span class="inferred1"><a name="line17"></a> 17   end
+</span><span class="inferred0"><a name="line18"></a> 18   
+</span><span class="marked1"><a name="line19"></a> 19   it 'should find the keyword within the delimiters' do
+</span><span class="marked0"><a name="line20"></a> 20     message = OpenStruct.new({:message =&gt; 'the message', :message2 =&gt; 'the second message', :name =&gt; 'fred', :full_name =&gt; 'fred flinstone'})
+</span><span class="marked1"><a name="line21"></a> 21     @parser.parse('$message$').eval(message).should eql('the message')
+</span><span class="marked0"><a name="line22"></a> 22     @parser.parse('$message$ for $name$').eval(message).should eql('the message for fred')
+</span><span class="marked1"><a name="line23"></a> 23     @parser.parse('we want to find $message$').eval(message).should eql('we want to find the message')
+</span><span class="marked0"><a name="line24"></a> 24     @parser.parse('$message$ has spoken').eval(message).should eql('the message has spoken')
+</span><span class="marked1"><a name="line25"></a> 25     @parser.parse('Yes! $message$ has spoken').eval(message).should eql('Yes! the message has spoken')
+</span><span class="marked0"><a name="line26"></a> 26     @parser.parse('Yes! $full_name$ has spoken').eval(message).should eql('Yes! fred flinstone has spoken')
+</span><span class="marked1"><a name="line27"></a> 27     @parser.parse('Yes! $message2$ has spoken').eval(message).should eql('Yes! the second message has spoken')
+</span><span class="marked0"><a name="line28"></a> 28     @parser.parse('Yes! &quot;$message2$&quot; has spoken').eval(message).should eql('Yes! &quot;the second message&quot; has spoken')
+</span><span class="marked1"><a name="line29"></a> 29     @parser.parse('$$').eval(message).should eql('')
+</span><span class="inferred0"><a name="line30"></a> 30   end
+</span><span class="inferred1"><a name="line31"></a> 31   
+</span><span class="marked0"><a name="line32"></a> 32   it 'should not match on escaped delimiters' do
+</span><span class="marked1"><a name="line33"></a> 33     @parser.parse('stuff \$notmatched\$').eval(stub(:nothing)).should eql('stuff \$notmatched\$')
+</span><span class="inferred0"><a name="line34"></a> 34   end
+</span><span class="inferred1"><a name="line35"></a> 35   
+</span><span class="marked0"><a name="line36"></a> 36   it &quot;should render a list of objects&quot; do
+</span><span class="marked1"><a name="line37"></a> 37     people = [OpenStruct.new({:name =&gt; 'fred'}), OpenStruct.new({:name =&gt; 'barney'}) ]
+</span><span class="marked0"><a name="line38"></a> 38     @parser.parse('this is $name$').eval(people).should eql(&quot;this is fredbarney&quot;)
+</span><span class="inferred1"><a name="line39"></a> 39   end
+</span><span class="inferred0"><a name="line40"></a> 40   
+</span><span class="marked1"><a name="line41"></a> 41   it &quot;should render the default string when the attribute cannot be found on the object to render and there is no template group&quot; do  
+</span><span class="marked0"><a name="line42"></a> 42     Slippers::Engine::DEFAULT_STRING.should eql('') 
+</span><span class="marked1"><a name="line43"></a> 43     @parser.parse(&quot;This is the $adjective$ template with $message$.&quot;).eval(OpenStruct.new).should eql(&quot;This is the  template with .&quot;)
+</span><span class="marked0"><a name="line44"></a> 44     @parser.parse(&quot;$not_me$&quot;).eval(:object).should eql('')
+</span><span class="inferred1"><a name="line45"></a> 45   end  
+</span><span class="inferred0"><a name="line46"></a> 46   
+</span><span class="marked1"><a name="line47"></a> 47   it &quot;should render the default string of the template group when the attribute cannot be found on the object to render&quot; do  
+</span><span class="marked0"><a name="line48"></a> 48     template_group = Slippers::TemplateGroup.new(:default_string =&gt; &quot;foo&quot; )
+</span><span class="marked1"><a name="line49"></a> 49     template_group.default_string.should eql('foo')
+</span><span class="marked0"><a name="line50"></a> 50     @parser.parse(&quot;$not_me$&quot;).eval(:object, template_group).should eql('foo')
+</span><span class="inferred1"><a name="line51"></a> 51   end
+</span><span class="inferred0"><a name="line52"></a> 52   
+</span><span class="marked1"><a name="line53"></a> 53   it &quot;should convert attribute to string&quot; do
+</span><span class="marked0"><a name="line54"></a> 54     fred = OpenStruct.new({:name =&gt; 'fred', :dob =&gt; DateTime.new(1983, 1, 2)})
+</span><span class="marked1"><a name="line55"></a> 55     template_group = Slippers::TemplateGroup.new(:templates =&gt; {:date =&gt; Slippers::Engine.new('$year$')} )
+</span><span class="marked0"><a name="line56"></a> 56     @parser.parse(&quot;This is $name$ who was born in $dob:date()$&quot;).eval(fred, template_group).should eql('This is fred who was born in 1983')
+</span><span class="inferred1"><a name="line57"></a> 57   end
+</span><span class="inferred0"><a name="line58"></a> 58 
+</span><span class="marked1"><a name="line59"></a> 59   it &quot;should render a hash&quot; do
+</span><span class="marked0"><a name="line60"></a> 60     hash_object = {:title =&gt; 'Domain driven design', :author =&gt; 'Eric Evans', :find =&gt; 'method on a hash'}
+</span><span class="marked1"><a name="line61"></a> 61     @parser.parse(&quot;should parse $title$ by $author$&quot;).eval(hash_object).should eql(&quot;should parse Domain driven design by Eric Evans&quot;)
+</span><span class="marked0"><a name="line62"></a> 62     @parser.parse(&quot;should parse a symbol before a $find$&quot;).eval(hash_object).should eql('should parse a symbol before a method on a hash')
+</span><span class="inferred1"><a name="line63"></a> 63   end
+</span><span class="inferred0"><a name="line64"></a> 64 
+</span><span class="marked1"><a name="line65"></a> 65   it &quot;should render a symbol on a hash before its methods&quot; do
+</span><span class="marked0"><a name="line66"></a> 66     hash_object = {:find =&gt; 'method on a hash'}
+</span><span class="marked1"><a name="line67"></a> 67     @parser.parse(&quot;should parse a symbol before a $find$&quot;).eval(hash_object).should eql('should parse a symbol before a method on a hash')
+</span><span class="marked0"><a name="line68"></a> 68     @parser.parse(&quot;should still render the method $size$&quot;).eval(hash_object).should eql('should still render the method 1')
+</span><span class="inferred1"><a name="line69"></a> 69   end
+</span><span class="inferred0"><a name="line70"></a> 70   
+</span><span class="marked1"><a name="line71"></a> 71   it 'should return an empty string if the template is not correctly formed' do
+</span><span class="marked0"><a name="line72"></a> 72     @parser.parse(&quot;$not_properly_formed&quot;).should eql(nil)
+</span><span class="inferred1"><a name="line73"></a> 73   end  
+</span><span class="inferred0"><a name="line74"></a> 74   
+</span><span class="marked1"><a name="line75"></a> 75   it 'should use the specified expression options to render list items' do
+</span><span class="marked0"><a name="line76"></a> 76     @parser.parse('$list; null=&quot;-1&quot;, seperator=&quot;, &quot;$').eval(:list =&gt; [1,2,nil,3]).should eql(&quot;1, 2, -1, 3&quot;)
+</span><span class="marked1"><a name="line77"></a> 77     @parser.parse('$list; seperator=&quot;, &quot;$').eval(:list =&gt; [1,2,3]).should eql(&quot;1, 2, 3&quot;)
+</span><span class="marked0"><a name="line78"></a> 78     @parser.parse('$list; seperator=&quot;!!&quot;$').eval(:list =&gt; [1,2,3,nil]).should eql(&quot;1!!2!!3&quot;)
+</span><span class="marked1"><a name="line79"></a> 79     @parser.parse('$list; null=&quot;-1&quot;$').eval(:list =&gt; [1,nil,3]).should eql(&quot;1-13&quot;)
+</span><span class="inferred0"><a name="line80"></a> 80   end
+</span><span class="inferred1"><a name="line81"></a> 81   
+</span><span class="marked0"><a name="line82"></a> 82   it 'should conditionally parse some text' do
+</span><span class="marked1"><a name="line83"></a> 83     @parser.parse(&quot;$if(greeting)$ Hello $end$&quot;).eval(:greeting =&gt; true).should eql(&quot; Hello &quot;)
+</span><span class="marked0"><a name="line84"></a> 84     @parser.parse(&quot;$if(greeting)$ Hello $end$&quot;).eval(:greeting =&gt; true).should eql(&quot; Hello &quot;)
+</span><span class="marked1"><a name="line85"></a> 85     @parser.parse(&quot;$if(greeting)$ Hello $end$&quot;).eval(:greeting =&gt; false).should eql(&quot;&quot;)
+</span><span class="marked0"><a name="line86"></a> 86     @parser.parse(&quot;$if(greeting)$ Hello $end$&quot;).eval(:greeting =&gt; nil).should eql(&quot;&quot;)
+</span><span class="marked1"><a name="line87"></a> 87     @parser.parse(&quot;$if(greeting)$Hello$else$Goodbye$end$&quot;).eval(:greeting =&gt; true).should eql(&quot;Hello&quot;)
+</span><span class="marked0"><a name="line88"></a> 88     @parser.parse(&quot;$if(greeting)$ Hello $else$ Goodbye $end$&quot;).eval(:greeting =&gt; false).should eql(&quot; Goodbye &quot;)
+</span><span class="marked1"><a name="line89"></a> 89     @parser.parse(&quot;$if(greeting)$ Hello $end$&quot;).eval(:greetingzzzz =&gt; true).should eql(&quot;&quot;)
+</span><span class="marked0"><a name="line90"></a> 90     @parser.parse(&quot;$if(greeting)$ $greeting$ $end$&quot;).eval(:greeting =&gt; 'Hi').should eql(&quot; Hi &quot;)
+</span><span class="inferred1"><a name="line91"></a> 91   end
+</span><span class="inferred0"><a name="line92"></a> 92 
+</span><span class="marked1"><a name="line93"></a> 93   it 'should conditionally parse a template' do
+</span><span class="marked0"><a name="line94"></a> 94     @parser.parse(&quot;$if(greeting)$ $greeting$ $end$&quot;).eval(:greeting =&gt; 'Hi').should eql(&quot; Hi &quot;)
+</span><span class="marked1"><a name="line95"></a> 95     @parser.parse(&quot;$if(greeting)$$greeting$ $else$ Nothing to see here $end$&quot;).eval(:greeting =&gt; 'Hi').should eql(&quot;Hi &quot;)
+</span><span class="marked0"><a name="line96"></a> 96     @parser.parse(&quot;$if(greeting)$$greeting$ $else$ Nothing to see here $end$&quot;).eval(:greeting =&gt; nil).should eql(&quot; Nothing to see here &quot;)
+</span><span class="inferred1"><a name="line97"></a> 97   end
+</span><span class="inferred0"><a name="line98"></a> 98 
+</span><span class="inferred1"><a name="line99"></a> 99 end
+</span><span class="inferred0"><a name="line100"></a>100 
+</span><span class="inferred1"><a name="line101"></a>101 
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.2.</p>

@@ -3,8 +3,11 @@ module Slippers
     def initialize(directory_paths, params={})
       @directory_paths = directory_paths
       @super_group = params[:super_group]
+      @missing_handler = params[:missing_template_handler] || Slippers::Engine::MISSING_HANDLER
+      @default_string = params[:default_string] || Slippers::Engine::DEFAULT_STRING
     end
-    attr_reader :directory_paths
+
+    attr_reader :directory_paths, :missing_handler, :default_string
     
     def find(subtemplate)
       file_name = @directory_paths.map { |directory_path| directory_path + '/' + subtemplate + '.st' }.find { |f| File.exist? f}   

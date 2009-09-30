@@ -38,13 +38,16 @@ describe SlippersParser do
     @parser.parse('this is $name$').eval(people).should eql("this is fredbarney")
   end
   
-  it "should render the default string when the attribute cannot be found on the object to render" do  
+  it "should render the default string when the attribute cannot be found on the object to render and there is no template group" do  
     Slippers::Engine::DEFAULT_STRING.should eql('') 
     @parser.parse("This is the $adjective$ template with $message$.").eval(OpenStruct.new).should eql("This is the  template with .")
     @parser.parse("$not_me$").eval(:object).should eql('')
-    Slippers::Engine::DEFAULT_STRING = "foo"
-    @parser.parse("$not_me$").eval(:object).should eql('foo')
-    Slippers::Engine::DEFAULT_STRING = ""
+  end  
+  
+  it "should render the default string of the template group when the attribute cannot be found on the object to render" do  
+    template_group = Slippers::TemplateGroup.new(:default_string => "foo" )
+    template_group.default_string.should eql('foo')
+    @parser.parse("$not_me$").eval(:object, template_group).should eql('foo')
   end
   
   it "should convert attribute to string" do
