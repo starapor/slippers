@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{slippers}
-  s.version = "0.0.10"
+  s.version = "0.0.11"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sarah Taraporewalla"]
-  s.date = %q{2009-09-29}
+  s.date = %q{2009-09-30}
   s.description = %q{A strict templating library for ruby}
   s.email = %q{me@sarahtaraporewalla.com}
   s.extra_rdoc_files = [
@@ -120,7 +120,7 @@ Gem::Specification.new do |s|
      "spec/views/person/date_renderer.rb",
      "spec/views/person/name.st"
   ]
-  s.homepage = %q{http://github.com/starapor/slippers}
+  s.homepage = %q{http://starapor/github.com/slippers}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
