@@ -16,7 +16,7 @@ module Slippers
     def render(object_to_render, template_group)
       substitue_null_values(object_to_render)
       return template_group.render(object_to_render) if template_group && template_group.has_registered?(object_to_render.class)
-      return object_to_render.compact.join(seperator) if seperator && object_to_render.respond_to?('join')
+      return object_to_render.compact.join(seperator) if object_to_render.respond_to?('join')
       object_to_render.to_s
     end
     

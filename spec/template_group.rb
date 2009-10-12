@@ -32,7 +32,9 @@ describe Slippers::TemplateGroup do
   it 'should render an item if its class is registered' do
     date = Date.new(DateTime.now.year, 2, 4)
     rendered_text = "rendered text"
-    template_group = Slippers::TemplateGroup.new(:templates => {Date => OpenStruct.new({:render => rendered_text})})
+    renderer = mock('date_renderer')
+    renderer.expects(:render).with(date).returns(rendered_text)
+    template_group = Slippers::TemplateGroup.new(:templates => {Date => renderer})
     
     template_group.has_registered?(date.class).should be_true
     template_group.render(date).should eql(rendered_text)
