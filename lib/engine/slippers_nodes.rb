@@ -8,7 +8,7 @@ module Slippers
     def value_of(item, template_group)
       return default_string(template_group) if attribute == ''
       return item.to_s if attribute == 'it'
-      return item[to_sym] if item.respond_to?('[]'.to_sym) && item[to_sym]
+      return item[to_sym] if item.respond_to?(:[]) && item[to_sym]
       return item.send(attribute) if item.respond_to?(attribute)
       default_string(template_group)
     end
