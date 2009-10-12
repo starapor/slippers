@@ -11,7 +11,7 @@ begin
     gem.name = "slippers"
     gem.summary = "A strict templating library for Ruby"
     gem.email = "me@sarahtaraporewalla.com"
-    gem.homepage = "http://starapor/github.com/slippers"
+    gem.homepage = "http://slippersrb.com"
     gem.description = "A strict templating library for ruby"
     gem.authors = ["Sarah Taraporewalla"]
     gem.files =  FileList["[A-Z]*", "{bin,lib,spec,examples}/**/*"]
