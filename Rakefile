@@ -14,7 +14,7 @@ begin
     gem.homepage = "http://slippersrb.com"
     gem.description = "A strict templating library for ruby"
     gem.authors = ["Sarah Taraporewalla"]
-    gem.files =  FileList["[A-Z]*", "{bin,lib,spec,examples}/**/*"]
+    gem.files =  FileList["[A-Z]*", "{bin,lib,spec,examples,tasks}/**/*"]
     gem.add_dependency 'treetop'
   end
   Jeweler::GemcutterTasks.new
