@@ -120,7 +120,7 @@ Gem::Specification.new do |s|
      "spec/views/person/date_renderer.rb",
      "spec/views/person/name.st"
   ]
-  s.homepage = %q{http://starapor/github.com/slippers}
+  s.homepage = %q{http://starapor.github.com/slippers}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}

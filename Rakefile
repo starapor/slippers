@@ -15,7 +15,6 @@ begin
     gem.description = "A strict templating library for ruby"
     gem.authors = ["Sarah Taraporewalla"]
     gem.files =  FileList["[A-Z]*", "{bin,lib,spec,examples}/**/*"]
-    gem.add_dependency 'schacon-git'
     gem.add_dependency 'treetop'
   end
   Jeweler::GemcutterTasks.new
