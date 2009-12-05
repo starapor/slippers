@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{slippers}
-  s.version = "0.0.12"
+  s.version = "0.0.13"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sarah Taraporewalla"]
@@ -118,7 +118,8 @@ Gem::Specification.new do |s|
      "spec/views/money.rb",
      "spec/views/person/age.st",
      "spec/views/person/date_renderer.rb",
-     "spec/views/person/name.st"
+     "spec/views/person/name.st",
+     "tasks/spec.rake"
   ]
   s.homepage = %q{http://slippersrb.com}
   s.rdoc_options = ["--charset=UTF-8"]
