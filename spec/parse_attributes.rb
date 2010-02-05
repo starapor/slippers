@@ -31,7 +31,7 @@ describe SlippersParser do
   end
   
   it 'should not match on escaped delimiters' do
-    @parser.parse('stuff \$notmatched\$').eval(stub(:nothing)).should eql('stuff \$notmatched\$')
+    @parser.parse('stuff \$notmatched\$').eval(stub(:nothing)).should eql('stuff $notmatched$')
   end
   
   it "should render a list of objects" do
