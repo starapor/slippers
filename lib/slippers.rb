@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'treetop'
-require 'active_support'
 
 require File.dirname(__FILE__) + '/engine/template'
 require File.dirname(__FILE__) + '/engine/file_template'

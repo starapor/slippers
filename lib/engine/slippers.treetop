@@ -51,7 +51,7 @@ grammar Slippers
    	   to_s
    	  end
       def to_s
-        text_value
+        elements.inject('') {|rendered, item| rendered + item.to_s}
       end
     }
   end
@@ -135,7 +135,12 @@ grammar Slippers
   end
     
   rule not_delimiter 
-    escape delimiter / !delimiter . {
+    escape delimiter {
+      def to_s
+        delimiter.text_value
+      end
+    }
+    / !delimiter . {
       def to_s
         text_value
       end
