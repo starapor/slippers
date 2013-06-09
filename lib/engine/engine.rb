@@ -13,7 +13,10 @@ module Slippers
     def render(object_to_render=nil)
       parser = SlippersParser.new
       parse_tree = parser.parse(@main_template.template)
-      return '' unless parse_tree
+      if(parse_tree.nil?) 
+        raise Exception, "Parse error: #{parser.failure_reason}"
+      end
+
       parse_tree.eval(object_to_render, @template_group) 
     end
     
