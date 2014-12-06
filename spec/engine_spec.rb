@@ -77,7 +77,7 @@ describe Slippers::Engine do
   
   it 'should render empty string if the template can not be evaluated' do
     engine = Slippers::Engine.new('$this_is_bad')
-    engine.render(stub('object')).should eql('')
+    expect(engine.render(double('object'))).to eq('')
   end
   
   it "should handle missing handlers" do

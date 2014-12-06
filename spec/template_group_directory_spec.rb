@@ -26,7 +26,7 @@ describe Slippers::TemplateGroupDirectory do
   end
   
   it 'should look in the super template group if it cannot find the template' do
-    template = stub 'template'
+    template = double 'template'
     super_template_group = Slippers::TemplateGroup.new(:templates => {:person => template})
     template_group = Slippers::TemplateGroupDirectory.new(['spec/views'], :super_group => super_template_group)
     template_group.find('person').should eql(template)

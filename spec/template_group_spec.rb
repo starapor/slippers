@@ -32,14 +32,14 @@ describe Slippers::TemplateGroup do
   it 'should render an item if its class is registered' do
     date = Date.new(DateTime.now.year, 2, 4)
     rendered_text = "rendered text"
-    renderer = mock('date_renderer')
-    renderer.expects(:render).with(date).returns(rendered_text)
+    renderer = double('date_renderer')
+    expect(renderer).to receive(:render).with(date).and_return(rendered_text)
     template_group = Slippers::TemplateGroup.new(:templates => {Date => renderer})
     
-    template_group.has_registered?(date.class).should be_true
+    template_group.has_registered?(date.class).should eq(true)
     template_group.render(date).should eql(rendered_text)
     
-    template_group.has_registered?(template_group.class).should be_false
+    template_group.has_registered?(template_group.class).should eq(false)
     template_group.render(template_group).should eql('')
   end
   
@@ -47,7 +47,7 @@ describe Slippers::TemplateGroup do
     date = Date.new(DateTime.now.year, 2, 4)
     template_group = Slippers::TemplateGroup.new()
     
-    template_group.has_registered?(date.class).should be_false
+    template_group.has_registered?(date.class).should eq(false)
     template_group.render(date).should eql('')
   end
   

@@ -2,7 +2,6 @@ load File.expand_path(File.dirname(__FILE__) + "/tasks/spec.rake")
 #load File.expand_path(File.dirname(__FILE__) + "/tasks/git.rake")
 
 require 'rake'
-require 'spec/rake/spectask'
 
 desc "Generate the gem using technicalpickles jeweler"
 begin

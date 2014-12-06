@@ -31,7 +31,7 @@ describe SlippersParser do
   end
   
   it 'should not match on escaped delimiters' do
-    @parser.parse('stuff \$notmatched\$').eval(stub(:nothing)).should eql('stuff $notmatched$')
+    @parser.parse('stuff \$notmatched\$').eval(double(:nothing)).should eql('stuff $notmatched$')
   end
   
   it "should render a list of objects" do
@@ -42,13 +42,13 @@ describe SlippersParser do
   it "should render the default string when the attribute cannot be found on the object to render and there is no template group" do  
     Slippers::Engine::DEFAULT_STRING.should eql('') 
     @parser.parse("This is the $adjective$ template with $message$.").eval(OpenStruct.new).should eql("This is the  template with .")
-    @parser.parse("$not_me$").eval(stub()).should eql('')
+    @parser.parse("$not_me$").eval(double('')).should eql('')
   end  
   
   it "should render the default string of the template group when the attribute cannot be found on the object to render" do  
     template_group = Slippers::TemplateGroup.new(:default_string => "foo" )
     template_group.default_string.should eql('foo')
-    @parser.parse("$not_me$").eval(stub(), template_group).should eql('foo')
+    @parser.parse("$not_me$").eval(double(''), template_group).should eql('foo')
   end
   
   it "should convert attribute to string" do
