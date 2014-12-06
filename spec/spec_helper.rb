@@ -1,14 +1,15 @@
-require 'spec'
+require 'rspec'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
-require 'lib/slippers'
+require 'slippers'
 require 'ostruct'
 require 'date'
 require 'mocha'
 require 'tempfile'
 
-Spec::Runner.configure do |config|
-  
+RSpec.configure do |config|
+  config.expect_with :rspec do |c|
+    c.syntax = [:should, :expect]
+  end
 end
-

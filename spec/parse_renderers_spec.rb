@@ -14,8 +14,8 @@ describe SlippersParser do
   end
   
   it 'should return an empty string if the subtemplate does not respond to render' do
-    template_group = Slippers::TemplateGroup.new(:templates => {:not_this_one => stub('renderer')})    
-    @parser.parse("$not_this_one()$").eval(stub('object'), template_group).should eql('')
+    template_group = Slippers::TemplateGroup.new(:templates => {:not_this_one => double('renderer')})    
+    @parser.parse("$not_this_one()$").eval(double('object'), template_group).should eql('')
   end
     
   it 'should find a renderer based on the type of the object to render' do
